@@ -1,36 +1,62 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/daisyui@1.3.6/dist/full.js"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .main-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            min-height: 0; /* Prevent flexbox items from overflowing */
+        }
+        .main-content {
+            overflow-y: auto; /* Enables vertical scrolling if content overflows */
+        }
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <livewire:layout.navigation />
+        .dropdown-content {
+            position: absolute;
+            right: 0; /* Align the dropdown content to the right of its parent */
+            z-index: 10; /* Ensure it's above other content */
+        }
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+    </style>
+    
+</head>
+<body class="h-full overflow-hidden grid grid-cols-[auto,1fr] main-grid">
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+    <!-- Sidebar -->
+    <div class="flex flex-col w-64 min-h-full px-2 text-white bg-gray-800 sidebar py-7">
+        <livewire:layout.navigation />        
+    </div>
+
+    <!-- Main Content -->
+    <div class="min-h-full p-8 text-gray-600 bg-gray-100 main-content">
+        @if (isset($header))
+            <h1 class="mb-4 text-xl font-semibold text-gray-800">{{ $header }}</h1>
+        @endif
+
+        <!-- [Your Main Content] -->
+        {{ $slot }}
+
+    </div>
+
+    @livewireScripts
+</body>
 </html>
