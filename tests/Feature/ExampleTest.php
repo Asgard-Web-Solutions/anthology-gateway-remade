@@ -4,12 +4,9 @@ namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Tests\CreateUserAndAuthenticate;
 
 class ExampleTest extends TestCase
 {
-    use CreateUserAndAuthenticate;
-    
     /**
      * A basic test example.
      */

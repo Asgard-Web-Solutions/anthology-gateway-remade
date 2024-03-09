@@ -8,6 +8,7 @@ use Tests\CreateUserAndAuthenticate;
 
 abstract class TestCase extends BaseTestCase
 {
+    use CreateUserAndAuthenticate;
     use CreatesApplication;
 
     public function createUser(): User
