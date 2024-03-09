@@ -4,9 +4,12 @@ namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tests\CreateUserAndAuthenticate;
 
 class ExampleTest extends TestCase
 {
+    use CreateUserAndAuthenticate;
+    
     /**
      * A basic test example.
      */
@@ -19,9 +22,9 @@ class ExampleTest extends TestCase
 
     public function test_user_create_works()
     {
-        $user = $this->createUser();
+        $this->CreateUserAndAuthenticate();
 
-        $response = $this->actingAs($user)->get('/');
+        $response = $this->get('/');
 
         $response->assertStatus(200);
     }
