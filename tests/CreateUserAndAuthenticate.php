@@ -6,10 +6,12 @@ use App\Models\User;
 
 trait CreateUserAndAuthenticate
 {
-    protected function CreateUserAndAuthenticate($attributes = [])
+    public function CreateUserAndAuthenticate($attributes = []): User
     {
         $user = User::factory()->create($attributes);
+        
         $this->actingAs($user);
+
         return $user;
     }
 }
