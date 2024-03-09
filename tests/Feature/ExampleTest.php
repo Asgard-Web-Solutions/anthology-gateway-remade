@@ -16,4 +16,13 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_user_create_works()
+    {
+        $this->CreateUserAndAuthenticate();
+
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+    }
 }
