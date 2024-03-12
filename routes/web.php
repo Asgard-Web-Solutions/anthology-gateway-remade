@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,7 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Route::get('/users')->name('users');
+Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 
 require __DIR__.'/auth.php';

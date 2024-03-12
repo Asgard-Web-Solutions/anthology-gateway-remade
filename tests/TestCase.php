@@ -11,6 +11,7 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
     use CreateUserAndAuthenticate;
     use RefreshDatabase;
+    use CreateUser;
 
     public function createUser(): User
     {
