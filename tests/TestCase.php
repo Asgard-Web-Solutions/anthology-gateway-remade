@@ -10,6 +10,7 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
     use CreateUserAndAuthenticate;
+    use CreateAdminAndAuthenticate;
     use RefreshDatabase;
     use CreateUser;
 
