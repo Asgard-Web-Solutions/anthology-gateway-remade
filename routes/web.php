@@ -26,5 +26,6 @@ Route::view('profile', 'profile')
 
 Route::get('/users', [UserController::class, 'index'])->name('users');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
 
 require __DIR__.'/auth.php';
