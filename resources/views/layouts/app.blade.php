@@ -6,8 +6,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+
     <link href="https://cdn.tailwindcss.com" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/daisyui@1.3.6/dist/full.js"></script>
+    <script src="https://kit.fontawesome.com/0cc3b28aa8.js" crossorigin="anonymous"></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 
