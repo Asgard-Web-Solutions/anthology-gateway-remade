@@ -41,7 +41,6 @@ class UserController extends Controller
         $user->email = $request->email;
 
         $user->save();
-
         $user->roles()->sync( $data['roles'] ?? [] );
 
         return redirect()->route('users');
