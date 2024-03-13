@@ -78,6 +78,31 @@ class UsersControllerTest extends TestCase
         $response->assertRedirectToRoute('users');
     }
 
+    /** ROLES */
+    public function test_roles_show_on_user_edit_page() {
+        $this->CreateAdminAndAuthenticate();
+        $user = $this->createUser();
+
+        $response = $this->get(route('users.edit', $user->id));
+
+        $response->assertSee('Admin');
+        $response->assertSee('Moderator');
+        $response->assertSee('Help Desk');
+    }
+
+    public function test_roles_save_on_user_update() {
+        $this->CreateAdminAndAuthenticate();
+        $user = $this->createUser();
+        $data = $this->getUserUpdateData();
+        $data['roles'] = ["1"];
+
+        $response = $this->put(route('users.update', $user->id), $data);
+
+        $verify_data['user_id'] = $user->id;
+        $verify_data['role_id'] = 1;
+        $this->assertDatabaseHas('role_user', $verify_data);
+    }
+
 
     private function getUserUpdateData() {
         $data['name'] = 'Admiral Akbar';
