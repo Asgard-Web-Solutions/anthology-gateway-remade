@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\RoleRepositoryInterface;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -16,11 +17,13 @@ class UserController extends Controller
     public function __construct()
     {
         $this->userRepository = app(UserRepositoryInterface::class);  
-        $this->roleRepository = app(RoleRepositoryInterface::class);  
+        $this->roleRepository = app(RoleRepositoryInterface::class); 
     }
 
     public function index() 
     {
+        Gate::authorize('viewAny', User::class);
+
         $users = $this->userRepository->getAllUsers();
 
         return view('users.index')->with([
@@ -31,6 +34,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = $this->userRepository->getUser($id);
+
+        Gate::authorize('update', $user);
+
         $roles = $this->roleRepository->getAllRoles();
 
         return view('users.edit')->with([
@@ -42,6 +48,8 @@ class UserController extends Controller
     public function update(Request $request, $id) {
 
         $user = $this->userRepository->getUser($id);
+
+        Gate::authorize('update', $user);
 
         $data = $request->validate([
             'roles' => 'sometimes:array',

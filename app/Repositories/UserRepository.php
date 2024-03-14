@@ -34,7 +34,9 @@ class UserRepository implements UserRepositoryInterface
     {
         $user = $this->getUser($id);
         $user->update($attributes);
+
         Cache::forget('users:id:' . $id);
+        Cache::forget('users:id:' . $id . ':isAdmin');
 
         return $user;
     }
