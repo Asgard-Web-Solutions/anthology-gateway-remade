@@ -20,8 +20,8 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUser($id)
     {
-        return Cache::remember('users:id:' + $id, $this->resetHourly, function ($id) {
-            User::find($id);
+        return Cache::remember('users:id:' . $id, $this->resetHourly, function() use ($id) {
+            return User::find($id);
         });
     }
 
@@ -34,7 +34,7 @@ class UserRepository implements UserRepositoryInterface
     {
         $user = $this->getUser($id);
         $user->update($attributes);
-        Cache::forget('users:id:' + $id);
+        Cache::forget('users:id:' . $id);
 
         return $user;
     }
