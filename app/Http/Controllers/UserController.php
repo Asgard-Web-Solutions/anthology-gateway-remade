@@ -5,12 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Repositories\UserRepositoryInterface;
 
 class UserController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct()
+    {
+        $this->userRepository = app(UserRepositoryInterface::class);  
+    }
+
     public function index() 
     {
-        $users = User::all();
+        $users = $this->userRepository->getAllUsers();
 
         return view('users.index')->with([
             'users' => $users

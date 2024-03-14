@@ -14,8 +14,8 @@ class UsersPanel extends Component
     public function mount()
     {
         $this->userRepository = app(UserRepositoryInterface::class);
-        $this->totalUsers = $this->userRepository->countAll();
-        $this->newUsers = $this->userRepository->countNew();
+        $this->totalUsers = $this->userRepository->countAllUsers();
+        $this->newUsers = $this->userRepository->countNewUsers();
     }
 
     public function render()

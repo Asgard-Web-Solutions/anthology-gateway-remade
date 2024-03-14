@@ -4,10 +4,10 @@ namespace App\Repositories;
 
 interface UserRepositoryInterface
 {
-    public function getAll();
-    public function findById($id);
-    public function create(array $attributes);
-    public function update($id, array $attributes);
-    public function countAll();
-    public function countNew();
+    public function getAllUsers();
+    public function getUser($id);
+    public function createUser(array $attributes);
+    public function updateUser($id, array $attributes);
+    public function countAllUsers();
+    public function countNewUsers();
 }
