@@ -13,12 +13,14 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAllUsers()
     {
-        return User::all();
+        return Cache::remember('users:all', $this->resetHourly, function() {
+            return User::all();
+        });
     }
 
     public function getUser($id)
     {
-        return Cache::remember('user:byId:' + $id, $this->resetHourly, function ($id) {
+        return Cache::remember('users:id:' + $id, $this->resetHourly, function ($id) {
             User::find($id);
         });
     }
@@ -30,23 +32,23 @@ class UserRepository implements UserRepositoryInterface
 
     public function updateUser($id, array $attributes)
     {
-        $user = $this->findById($id);
+        $user = $this->getUser($id);
         $user->update($attributes);
-        Cache::forget('user:byId:' + $id);
+        Cache::forget('users:id:' + $id);
 
         return $user;
     }
 
     public function countAllUsers()
     {
-        return Cache::remember('user:countAll', $this->resetDaily, function () {
+        return Cache::remember('users:countAll', $this->resetDaily, function () {
             return User::count();
         });
     }
 
     public function countNewUsers()
     {
-        return Cache::remember('user:countNew', $this->resetDaily, function () {
+        return Cache::remember('users:countNew', $this->resetDaily, function () {
             return User::where('created_at', '>=', Carbon::now()->subDays(30))->count();
         });
     }

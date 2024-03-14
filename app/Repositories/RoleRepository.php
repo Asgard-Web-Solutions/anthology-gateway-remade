@@ -8,26 +8,36 @@ use Illuminate\Support\Facades\Cache;
 
 class RoleRepository implements RoleRepositoryInterface
 {
-    private $resetDaily = (60 * 60 * 24);
-    private $resetHourly = (60 * 60);
+    protected $resetHourly;
+    protected $resetDaily;
+    protected $resetWeekly;
 
-    public function getAll()
+    public function __construct()
     {
-        return Role::all();
+        $this->resetHourly = 60 * 60;
+        $this->resetDaily = $this->resetHourly * 24;
+        $this->resetWeekly = $this->resetDaily * 7;
     }
 
-    public function findById($id)
+    public function getAllRoles()
     {
-        return Cache::remember('Role:byId:' + $id, $this->resetHourly, function ($id) {
+        return Cache::remember('roles:all', $this->resetDaily, function () {
+            return Role::all();
+        });
+    }
+
+    public function getRole($id)
+    {
+        return Cache::remember('role:id:' + $id, $this->resetWeekly, function ($id) {
             Role::find($id);
         });
     }
 
-    public function update($id, array $attributes)
+    public function updateRole($id, array $attributes)
     {
-        $Role = $this->findById($id);
+        $Role = $this->getRole($id);
         $Role->update($attributes);
-        Cache::forget('Role:byId:' + $id);
+        Cache::forget('role:id:' + $id);
 
         return $Role;
     }

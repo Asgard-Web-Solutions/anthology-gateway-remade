@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 interface RoleRepositoryInterface
 {
-    public function getAll();
-    public function findById($id);
-    public function update($id, array $attributes);
+    public function getAllRoles();
+    public function getRole($id);
+    public function updateRole($id, array $attributes);
 }
