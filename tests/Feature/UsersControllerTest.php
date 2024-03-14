@@ -20,15 +20,6 @@ class UsersControllerTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function test_users_list_page_loads() {
-        $this->CreateAdminAndAuthenticate();
-
-        $response = $this->get(route('users'));
-
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertViewIs('users.index');
-    }
-
     public function test_users_are_displayed_on_users_page() {
         $user = $this->createUser();
         $this->createAdminAndAuthenticate();
@@ -37,16 +28,6 @@ class UsersControllerTest extends TestCase
 
         $response->assertSee($user->name);
         $response->assertSee($user->email);
-    }
-
-    public function test_user_edit_page_loads() {
-        $user = $this->createUser();
-        $this->CreateAdminAndAuthenticate();
-
-        $response = $this->get(route('users.edit', $user->id));
-
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertViewIs('users.edit');
     }
 
     public function test_user_edit_page_displays_correct_user() {
@@ -103,11 +84,78 @@ class UsersControllerTest extends TestCase
         $this->assertDatabaseHas('role_user', $verify_data);
     }
 
+    // Authorization
+    public function test_normal_users_cant_access_users_page() {
+        $this->CreateUserAndAuthenticate();
+
+        $response = $this->get(route('users'));
+
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    /** @dataProvider protectedRoutesProvider */
+    public function test_validateAdminsCanAccessProtectedRoutes($routeName, $passIdIn, $method, $view) {
+        $this->CreateAdminAndAuthenticate();
+        $user = $this->createUser();
+
+        $useRoute = ($passIdIn) ? route($routeName, $user->id) : route($routeName);
+        $userData = $this->getUserUpdateData();
+
+        switch ($method) {
+            case 'get':
+                $response = $this->get($useRoute);
+                break;
+            case 'put':
+                $response = $this->put($useRoute, $userData);
+                break;
+            default:
+        }
+
+        $status_codes = [Response::HTTP_OK, Response::HTTP_FOUND];
+
+        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), "The status code was not an expected status code.");
+        if ($view) {
+            $response->assertViewIs($view);
+        }
+    }
+
+    /** @dataProvider protectedRoutesProvider */
+    public function test_validate_admins_cannot_access_protected_routes($routeName, $passIdIn, $method, $view) {
+        $this->CreateUserAndAuthenticate();
+        $user = $this->createUser();
+
+        $useRoute = ($passIdIn) ? route($routeName, $user->id) : route($routeName);
+        $userData = $this->getUserUpdateData();
+
+        switch ($method) {
+            case 'get':
+                $response = $this->get($useRoute);
+                break;
+            case 'put':
+                $response = $this->put($useRoute, $userData);
+                break;
+            default:
+        }
+
+        $status_codes = [Response::HTTP_NOT_FOUND, Response::HTTP_UNAUTHORIZED];
+
+        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), "The status code was not an expected status code.");
+    }
+
 
     private function getUserUpdateData() {
         $data['name'] = 'Admiral Akbar';
         $data['email'] = 'Itsatrap@moncalamari.com';
 
         return $data;
+    }
+
+    public static function protectedRoutesProvider() {
+        // Route name, requires user id, method, view
+        return [
+            ['users', false, 'get', 'users.index'],
+            ['users.edit', true, 'get', 'users.edit'],
+            ['users.update', true, 'put', '']
+        ];
     }
 }
