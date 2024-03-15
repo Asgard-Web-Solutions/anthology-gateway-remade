@@ -42,15 +42,15 @@
     </style>
     
 </head>
-<body class="h-full overflow-hidden grid grid-cols-[auto,1fr] main-grid">
+<body class="grid h-full grid-cols-1 overflow-hidden sm:grid-cols-3 md:grid-cols-4">
 
     <!-- Sidebar -->
-    <div class="flex flex-col w-64 min-h-full px-2 text-white bg-gray-800 sidebar py-7">
+    <div class="hidden min-h-full col-span-1 px-2 text-white bg-gray-800 sidebar py-7 sm:grid">
         <livewire:layout.navigation />        
     </div>
 
     <!-- Main Content -->
-    <div class="min-h-full p-8 text-gray-600 bg-gray-100 main-content">
+    <div class="min-h-full col-span-1 p-8 text-gray-600 bg-gray-100 sm:col-span-2 md:grid-cols-3">
         @if (isset($header))
             <h1 class="mb-4 text-xl font-semibold text-gray-800">{{ $header }}</h1>
         @endif
