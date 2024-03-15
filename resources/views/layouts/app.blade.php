@@ -46,11 +46,11 @@
 
     <!-- Sidebar -->
     <div class="hidden min-h-full col-span-1 px-2 text-white bg-gray-800 sidebar py-7 sm:grid">
-        <livewire:layout.navigation />        
+        <livewire:layout.navigation />
     </div>
 
     <!-- Main Content -->
-    <div class="min-h-full col-span-1 p-8 text-gray-600 bg-gray-100 sm:col-span-2 md:grid-cols-3">
+    <div class="min-h-full col-span-1 p-8 text-gray-600 bg-gray-100 sm:col-span-2 md:col-span-3">
         @if (isset($header))
             <h1 class="mb-4 text-xl font-semibold text-gray-800">{{ $header }}</h1>
         @endif
