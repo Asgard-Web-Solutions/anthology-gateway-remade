@@ -3,6 +3,10 @@
         {{ __('Users') }}
     </x-slot>
 
+    <div class="px-4 text-right">
+        <a href="{{ route('dashboard') }}" class='px-2 py-1 text-sm text-white bg-gray-500 rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline'>Back</a>
+    </div>
+
     <div class="container px-4 py-8 mx-auto">
         <div class="my-6 bg-white rounded-lg shadow-md">
             <table class="w-full text-left border-collapse">
@@ -30,6 +34,10 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div class="px-4 text-right">
+        <a href="{{ route('dashboard') }}" class='px-2 py-1 text-sm text-white bg-gray-500 rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline'>Back</a>
     </div>
     
 </x-app-layout>
