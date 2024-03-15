@@ -141,6 +141,22 @@ class UsersControllerTest extends TestCase
 
         $this->assertTrue(in_array($response->getStatusCode(), $status_codes), "The status code was not an expected status code.");
     }
+    
+    public function test_admin_user_manager_shows_on_dashboard_for_admins() {
+        $this->CreateAdminAndAuthenticate();
+
+        $response = $this->get(route('dashboard'));
+
+        $response->assertSee(route('users'));
+    }
+
+    public function test_admin_user_manger_does_not_show_on_dashboard_for_users() {
+        $this->CreateUserAndAuthenticate();
+
+        $response = $this->get(route('dashboard'));
+
+        $response->assertDontSee(route('users'));
+    }
 
 
     private function getUserUpdateData() {

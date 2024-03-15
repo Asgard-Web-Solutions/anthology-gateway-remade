@@ -3,8 +3,9 @@
         {{ __('Dashboard') }}
     </x-slot>
 
-    <h2>Admin</h2>
-    <livewire:dashboardPanels.UsersPanel />
+    @can('viewAny', App\Models\User::class)
+        <livewire:dashboardPanels.UsersPanel />
+    @endcan
 
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
