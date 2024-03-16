@@ -1,8 +1,16 @@
 <x-app-layout>
-    <x-slot name="header">
-        {{ __('Dashboard') }}
-    </x-slot>
+    <x-site.header>{{ __('Dashboard') }}</x-site.header>
 
+    @can('viewAny', App\Models\User::class)
+        <div class="flex">
+            <div class="p-2 mx-2 bg-gray-900 rounded-md">
+                <h2 class="mx-2" style="color: #25e4e1">Admin Panel</h2>
+                <livewire:dashboardPanels.UsersPanel />            
+            </div>
+        </div>
+
+    @endcan
+ 
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">

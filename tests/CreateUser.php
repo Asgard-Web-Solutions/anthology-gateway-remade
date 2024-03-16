@@ -2,15 +2,14 @@
 
 namespace Tests;
 
+use Illuminate\Contracts\Console\Kernel;
 use App\Models\User;
 
-trait CreateUserAndAuthenticate
+trait CreateUser
 {
-    public function CreateUserAndAuthenticate($attributes = []): User
+    public function CreateUser(): User
     {
         $user = User::factory()->create($attributes);
-
-        $this->actingAs($user);
 
         return $user;
     }
