@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 
 class UserPromote extends Command
 {
@@ -41,6 +42,8 @@ class UserPromote extends Command
         }
 
         $user->roles()->attach($adminRole->id);
+        Cache::clear('users:id:' . $user->id . ':isAdmin');
+        Cache::clear('users:id:' . $user->id);
 
         $this->info('User {$user->Name} promoted to Admin.');
     }
