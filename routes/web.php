@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,10 @@ Route::view('profile', 'profile')
 Route::get('/users', [UserController::class, 'index'])->name('users');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
+
+Route::get('/logout', function() {
+    Auth::logout();
+    return redirect()->route('login');
+})->name('logout');
 
 require __DIR__.'/auth.php';

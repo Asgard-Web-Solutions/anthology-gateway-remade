@@ -13,53 +13,33 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-        .main-grid {
-            flex: 1;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            min-height: 0; /* Prevent flexbox items from overflowing */
-        }
-        .main-content {
-            overflow-y: auto; /* Enables vertical scrolling if content overflows */
-        }
-
-        .dropdown-content {
-            position: absolute;
-            right: 0; /* Align the dropdown content to the right of its parent */
-            z-index: 10; /* Ensure it's above other content */
-        }
-
-    </style>
     
 </head>
-<body class="grid h-full grid-cols-1 overflow-hidden sm:grid-cols-3 md:grid-cols-4">
+<body class="min-h-screen bg-black">
 
-    <!-- Sidebar -->
-    <div class="hidden min-h-full col-span-1 px-2 text-white bg-gray-800 sidebar py-7 sm:grid">
-        <livewire:layout.navigation />
+    
+    <div class="flex flex-col min-h-screen sm:grid sm:grid-cols-12">
+        <header class="grid grid-cols-4 p-2 text-white bg-black sm:grid-flow-row sm:auto-rows-max sm:grid-cols-1 min-h-16 max-h-16 sm:col-span-3 sm:min-h-screen lg:col-span-2" >
+            <div class="flex items-center col-span-3 text-left align-midd sm:h-16">
+                <img src="{{ asset('images/AGLogo.jpg') }}" alt="AG Logo" class="object-cover w-12 h-12 rounded-full ">
+                <span class="ml-2 text-lg text-teal-300"> Anthology Gateway</span>
+            </div>
+            <nav class="flex items-center justify-end h-full col-span-1 pr-3 text-right sm:p-3 sm:text-center sm:flex-grow sm:row-span-1">
+                <livewire:mobile-nav-menu />
+
+                <div class="flex-col justify-between hidden w-full sm:flex">
+                    <livewire:main-nav-menu />
+                    <livewire:main-nav-profile />
+                </div>
+            </nav>
+        </header>
+
+        <main class="flex-1 p-4 bg-gray-200 sm:col-span-9 lg:col-span-10">
+           {{ $slot }}
+        </main>
     </div>
 
-    <!-- Main Content -->
-    <div class="min-h-full col-span-1 p-8 text-gray-600 bg-gray-100 sm:col-span-2 md:col-span-3">
-        @if (isset($header))
-            <h1 class="mb-4 text-xl font-semibold text-gray-800">{{ $header }}</h1>
-        @endif
-
-        <!-- [Your Main Content] -->
-        {{ $slot }}
-
-    </div>
-
+    
     @livewireScripts
 </body>
 </html>
