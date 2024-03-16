@@ -20,9 +20,9 @@
     
     <div class="flex flex-col min-h-screen sm:grid sm:grid-cols-12">
         <header class="grid grid-cols-4 p-2 text-white bg-black sm:grid-flow-row sm:auto-rows-max sm:grid-cols-1 min-h-16 max-h-16 sm:col-span-3 sm:min-h-screen lg:col-span-2" >
-            <div class="flex items-center col-span-3 text-left align-midd sm:h-16">
+            <div class="flex items-center col-span-3 text-left sm:h-16">
                 <img src="{{ asset('images/AGLogo.jpg') }}" alt="AG Logo" class="object-cover w-12 h-12 rounded-full ">
-                <span class="ml-2 text-lg text-teal-300"> Anthology Gateway</span>
+                <span class="ml-2 text-lg" style="color: #25e4e1"> Anthology Gateway</span>
             </div>
             <nav class="flex items-center justify-end h-full col-span-1 pr-3 text-right sm:p-3 sm:text-center sm:flex-grow sm:row-span-1">
                 <livewire:mobile-nav-menu />
@@ -35,10 +35,6 @@
         </header>
 
         <main class="flex-1 p-4 bg-gray-200 sm:col-span-9 lg:col-span-10">
-            @if (isset($header))
-                <h1 class="mb-4 text-xl font-semibold text-gray-800">{{ $header }}</h1>
-            @endif
-
             {{ $slot }}
         </main>
     </div>
