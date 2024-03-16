@@ -35,7 +35,11 @@
         </header>
 
         <main class="flex-1 p-4 bg-gray-200 sm:col-span-9 lg:col-span-10">
-           {{ $slot }}
+            @if (isset($header))
+                <h1 class="mb-4 text-xl font-semibold text-gray-800">{{ $header }}</h1>
+            @endif
+
+            {{ $slot }}
         </main>
     </div>
 
