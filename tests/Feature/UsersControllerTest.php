@@ -36,7 +36,7 @@ class UsersControllerTest extends TestCase
 
         $response = $this->get(route('users.edit', $user->id));
 
-        $response->assertSee('Edit User ' . $user->email);
+        $response->assertSee('Editing User ' . $user->email);
     }
 
     public function test_user_update_updates_the_database() {
