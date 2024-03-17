@@ -43,4 +43,8 @@ class SocialRepository implements SocialRepositoryInterface
 
         return $Social;
     }
+
+    public function clearCache() {
+        Cache::forget('socials:all');
+    }
 }

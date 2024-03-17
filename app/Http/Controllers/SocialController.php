@@ -30,11 +30,21 @@ class SocialController extends Controller
         ]);
     }
 
+    public function store(Request $request)
+    {
+        Gate::authorize('create', Social::class);
+
+        Social::create($request->all());
+        $this->socialRepository->clearCache();
+
+        return redirect()->route('socials')->with('Social Media added successfully');
+    }
+
     public function edit($id)
     {
-        Gate::authorize('update', Social::class);
-
         $social = $this->socialRepository->getSocial($id);
+
+        Gate::authorize('update', $social);
 
         return view('socials.edit')->with([
             'social' => $social
@@ -43,7 +53,9 @@ class SocialController extends Controller
 
     public function update(Request $request, $id)
     {
-        Gate::authorize('update', Social::class);
+        $social = $this->socialRepository->getSocial($id);
+
+        Gate::authorize('update', $social);
 
         $update['name'] = $request->name;
         $update['image'] = $request->image;

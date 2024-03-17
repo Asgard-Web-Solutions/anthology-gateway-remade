@@ -15,9 +15,10 @@ class SocialControllerTest extends TestCase
     //** Data Providers */
 
     public static function protectedRoutesProvider() {
-        // Route name, requires user id, method, view
+        // Route name, requires id, method, view
         return [
             ['socials', false, 'get', null],
+            ['socials.edit', true, 'get', 'socials.edit']
         ];
     }
 
@@ -26,9 +27,9 @@ class SocialControllerTest extends TestCase
     /** @dataProvider protectedRoutesProvider */
     public function test_validate_admins_can_access_protected_routes($routeName, $passIdIn, $method, $view) {
         $this->CreateAdminAndAuthenticate();
-        $user = $this->createUser();
+        $social = $this->createSocial();
 
-        $useRoute = ($passIdIn) ? route($routeName, $user->id) : route($routeName);
+        $useRoute = ($passIdIn) ? route($routeName, $social->id) : route($routeName);
         // $userData = $this->getUserUpdateData();
 
         switch ($method) {
@@ -52,9 +53,9 @@ class SocialControllerTest extends TestCase
     /** @dataProvider protectedRoutesProvider */
     public function test_validate_users_cannot_access_protected_routes($routeName, $passIdIn, $method, $view) {
         $this->CreateUserAndAuthenticate();
-        $user = $this->createUser();
+        $social = $this->createSocial();
 
-        $useRoute = ($passIdIn) ? route($routeName, $user->id) : route($routeName);
+        $useRoute = ($passIdIn) ? route($routeName, $social->id) : route($routeName);
 
         switch ($method) {
             case 'get':
@@ -69,6 +70,19 @@ class SocialControllerTest extends TestCase
         $status_codes = [Response::HTTP_NOT_FOUND, Response::HTTP_UNAUTHORIZED];
 
         $this->assertTrue(in_array($response->getStatusCode(), $status_codes), "The status code was not an expected status code.");
+    }
+
+    //** Helper Functions */
+    private function createSocial(): Social {
+        return Social::factory()->create();
+    }
+
+    private function loadSocialData(): Array {
+        $data['name'] = 'Test Social';
+        $data['image'] = 'fa-light fa-plus-square';
+        $data['base_url'] = 'https://x.com';
+
+        return $data;
     }
 
     //** Regular Tests */
@@ -98,6 +112,22 @@ class SocialControllerTest extends TestCase
         Livewire::test('SocialIndex')
             ->assertStatus(Response::HTTP_OK)
             ->assertSee('Manage Social Media Services');
+    }
 
+    public function test_socials_index_has_new_form() {
+        $this->CreateAdminAndAuthenticate();
+
+        $response = $this->get(route('socials'));
+
+        $response->assertSee(route('socials.store'));
+    }
+
+    public function test_socials_store_adds_to_db() {
+        $this->CreateAdminAndAuthenticate();
+        $data = $this->loadSocialData();
+
+        $this->post(route('socials.store'), $data);
+
+        $this->assertDatabaseHas('socials', $data);
     }
 }

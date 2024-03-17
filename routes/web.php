@@ -33,6 +33,7 @@ Route::put('/users/{id}/update', [UserController::class, 'update'])->name('users
 Route::get('/socials', \App\Livewire\SocialIndex::class)->name('socials');
 Route::get('/socials/{id}/edit', [SocialController::class, 'edit'])->name('socials.edit');
 Route::put('/socials/{id}/update', [SocialController::class, 'update'])->name('socials.update');
+Route::post('/socials/add', [SocialController::class, 'store'])->name('socials.store');
 
 Route::get('/logout', function() {
     Auth::logout();

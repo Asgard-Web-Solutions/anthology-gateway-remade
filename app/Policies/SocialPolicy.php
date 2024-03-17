@@ -46,17 +46,17 @@ class SocialPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user): Response
     {
-        return false;
+        return Response::denyAsNotFound();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Social $social): bool
+    public function update(User $user, Social $social): Response
     {
-        return false;
+        return Response::denyAsNotFound();
     }
 
     /**
