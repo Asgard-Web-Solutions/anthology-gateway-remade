@@ -17,6 +17,7 @@ class SocialControllerTest extends TestCase
         return [
             ['socials', false, 'get', null],
             ['socials.edit', true, 'get', 'socials.edit'],
+            ['socials.store', true, 'post', null],
         ];
     }
 
@@ -29,7 +30,7 @@ class SocialControllerTest extends TestCase
         $social = $this->createSocial();
 
         $useRoute = ($passIdIn) ? route($routeName, $social->id) : route($routeName);
-        // $userData = $this->getUserUpdateData();
+        $data = $this->loadSocialData();
 
         switch ($method) {
             case 'get':
@@ -37,6 +38,9 @@ class SocialControllerTest extends TestCase
                 break;
             case 'put':
                 // $response = $this->put($useRoute, $userData);
+                break;
+            case 'post':
+                $response = $this->post($useRoute, $data);
                 break;
             default:
         }
@@ -56,6 +60,7 @@ class SocialControllerTest extends TestCase
         $social = $this->createSocial();
 
         $useRoute = ($passIdIn) ? route($routeName, $social->id) : route($routeName);
+        $data = $this->loadSocialData();
 
         switch ($method) {
             case 'get':
@@ -64,6 +69,9 @@ class SocialControllerTest extends TestCase
             case 'put':
                 // $response = $this->put($useRoute, $userData);
                 break;
+            case 'post':
+                $response = $this->post($useRoute, $data);
+                break;    
             default:
         }
 
