@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,8 +35,9 @@ Route::get('/socials/{id}/edit', [SocialController::class, 'edit'])->name('socia
 Route::put('/socials/{id}/update', [SocialController::class, 'update'])->name('socials.update');
 Route::post('/socials/add', [SocialController::class, 'store'])->name('socials.store');
 
-Route::get('/logout', function() {
+Route::get('/logout', function () {
     Auth::logout();
+
     return redirect()->route('login');
 })->name('logout');
 

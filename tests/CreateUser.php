@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use Illuminate\Contracts\Console\Kernel;
 use App\Models\User;
 
 trait CreateUser

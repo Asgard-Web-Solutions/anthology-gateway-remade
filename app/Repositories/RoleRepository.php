@@ -3,13 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\Role;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 class RoleRepository implements RoleRepositoryInterface
 {
     protected $resetHourly;
+
     protected $resetDaily;
+
     protected $resetWeekly;
 
     public function __construct()
@@ -28,7 +29,7 @@ class RoleRepository implements RoleRepositoryInterface
 
     public function getRole($id)
     {
-        return Cache::remember('role:id:' . $id, $this->resetWeekly, function() use ($id) {
+        return Cache::remember('role:id:'.$id, $this->resetWeekly, function () use ($id) {
             return Role::find($id);
         });
     }

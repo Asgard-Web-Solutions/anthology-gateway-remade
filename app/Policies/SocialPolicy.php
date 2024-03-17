@@ -10,19 +10,20 @@ use Illuminate\Support\Facades\Cache;
 class SocialPolicy
 {
     protected $cacheTime = 60 * 60;
+
     private function isAdmin(User $user): bool
     {
-        return Cache::remember('user:id:' . $user->id . ':isAdmin', $this->cacheTime, function() use ($user) {
-            return ($user->roles()->where('name', 'Admin')->exists());
+        return Cache::remember('user:id:'.$user->id.':isAdmin', $this->cacheTime, function () use ($user) {
+            return $user->roles()->where('name', 'Admin')->exists();
         });
     }
 
-    public function before(User $user, string $ability): bool|null
+    public function before(User $user, string $ability): ?bool
     {
         if ($this->isAdmin($user)) {
             return true;
         }
-    
+
         return null;
     }
 

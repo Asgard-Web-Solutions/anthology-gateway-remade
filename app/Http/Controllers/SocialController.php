@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Social;
+use App\Repositories\SocialRepositoryInterface;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Social;
-use App\Repositories\UserRepositoryInterface;
-use App\Repositories\SocialRepositoryInterface;
 
 class SocialController extends Controller
 {
     protected $userRepository;
+
     protected $socialRepository;
 
     public function __construct()
     {
-        $this->userRepository = app(UserRepositoryInterface::class);  
-        $this->socialRepository = app(SocialRepositoryInterface::class); 
+        $this->userRepository = app(UserRepositoryInterface::class);
+        $this->socialRepository = app(SocialRepositoryInterface::class);
     }
 
-    public function index() 
+    public function index()
     {
         Gate::authorize('viewAny', Social::class);
 
@@ -47,7 +48,7 @@ class SocialController extends Controller
         Gate::authorize('update', $social);
 
         return view('socials.edit')->with([
-            'social' => $social
+            'social' => $social,
         ]);
     }
 

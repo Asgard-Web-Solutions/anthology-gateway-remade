@@ -10,7 +10,7 @@ class Social extends Model
     protected $fillable = [
         'name',
         'image',
-        'base_url'
+        'base_url',
     ];
 
     use HasFactory;

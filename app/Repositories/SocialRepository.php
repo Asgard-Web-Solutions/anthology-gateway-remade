@@ -3,13 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\Social;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 class SocialRepository implements SocialRepositoryInterface
 {
     protected $resetHourly;
+
     protected $resetDaily;
+
     protected $resetWeekly;
 
     public function __construct()
@@ -28,7 +29,7 @@ class SocialRepository implements SocialRepositoryInterface
 
     public function getSocial($id)
     {
-        return Cache::remember('social:id:' . $id, $this->resetWeekly, function() use ($id) {
+        return Cache::remember('social:id:'.$id, $this->resetWeekly, function () use ($id) {
             return Social::find($id);
         });
     }
@@ -37,14 +38,15 @@ class SocialRepository implements SocialRepositoryInterface
     {
         $Social = $this->getSocial($id);
         $Social->update($attributes);
-        
-        Cache::forget('social:id:' . $id);
+
+        Cache::forget('social:id:'.$id);
         Cache::forget('socials:all');
 
         return $Social;
     }
 
-    public function clearCache() {
+    public function clearCache()
+    {
         Cache::forget('socials:all');
     }
 }

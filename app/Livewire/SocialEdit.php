@@ -2,15 +2,15 @@
 
 namespace App\Livewire;
 
-use App\Models\Social;
-use Livewire\Component;
 use App\Repositories\SocialRepositoryInterface;
-use Illuminate\Support\Facades\Gate;
+use Livewire\Component;
 
 class SocialEdit extends Component
 {
     protected $socialRepository;
+
     public $social;
+
     public $id;
 
     public function mount($id)
@@ -27,15 +27,15 @@ class SocialEdit extends Component
         $this->validate([
             'social.name' => 'required',
         ]);
-    
+
         $social = $this->socialRepository->getSocial($this->socialId);
         $social->update([
             'name' => $this->social->name,
         ]);
-    
+
         return redirect()->route('socials');
     }
-    
+
     public function render()
     {
         return view('livewire.social.edit');

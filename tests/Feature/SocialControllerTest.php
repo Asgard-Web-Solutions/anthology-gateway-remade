@@ -2,30 +2,29 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Symfony\Component\HttpFoundation\Response;
-use Tests\TestCase;
 use App\Models\Social;
 use Livewire\Livewire;
+use Symfony\Component\HttpFoundation\Response;
+use Tests\TestCase;
 
 class SocialControllerTest extends TestCase
 {
-
     //** Data Providers */
 
-    public static function protectedRoutesProvider() {
+    public static function protectedRoutesProvider()
+    {
         // Route name, requires id, method, view
         return [
             ['socials', false, 'get', null],
-            ['socials.edit', true, 'get', 'socials.edit']
+            ['socials.edit', true, 'get', 'socials.edit'],
         ];
     }
 
     //** Data Provider Test Classes */
 
     /** @dataProvider protectedRoutesProvider */
-    public function test_validate_admins_can_access_protected_routes($routeName, $passIdIn, $method, $view) {
+    public function test_validate_admins_can_access_protected_routes($routeName, $passIdIn, $method, $view)
+    {
         $this->CreateAdminAndAuthenticate();
         $social = $this->createSocial();
 
@@ -44,14 +43,15 @@ class SocialControllerTest extends TestCase
 
         $status_codes = [Response::HTTP_OK, Response::HTTP_FOUND];
 
-        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), "The status code was not an expected status code.");
+        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), 'The status code was not an expected status code.');
         if ($view) {
             $response->assertViewIs($view);
         }
     }
 
     /** @dataProvider protectedRoutesProvider */
-    public function test_validate_users_cannot_access_protected_routes($routeName, $passIdIn, $method, $view) {
+    public function test_validate_users_cannot_access_protected_routes($routeName, $passIdIn, $method, $view)
+    {
         $this->CreateUserAndAuthenticate();
         $social = $this->createSocial();
 
@@ -69,15 +69,17 @@ class SocialControllerTest extends TestCase
 
         $status_codes = [Response::HTTP_NOT_FOUND, Response::HTTP_UNAUTHORIZED];
 
-        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), "The status code was not an expected status code.");
+        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), 'The status code was not an expected status code.');
     }
 
     //** Helper Functions */
-    private function createSocial(): Social {
+    private function createSocial(): Social
+    {
         return Social::factory()->create();
     }
 
-    private function loadSocialData(): Array {
+    private function loadSocialData(): array
+    {
         $data['name'] = 'Test Social';
         $data['image'] = 'fa-light fa-plus-square';
         $data['base_url'] = 'https://x.com';
@@ -86,7 +88,8 @@ class SocialControllerTest extends TestCase
     }
 
     //** Regular Tests */
-    public function test_social_media_data_shows_up_on_socials_page() {
+    public function test_social_media_data_shows_up_on_socials_page()
+    {
         $this->CreateAdminAndAuthenticate();
 
         $response = $this->get(route('socials'));
@@ -96,7 +99,8 @@ class SocialControllerTest extends TestCase
         $response->assertSee($socials[0]->name);
     }
 
-    public function test_socials_index_shows_edit_link() {
+    public function test_socials_index_shows_edit_link()
+    {
         $this->CreateAdminAndAuthenticate();
 
         $response = $this->get(route('socials'));
@@ -106,7 +110,8 @@ class SocialControllerTest extends TestCase
         $response->assertSee(route('socials.edit', $socials[0]->id));
     }
 
-    public function test_socials_index_is_a_livewire_component() {
+    public function test_socials_index_is_a_livewire_component()
+    {
         $this->CreateAdminAndAuthenticate();
 
         Livewire::test('SocialIndex')
@@ -114,7 +119,8 @@ class SocialControllerTest extends TestCase
             ->assertSee('Manage Social Media Services');
     }
 
-    public function test_socials_index_has_new_form() {
+    public function test_socials_index_has_new_form()
+    {
         $this->CreateAdminAndAuthenticate();
 
         $response = $this->get(route('socials'));
@@ -122,7 +128,8 @@ class SocialControllerTest extends TestCase
         $response->assertSee(route('socials.store'));
     }
 
-    public function test_socials_store_adds_to_db() {
+    public function test_socials_store_adds_to_db()
+    {
         $this->CreateAdminAndAuthenticate();
         $data = $this->loadSocialData();
 

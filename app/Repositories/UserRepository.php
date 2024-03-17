@@ -9,18 +9,19 @@ use Illuminate\Support\Facades\Cache;
 class UserRepository implements UserRepositoryInterface
 {
     private $resetDaily = (60 * 60 * 24);
+
     private $resetHourly = (60 * 60);
 
     public function getAllUsers()
     {
-        return Cache::remember('users:all', $this->resetHourly, function() {
+        return Cache::remember('users:all', $this->resetHourly, function () {
             return User::all();
         });
     }
 
     public function getUser($id)
     {
-        return Cache::remember('users:id:' . $id, $this->resetHourly, function() use ($id) {
+        return Cache::remember('users:id:'.$id, $this->resetHourly, function () use ($id) {
             return User::find($id);
         });
     }
@@ -35,8 +36,8 @@ class UserRepository implements UserRepositoryInterface
         $user = $this->getUser($id);
         $user->update($attributes);
 
-        Cache::forget('users:id:' . $id);
-        Cache::forget('users:id:' . $id . ':isAdmin');
+        Cache::forget('users:id:'.$id);
+        Cache::forget('users:id:'.$id.':isAdmin');
 
         return $user;
     }

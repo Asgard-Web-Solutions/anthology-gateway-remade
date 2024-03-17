@@ -2,10 +2,9 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Repositories\SocialRepositoryInterface;
 use Illuminate\Support\Facades\Gate;
-
+use Livewire\Component;
 
 class SocialIndex extends Component
 {
@@ -23,7 +22,7 @@ class SocialIndex extends Component
         $socials = $this->socialRepository->getAllSocials();
 
         return view('livewire.social.index', [
-            'socials' => $socials
+            'socials' => $socials,
         ]);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
 class MobileNavMenu extends Component
 {
@@ -11,7 +11,7 @@ class MobileNavMenu extends Component
 
     public function toggleNavigation()
     {
-        $this->isOpen = !$this->isOpen;
+        $this->isOpen = ! $this->isOpen;
     }
 
     public function logout()
