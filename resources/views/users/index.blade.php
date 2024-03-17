@@ -33,6 +33,6 @@
     </div>
 
     <div class="px-5 text-right">
-        <a href="{{ route('dashboard') }}" class='px-2 py-1 text-sm text-white bg-gray-500 rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline'>Back</a>
+        <a href="{{ route('settings') }}" class='px-2 py-1 text-sm text-white bg-gray-500 rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline'>Back</a>
     </div>
 @endsection

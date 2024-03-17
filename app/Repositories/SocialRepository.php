@@ -48,5 +48,13 @@ class SocialRepository implements SocialRepositoryInterface
     public function clearCache()
     {
         Cache::forget('socials:all');
+        Cache::forget('socials:countAll');
+    }
+
+    public function countAllSocials()
+    {
+        return Cache::remember('socials:countAll', $this->resetWeekly, function () {
+            return Social::count();
+        });
     }
 }

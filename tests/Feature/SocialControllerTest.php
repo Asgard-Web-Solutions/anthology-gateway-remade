@@ -71,7 +71,7 @@ class SocialControllerTest extends TestCase
                 break;
             case 'post':
                 $response = $this->post($useRoute, $data);
-                break;    
+                break;
             default:
         }
 

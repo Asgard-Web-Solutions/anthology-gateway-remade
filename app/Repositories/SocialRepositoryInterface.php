@@ -11,4 +11,6 @@ interface SocialRepositoryInterface
     public function updateSocial($id, array $attributes);
 
     public function clearCache();
+
+    public function countAllSocials();
 }
