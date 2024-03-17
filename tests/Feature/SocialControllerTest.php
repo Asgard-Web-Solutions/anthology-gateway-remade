@@ -6,18 +6,22 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
+use App\Models\Social;
+use Livewire\Livewire;
 
 class SocialControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
+    //** Data Providers */
+
+    public static function protectedRoutesProvider() {
+        // Route name, requires user id, method, view
+        return [
+            ['socials', false, 'get', null],
+        ];
     }
+
+    //** Data Provider Test Classes */
 
     /** @dataProvider protectedRoutesProvider */
     public function test_validate_admins_can_access_protected_routes($routeName, $passIdIn, $method, $view) {
@@ -67,11 +71,33 @@ class SocialControllerTest extends TestCase
         $this->assertTrue(in_array($response->getStatusCode(), $status_codes), "The status code was not an expected status code.");
     }
 
-    public static function protectedRoutesProvider() {
-        // Route name, requires user id, method, view
-        return [
-            ['socials', false, 'get', 'social.index'],
-        ];
+    //** Regular Tests */
+    public function test_social_media_data_shows_up_on_socials_page() {
+        $this->CreateAdminAndAuthenticate();
+
+        $response = $this->get(route('socials'));
+
+        $socials = Social::all();
+
+        $response->assertSee($socials[0]->name);
     }
 
+    public function test_socials_index_shows_edit_link() {
+        $this->CreateAdminAndAuthenticate();
+
+        $response = $this->get(route('socials'));
+
+        $socials = Social::all();
+
+        $response->assertSee(route('socials.edit', $socials[0]->id));
+    }
+
+    public function test_socials_index_is_a_livewire_component() {
+        $this->CreateAdminAndAuthenticate();
+
+        Livewire::test('SocialIndex')
+            ->assertStatus(Response::HTTP_OK)
+            ->assertSee('Manage Social Media Services');
+
+    }
 }

@@ -12,6 +12,10 @@ class SocialController extends Controller
     {
         Gate::authorize('viewAny', Social::class);
 
-        return view('social.index');
+        $socials = Social::all();
+
+        return view('social.index')->with([
+            'socials' => $socials,
+        ]);
     }
 }

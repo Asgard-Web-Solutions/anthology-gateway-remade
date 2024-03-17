@@ -35,7 +35,7 @@
         </header>
 
         <main class="flex-1 p-4 bg-gray-200 sm:col-span-9 lg:col-span-10">
-            {{ $slot }}
+            @yield('content')
         </main>
     </div>
 
