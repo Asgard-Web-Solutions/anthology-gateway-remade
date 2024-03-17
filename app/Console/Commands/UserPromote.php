@@ -39,6 +39,7 @@ class UserPromote extends Command
 
         if (!$adminRole) {
             $this->error('Admin role not found.');
+            return 1;
         }
 
         $user->roles()->attach($adminRole->id);
