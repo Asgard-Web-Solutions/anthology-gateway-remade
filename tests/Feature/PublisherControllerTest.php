@@ -99,4 +99,18 @@ class PublisherControllerTest extends TestCase
 
         $this->assertDatabaseHas('publishers', $data);
     }
+
+    // Publisher page loads data
+
+    // User that creates the publisher is stored as the creator
+
+    // Publisher section in dashboard is populated
+
+    // User is added to the teams table
+
+    // Team members show up in the publisher page
+
+    // User can edit the publisher info
+
+    // Social media sites can be added to publisher profile
 }

@@ -7,10 +7,10 @@
     <div class="max-w-3xl p-6 mx-auto text-gray-300 bg-gray-900 rounded-md shadow-sm">
         <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">Publisher Details</h2>
 
-        <form action="" method="POST">
+        <form action="{{ route('publisher.store') }}" method="POST">
             @csrf
  
-            <x-form.input-text name='name'>Name</x-form.input-text>
+            <x-form.input-text name='name' required='true'>Name</x-form.input-text>
             <x-form.input-text name='description'>Description</x-form.input-text>
             <x-form.input-text name='logo_url'>Logo URL</x-form.input-text>
         
