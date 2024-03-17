@@ -94,7 +94,7 @@ class UserControllerTest extends TestCase
     }
 
     /** @dataProvider protectedRoutesProvider */
-    public function test_validateAdminsCanAccessProtectedRoutes($routeName, $passIdIn, $method, $view) {
+    public function test_validate_admins_can_access_protected_routes($routeName, $passIdIn, $method, $view) {
         $this->CreateAdminAndAuthenticate();
         $user = $this->createUser();
 
