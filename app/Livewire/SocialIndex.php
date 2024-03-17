@@ -22,7 +22,7 @@ class SocialIndex extends Component
 
         $socials = $this->socialRepository->getAllSocials();
 
-        return view('livewire.social-index', [
+        return view('livewire.social.index', [
             'socials' => $socials
         ]);
     }

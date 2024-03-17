@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')    
+
+@section('content')
     <x-site.header>{{ __('Dashboard') }}</x-site.header>
 
     @can('viewAny', App\Models\User::class)
@@ -20,4 +22,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

@@ -28,7 +28,7 @@ class RoleRepository implements RoleRepositoryInterface
 
     public function getRole($id)
     {
-        return Cache::remember('role:id:' + $id, $this->resetWeekly, function() use ($id) {
+        return Cache::remember('role:id:' . $id, $this->resetWeekly, function() use ($id) {
             return Role::find($id);
         });
     }

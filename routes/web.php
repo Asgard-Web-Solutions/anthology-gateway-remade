@@ -30,9 +30,9 @@ Route::get('/users', [UserController::class, 'index'])->name('users');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
 
-// Route::get('/socials', [SocialController::class, 'index'])->name('socials');
 Route::get('/socials', \App\Livewire\SocialIndex::class)->name('socials');
 Route::get('/socials/{id}/edit', [SocialController::class, 'edit'])->name('socials.edit');
+Route::put('/socials/{id}/update', [SocialController::class, 'update'])->name('socials.update');
 
 Route::get('/logout', function() {
     Auth::logout();

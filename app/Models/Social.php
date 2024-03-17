@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Social extends Model
 {
+    protected $fillable = [
+        'name',
+        'image',
+        'base_url'
+    ];
+
     use HasFactory;
 }

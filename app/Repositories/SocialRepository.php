@@ -21,14 +21,14 @@ class SocialRepository implements SocialRepositoryInterface
 
     public function getAllSocials()
     {
-        return Cache::remember('socials:all', $this->resetDaily, function () {
+        return Cache::remember('socials:all', $this->resetWeekly, function () {
             return Social::all();
         });
     }
 
     public function getSocial($id)
     {
-        return Cache::remember('social:id:' + $id, $this->resetWeekly, function() use ($id) {
+        return Cache::remember('social:id:' . $id, $this->resetWeekly, function() use ($id) {
             return Social::find($id);
         });
     }
@@ -38,7 +38,7 @@ class SocialRepository implements SocialRepositoryInterface
         $Social = $this->getSocial($id);
         $Social->update($attributes);
         
-        Cache::forget('social:id:' + $id);
+        Cache::forget('social:id:' . $id);
         Cache::forget('socials:all');
 
         return $Social;
