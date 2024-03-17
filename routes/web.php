@@ -39,6 +39,8 @@ Route::post('/socials/add', [SocialController::class, 'store'])->name('socials.s
 
 Route::get('/publisher/new', [PublisherController::class, 'info'])->name('publisher.create');
 Route::get('/publisher/new/create', [PublisherController::class, 'create'])->name('publisher.create-detail');
+Route::post('/publisher/save', [PublisherController::class, 'store'])->name('publisher.store');
+Route::get('/publisher/{id}', [PublisherController::class, 'show'])->name('publisher');
 
 Route::get('/settings', [HomeController::class, 'index'])->name('settings');
 

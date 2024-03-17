@@ -76,6 +76,9 @@ class PublisherControllerTest extends TestCase
         $this->assertTrue(in_array($response->getStatusCode(), $status_codes), 'The status code was not an expected status code.');
     }
 
+
+    //** Normal test methods */
+
     public function test_create_publisher_link_shows_on_dashboard() {
         $this->CreateUserAndAuthenticate();
 
@@ -85,4 +88,15 @@ class PublisherControllerTest extends TestCase
         $response->assertSee(route('publisher.create'));
     }
 
+    public function test_create_publisher_form_saves_data() {
+        $this->CreateUserAndAuthenticate();
+
+        $data['name'] = 'Test Pubby';
+        $data['description'] = 'We have an awesome publishing company that nobody has ever heard of.';
+        $data['logo_url'] = 'https://example.com/somepic.jpg';
+
+        $response = $this->post(route('publisher.store'), $data);
+
+        $this->assertDatabaseHas('publishers', $data);
+    }
 }

@@ -38,7 +38,18 @@ class PublisherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Gate::authorize('create', Publisher::class);
+
+        $publisher = new Publisher;
+
+        $publisher->name = $request->name;
+        $publisher->description = $request->description;
+        $publisher->logo_url = $request->logo_url;
+        $publisher->creator = auth()->user()->id;
+
+        $publisher->save();
+
+        return redirect()->route('publisher', $publisher->id);
     }
 
     /**

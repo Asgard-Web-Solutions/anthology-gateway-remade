@@ -12,7 +12,7 @@
  
             <x-form.input-text name='name'>Name</x-form.input-text>
             <x-form.input-text name='description'>Description</x-form.input-text>
-            <x-form.input-text name='logo-url'>Logo URL</x-form.input-text>
+            <x-form.input-text name='logo_url'>Logo URL</x-form.input-text>
         
             <div class="items-end block w-full text-right">
                 <x-buttons.dim href="{{ route('dashboard') }}">Cancel</x-buttons.dim>
