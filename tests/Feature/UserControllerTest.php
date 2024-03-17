@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Tests\TestCase;
 
-class UsersControllerTest extends TestCase
+class UserControllerTest extends TestCase
 {
     /**
      * A basic feature test example.

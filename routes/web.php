@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SocialController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -28,6 +29,8 @@ Route::view('profile', 'profile')
 Route::get('/users', [UserController::class, 'index'])->name('users');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
+
+Route::get('/socials', [SocialController::class, 'index'])->name('socials');
 
 Route::get('/logout', function() {
     Auth::logout();
