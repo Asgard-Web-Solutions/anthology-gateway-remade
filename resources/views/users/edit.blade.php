@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app');
+
+@section('content')
     <x-site.header>{{ __('Editing User') }} {{ $user->email }}</x-site.header>
 
     <div class="container px-4 py-8 mx-auto">
@@ -45,5 +47,4 @@
             </form>
         </div>
     </div>
-        
-</x-app-layout>
+@endsection

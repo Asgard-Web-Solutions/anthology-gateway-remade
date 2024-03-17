@@ -5,20 +5,19 @@ namespace Tests;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use SebastianBergmann\Type\VoidType;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
-    use CreateUserAndAuthenticate;
     use CreateAdminAndAuthenticate;
-    use RefreshDatabase;
+    use CreatesApplication;
     use CreateUser;
+    use CreateUserAndAuthenticate;
+    use RefreshDatabase;
 
-    public function setUp(): Void
+    public function setUp(): void
     {
         parent::setUp();
-        
+
         $this->artisan('db:seed');
     }
 

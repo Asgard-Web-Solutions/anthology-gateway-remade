@@ -35,11 +35,20 @@
         </header>
 
         <main class="flex-1 p-4 bg-gray-200 sm:col-span-9 lg:col-span-10">
-            {{ $slot }}
+            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                @if(session()->has($msg))
+                    <div class="alert alert-{{ $msg }}">
+                        {{ session($msg) }}
+                    </div>
+                @endif
+            @endforeach        
+
+            @yield('content')
         </main>
     </div>
 
     
     @livewireScripts
+    {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
 </body>
 </html>

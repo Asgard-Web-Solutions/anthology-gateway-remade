@@ -2,13 +2,10 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
-
 use Tests\TestCase;
 
-class UsersControllerTest extends TestCase
+class UserControllerTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -20,7 +17,8 @@ class UsersControllerTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function test_users_are_displayed_on_users_page() {
+    public function test_users_are_displayed_on_users_page()
+    {
         $user = $this->createUser();
         $this->createAdminAndAuthenticate();
 
@@ -30,16 +28,18 @@ class UsersControllerTest extends TestCase
         $response->assertSee($user->email);
     }
 
-    public function test_user_edit_page_displays_correct_user() {
+    public function test_user_edit_page_displays_correct_user()
+    {
         $this->CreateAdminAndAuthenticate();
         $user = $this->createUser();
 
         $response = $this->get(route('users.edit', $user->id));
 
-        $response->assertSee('Editing User ' . $user->email);
+        $response->assertSee('Editing User '.$user->email);
     }
 
-    public function test_user_update_updates_the_database() {
+    public function test_user_update_updates_the_database()
+    {
         $this->CreateAdminAndAuthenticate();
         $user = $this->createUser();
         $data = $this->getUserUpdateData();
@@ -49,7 +49,8 @@ class UsersControllerTest extends TestCase
         $this->assertDatabaseHas('users', $data);
     }
 
-    public function test_user_update_redirects_to_users() {
+    public function test_user_update_redirects_to_users()
+    {
         $this->CreateAdminAndAuthenticate();
         $user = $this->createUser();
         $data = $this->getUserUpdateData();
@@ -60,7 +61,8 @@ class UsersControllerTest extends TestCase
     }
 
     /** ROLES */
-    public function test_roles_show_on_user_edit_page() {
+    public function test_roles_show_on_user_edit_page()
+    {
         $this->CreateAdminAndAuthenticate();
         $user = $this->createUser();
 
@@ -71,11 +73,12 @@ class UsersControllerTest extends TestCase
         $response->assertSee('Help Desk');
     }
 
-    public function test_roles_save_on_user_update() {
+    public function test_roles_save_on_user_update()
+    {
         $this->CreateAdminAndAuthenticate();
         $user = $this->createUser();
         $data = $this->getUserUpdateData();
-        $data['roles'] = ["1"];
+        $data['roles'] = ['1'];
 
         $response = $this->put(route('users.update', $user->id), $data);
 
@@ -85,7 +88,8 @@ class UsersControllerTest extends TestCase
     }
 
     // Authorization
-    public function test_normal_users_cant_access_users_page() {
+    public function test_normal_users_cant_access_users_page()
+    {
         $this->CreateUserAndAuthenticate();
 
         $response = $this->get(route('users'));
@@ -94,7 +98,8 @@ class UsersControllerTest extends TestCase
     }
 
     /** @dataProvider protectedRoutesProvider */
-    public function test_validateAdminsCanAccessProtectedRoutes($routeName, $passIdIn, $method, $view) {
+    public function test_validate_admins_can_access_protected_routes($routeName, $passIdIn, $method, $view)
+    {
         $this->CreateAdminAndAuthenticate();
         $user = $this->createUser();
 
@@ -113,14 +118,15 @@ class UsersControllerTest extends TestCase
 
         $status_codes = [Response::HTTP_OK, Response::HTTP_FOUND];
 
-        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), "The status code was not an expected status code.");
+        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), 'The status code was not an expected status code.');
         if ($view) {
             $response->assertViewIs($view);
         }
     }
 
     /** @dataProvider protectedRoutesProvider */
-    public function test_validate_admins_cannot_access_protected_routes($routeName, $passIdIn, $method, $view) {
+    public function test_validate_admins_cannot_access_protected_routes($routeName, $passIdIn, $method, $view)
+    {
         $this->CreateUserAndAuthenticate();
         $user = $this->createUser();
 
@@ -139,39 +145,42 @@ class UsersControllerTest extends TestCase
 
         $status_codes = [Response::HTTP_NOT_FOUND, Response::HTTP_UNAUTHORIZED];
 
-        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), "The status code was not an expected status code.");
+        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), 'The status code was not an expected status code.');
     }
-    
-    public function test_admin_user_manager_shows_on_dashboard_for_admins() {
+
+    public function test_admin_user_manager_shows_on_settings_for_admins()
+    {
         $this->CreateAdminAndAuthenticate();
 
-        $response = $this->get(route('dashboard'));
+        $response = $this->get(route('settings'));
 
         $response->assertSee(route('users'));
     }
 
-    public function test_admin_user_manger_does_not_show_on_dashboard_for_users() {
+    public function test_admin_user_manger_does_not_show_on_settings_for_users()
+    {
         $this->CreateUserAndAuthenticate();
 
-        $response = $this->get(route('dashboard'));
+        $response = $this->get(route('settings'));
 
         $response->assertDontSee(route('users'));
     }
 
-
-    private function getUserUpdateData() {
+    private function getUserUpdateData()
+    {
         $data['name'] = 'Admiral Akbar';
         $data['email'] = 'Itsatrap@moncalamari.com';
 
         return $data;
     }
 
-    public static function protectedRoutesProvider() {
+    public static function protectedRoutesProvider()
+    {
         // Route name, requires user id, method, view
         return [
             ['users', false, 'get', 'users.index'],
             ['users.edit', true, 'get', 'users.edit'],
-            ['users.update', true, 'put', '']
+            ['users.update', true, 'put', ''],
         ];
     }
 }

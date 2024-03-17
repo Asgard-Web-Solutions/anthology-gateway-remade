@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <x-site.header>{{ __('Manage Users') }}</x-site.header>
 
     <div class="px-5 mx-auto">
@@ -31,7 +33,6 @@
     </div>
 
     <div class="px-5 text-right">
-        <a href="{{ route('dashboard') }}" class='px-2 py-1 text-sm text-white bg-gray-500 rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline'>Back</a>
+        <a href="{{ route('settings') }}" class='px-2 py-1 text-sm text-white bg-gray-500 rounded hover:bg-gray-700 focus:outline-none focus:shadow-outline'>Back</a>
     </div>
-    
-</x-app-layout>
+@endsection

@@ -2,13 +2,15 @@
 
 namespace App\Livewire\DashboardPanels;
 
-use Livewire\Component;
 use App\Repositories\UserRepositoryInterface;
+use Livewire\Component;
 
 class UsersPanel extends Component
 {
     public $totalUsers;
+
     public $newUsers;
+
     protected $userRepository;
 
     public function mount()

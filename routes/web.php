@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +31,16 @@ Route::get('/users', [UserController::class, 'index'])->name('users');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
 
-Route::get('/logout', function() {
+Route::get('/socials', \App\Livewire\SocialIndex::class)->name('socials');
+Route::get('/socials/{id}/edit', [SocialController::class, 'edit'])->name('socials.edit');
+Route::put('/socials/{id}/update', [SocialController::class, 'update'])->name('socials.update');
+Route::post('/socials/add', [SocialController::class, 'store'])->name('socials.store');
+
+Route::get('/settings', [HomeController::class, 'index'])->name('settings');
+
+Route::get('/logout', function () {
     Auth::logout();
+
     return redirect()->route('login');
 })->name('logout');
 
