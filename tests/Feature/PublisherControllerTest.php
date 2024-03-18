@@ -154,4 +154,6 @@ class PublisherControllerTest extends TestCase
     // User can edit the publisher info
 
     // Social media sites can be added to publisher profile
+
+    // Publisher link shows in side menu if user is part of a publisher
 }
