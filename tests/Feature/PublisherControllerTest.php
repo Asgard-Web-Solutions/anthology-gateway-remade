@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
+use App\Models\Publisher;
 
 class PublisherControllerTest extends TestCase
 {
@@ -19,6 +20,7 @@ class PublisherControllerTest extends TestCase
             ['dashboard', false, 'get', 'dashboard'],
             ['publisher.create', false, 'get', 'publisher.create-info'],
             ['publisher.create-detail', false, 'get', 'publisher.create'],
+            // ['publisher', true, 'get', 'publisher.view'],
         ];
     }
 
@@ -27,9 +29,9 @@ class PublisherControllerTest extends TestCase
     /** @dataProvider userAccessibleRoutesProvider */
     public function test_validate_users_can_access_accessible_routes($routeName, $passIdIn, $method, $view)
     {
-        $this->CreateUserAndAuthenticate();
-
-        $useRoute = route($routeName);
+        $user = $this->CreateUserAndAuthenticate();
+        $publisher = $this->createPublisher($user);
+        $useRoute = ($passIdIn) ? route($routeName, $publisher->id) : route($routeName);
 
         switch ($method) {
             case 'get':
@@ -55,7 +57,9 @@ class PublisherControllerTest extends TestCase
     /** @dataProvider userAccessibleRoutesProvider */
     public function test_guest_users_cannot_access_user_accessible_routes($routeName, $passIdIn, $method, $view)
     {
-        $useRoute = route($routeName);
+        $user = $this->createUser();
+        $publisher = $this->createPublisher($user);
+        $useRoute = ($passIdIn) ? route($routeName, $publisher->id) : route($routeName);
 
         switch ($method) {
             case 'get':
@@ -76,6 +80,16 @@ class PublisherControllerTest extends TestCase
         $this->assertTrue(in_array($response->getStatusCode(), $status_codes), 'The status code was not an expected status code.');
     }
 
+    //** Helper functions */
+    public function createPublisher($user = null) {
+        if ($user) {
+            $publisher = Publisher::factory()->creator($user->id)->create();
+        } else {
+            $publisher = Publisher::factory()->create();
+        }
+
+        return $publisher;
+    }
 
     //** Normal test methods */
 
@@ -101,6 +115,33 @@ class PublisherControllerTest extends TestCase
     }
 
     // Publisher page loads data
+    public function test_publisher_view_page_loads_data() {
+        $user = $this->CreateUserAndAuthenticate();
+        $publisher = $this->createPublisher($user);
+
+        $response = $this->get(route('publisher', $publisher->id));
+
+        $response->assertSee($publisher->name);
+    }
+
+    public function test_publisher_view_page_shows_config_button() {
+        $user = $this->CreateUserAndAuthenticate();
+        $publisher = $this->createPublisher($user);
+
+        $response = $this->get(route('publisher', $publisher->id));
+
+        $response->assertSee(route('publisher.edit', $publisher->id));
+    }
+
+    public function test_publisher_view_does_not_show_for_other_users() {
+        $this->CreateUserAndAuthenticate();
+        $user = $this->createUser();
+        $publisher = $this->createPublisher($user);
+
+        $response = $this->get(route('publisher', $publisher->id));
+
+        $response->assertDontSee(route('publisher.edit', $publisher->id));
+    }
 
     // User that creates the publisher is stored as the creator
 

@@ -34,7 +34,7 @@
             </nav>
         </header>
 
-        <main class="flex-1 p-4 bg-gray-700 sm:col-span-9 lg:col-span-10">
+        <main class="flex-1 p-4 bg-gray-200 sm:col-span-9 lg:col-span-10">
             @foreach (['danger', 'warning', 'success', 'info'] as $msg)
                 @if(session()->has($msg))
                     <div class="alert alert-{{ $msg }}">

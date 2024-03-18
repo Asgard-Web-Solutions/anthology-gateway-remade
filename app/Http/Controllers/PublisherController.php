@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Repositories\PublisherRepositoryInterface;
 
 class PublisherController extends Controller
 {
+    protected $PublisherRepository;
+
+    public function __construct()
+    {
+        $this->PublisherRepository = app(PublisherRepositoryInterface::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -57,7 +65,12 @@ class PublisherController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $publisher = $this->PublisherRepository->getPublisher($id);
+        Gate::authorize('view', $publisher);
+
+        return view('publisher.view', [
+            'publisher' => $publisher,
+        ]);
     }
 
     /**

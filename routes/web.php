@@ -41,6 +41,7 @@ Route::get('/publisher/new', [PublisherController::class, 'info'])->name('publis
 Route::get('/publisher/new/create', [PublisherController::class, 'create'])->name('publisher.create-detail');
 Route::post('/publisher/save', [PublisherController::class, 'store'])->name('publisher.store');
 Route::get('/publisher/{id}', [PublisherController::class, 'show'])->name('publisher');
+Route::get('/publisher/{id}/edit', [PublisherController::class, 'edit'])->name('publisher.edit');
 
 Route::get('/settings', [HomeController::class, 'index'])->name('settings');
 

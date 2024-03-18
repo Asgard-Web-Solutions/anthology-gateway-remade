@@ -41,7 +41,7 @@ class PublisherPolicy
      */
     public function view(User $user, Publisher $publisher): bool
     {
-        return $user !== null;
+        return true;
     }
 
     /**
@@ -57,7 +57,7 @@ class PublisherPolicy
      */
     public function update(User $user, Publisher $publisher): bool
     {
-        //
+        return ($publisher->creator == $user->id);
     }
 
     /**
