@@ -15,7 +15,7 @@ class UserRepository implements UserRepositoryInterface
     public function getAllUsers()
     {
         return Cache::remember('users:all', $this->resetHourly, function () {
-            return User::all();
+            return User::with('roles')->get();
         });
     }
 
