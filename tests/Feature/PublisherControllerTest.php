@@ -22,7 +22,7 @@ class PublisherControllerTest extends TestCase
             ['publisher.create', false, 'get', 'publisher.create-info'],
             ['publisher.create-detail', false, 'get', 'publisher.create'],
             ['publisher.edit', true, 'get', 'publisher.edit'],
-            // ['publisher', true, 'get', 'publisher.view'],
+            ['publisher.update', true, 'post', null],
         ];
     }
 
@@ -34,6 +34,7 @@ class PublisherControllerTest extends TestCase
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
         $useRoute = ($passIdIn) ? route($routeName, $publisher->id) : route($routeName);
+        $data = $this->loadPublisherFormData();
 
         switch ($method) {
             case 'get':
@@ -43,12 +44,16 @@ class PublisherControllerTest extends TestCase
                 // $response = $this->put($useRoute, $userData);
                 break;
             case 'post':
-                // $response = $this->post($useRoute, $data);
+                $response = $this->post($useRoute, $data);
                 break;
             default:
         }
 
-        $status_codes = [Response::HTTP_OK];
+        if ($method == 'post') {
+            $status_codes = [Response::HTTP_FOUND];
+        } else {
+            $status_codes = [Response::HTTP_OK];
+        }
 
         $this->assertTrue(in_array($response->getStatusCode(), $status_codes), 'The status code was not an expected status code.');
         if ($view) {
@@ -62,6 +67,7 @@ class PublisherControllerTest extends TestCase
         $user = $this->createUser();
         $publisher = $this->createPublisher($user);
         $useRoute = ($passIdIn) ? route($routeName, $publisher->id) : route($routeName);
+        $data = $this->loadPublisherFormData();
 
         switch ($method) {
             case 'get':
@@ -71,7 +77,7 @@ class PublisherControllerTest extends TestCase
                 // $response = $this->put($useRoute, $userData);
                 break;
             case 'post':
-                // $response = $this->post($useRoute, $data);
+                $response = $this->post($useRoute, $data);
                 break;
             default:
         }
@@ -209,8 +215,6 @@ class PublisherControllerTest extends TestCase
 
         $this->assertDatabaseHas('publishers', $data);
     }
-
-    // public function test_publisher_edit_page_loads()
 
     // Social media sites can be added to publisher profile
 
