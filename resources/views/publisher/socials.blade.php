@@ -6,16 +6,20 @@
 <div class="block px-4 py-8 mx-auto">
     <div class="max-w-3xl p-6 mx-auto my-3 text-gray-300 bg-gray-900 rounded-md shadow-sm">
         <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">{{ __('Social Media Settings') }}</h2>
+        <div class="p-3 text-gray-800 bg-gray-300 rounded-lg">
+            <table class="w-full text-left border-collapse">
+                @foreach ($publisher->socials as $social)
+                @php
+                    $modifiedUrl = str_replace('{id}', $social->pivot->url, $social->base_url);
+                @endphp
+                <tr>
+                    <td><x-site.social-icon>{{ $social->image }}</x-site.social-icon></td>
+                    <td><a href="{{ $modifiedUrl }}">{{ $modifiedUrl }}</a></td>
+                </tr>
+                @endforeach
+            </table>
+        </div>
 
-        <form action="" method="POST">
-            @csrf
- 
-        
-            <div class="items-end block w-full text-right">
-                <x-buttons.dim href="{{ route('publisher.view', $publisher->id) }}">Cancel</x-buttons.dim>
-                <x-buttons.primary type='submit'>Save Publisher Profile</x-buttons.primary>
-            </div>
-        </form>
     </div>
 
     <br />
@@ -23,17 +27,17 @@
     <div class="max-w-3xl p-6 mx-auto my-3 text-gray-300 bg-gray-900 rounded-md shadow-sm">
         <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">{{ __('Add Social Media') }}</h2>
 
-        <table class="w-full text-left border-collapse">
-            <!-- Table Header -->
-            <thead class="text-white bg-gray-900 rounded-lg">
-                <tr>
-                    <th class="px-6 py-4 text-sm font-bold uppercase border-b rounded-tl bg-grey-lightest text-grey-dark border-grey-light"><label id='name'>Platform</label></th>
-                    <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light"><label id='image'>URL</label></th>
-                    <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light"><label id='image'>ID</label></th>
-                </tr>
-            </thead>
-            <!-- Table Body -->
-            <form action="" method="POST">
+        <form action="{{ route('publisher.social_add', $publisher->id) }}" method="POST">
+            <table class="w-full text-left border-collapse">
+                <!-- Table Header -->
+                <thead class="text-white bg-gray-900 rounded-lg">
+                    <tr>
+                        <th class="px-6 py-4 text-sm font-bold uppercase border-b rounded-tl bg-grey-lightest text-grey-dark border-grey-light"><label id='name'>Platform</label></th>
+                        <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light"><label id='image'>URL</label></th>
+                        <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light"><label id='image'>ID</label></th>
+                    </tr>
+                </thead>
+                <!-- Table Body -->
                 @csrf
                 <tbody class="text-gray-700">
                     <tr>
@@ -49,13 +53,14 @@
                         <td><input type="text" id="url" name="url" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-32 m-2 p-2.5"></td>
                     </tr>
                 </tbody>
-            </form>
-        </table>
-        <br />
+            </table>
+            <br />
 
-        <div class="w-full my-3 text-right">
-            <x-buttons.primary type="submit" icon='fa-light fa-square-plus'>Add Social</x-buttons.primary_small>
-        </div>
+            <div class="w-full my-3 text-right">
+                <x-buttons.primary type="submit" icon='fa-light fa-square-plus'>Add Social</x-buttons.primary_small>
+            </div>
+    
+        </form>
     </div>
 </div>
 

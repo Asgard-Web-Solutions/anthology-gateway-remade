@@ -63,7 +63,7 @@ class PublisherController extends Controller
         // ADd the user to the teams table
         $publisher->users()->attach(auth()->user()->id, ['role' => 'Owner']);
 
-        return redirect()->route('publisher', $publisher->id);
+        return redirect()->route('publisher.view', $publisher->id);
     }
 
     /**
@@ -123,7 +123,9 @@ class PublisherController extends Controller
 
         $publisher->socials()->attach($request->platform, ['url' => $request->url]);
 
-        return redirect()->route('publisher.view', $publisher->id);
+        $this->PublisherRepository->clearCache($publisher->id);
+
+        return redirect()->route('publisher.socials', $publisher->id);
     }
 
     /**

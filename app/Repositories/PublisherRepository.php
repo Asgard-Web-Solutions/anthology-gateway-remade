@@ -30,7 +30,7 @@ class PublisherRepository implements PublisherRepositoryInterface
     public function getPublisher($id)
     {
         return Cache::remember('publisher:id:'.$id, $this->resetWeekly, function () use ($id) {
-            return Publisher::find($id)->with('users')->first();
+            return Publisher::find($id)->with(['users', 'socials'])->first();
         });
     }
 
@@ -45,10 +45,14 @@ class PublisherRepository implements PublisherRepositoryInterface
         return $Publisher;
     }
 
-    public function clearCache()
+    public function clearCache($id = 0)
     {
-        Cache::forget('publishers:all');
-        Cache::forget('publishers:countAll');
+        if ($id) {
+            Cache::forget('publisher:id:' . $id);
+        } else {
+            Cache::forget('publishers:all');
+            Cache::forget('publishers:countAll');
+        }
     }
 
     public function countAllPublishers()

@@ -235,7 +235,7 @@ class PublisherControllerTest extends TestCase
         $data['platform'] = 1;
         $data['url'] = 'testing';
 
-        $response = $this->post(route('publisher.social-add', $publisher->id), $data);
+        $response = $this->post(route('publisher.social_add', $publisher->id), $data);
 
         $dbData['publisher_id'] = $publisher->id;
         $dbData['social_id'] = 1;
@@ -244,8 +244,25 @@ class PublisherControllerTest extends TestCase
     }
     
     // Social media links show on the manage page
+    public function test_social_links_show_in_manager() {
+        $user = $this->CreateUserAndAuthenticate();
+        $publisher = $this->createPublisher($user);
+        $useId = 1;
+        $useUrl = 'http://x.com/mysite';
+        $publisher->socials()->attach($useId, ['url' => $useUrl]);
+
+        $response = $this->get(route('publisher.socials', $publisher->id));
+
+        $response->assertSee($useUrl);
+    }
 
     // User can delete social media links
+
+    // User can edit social media links
+
+    // Publisher managers can see socials manage link in publisher view
+
+    // Normal users cannot see socials manage link in publishers view
 
     // Social media links show on the publisher view page
 
