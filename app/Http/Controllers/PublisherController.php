@@ -57,6 +57,9 @@ class PublisherController extends Controller
 
         $publisher->save();
 
+        // ADd the user to the teams table
+        $publisher->users()->attach(auth()->user()->id, ['role' => 'Owner']);
+
         return redirect()->route('publisher', $publisher->id);
     }
 

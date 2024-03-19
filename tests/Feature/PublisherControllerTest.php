@@ -84,11 +84,20 @@ class PublisherControllerTest extends TestCase
     public function createPublisher($user = null) {
         if ($user) {
             $publisher = Publisher::factory()->creator($user->id)->create();
+            $user->publishers()->attach($user->id, ['role' => 'Owner']);
         } else {
             $publisher = Publisher::factory()->create();
         }
 
         return $publisher;
+    }
+
+    public function loadPublisherFormData() {
+        $data['name'] = 'Test Pubby';
+        $data['description'] = 'We have an awesome publishing company that nobody has ever heard of.';
+        $data['logo_url'] = 'https://example.com/somepic.jpg';
+
+        return $data;
     }
 
     //** Normal test methods */
@@ -104,10 +113,7 @@ class PublisherControllerTest extends TestCase
 
     public function test_create_publisher_form_saves_data() {
         $this->CreateUserAndAuthenticate();
-
-        $data['name'] = 'Test Pubby';
-        $data['description'] = 'We have an awesome publishing company that nobody has ever heard of.';
-        $data['logo_url'] = 'https://example.com/somepic.jpg';
+        $data = $this->loadPublisherFormData();
 
         $response = $this->post(route('publisher.store'), $data);
 
@@ -119,7 +125,7 @@ class PublisherControllerTest extends TestCase
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
 
-        $response = $this->get(route('publisher', $publisher->id));
+        $response = $this->get(route('publisher.view', $publisher->id));
 
         $response->assertSee($publisher->name);
     }
@@ -128,7 +134,7 @@ class PublisherControllerTest extends TestCase
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
 
-        $response = $this->get(route('publisher', $publisher->id));
+        $response = $this->get(route('publisher.view', $publisher->id));
 
         $response->assertSee(route('publisher.edit', $publisher->id));
     }
@@ -138,16 +144,46 @@ class PublisherControllerTest extends TestCase
         $user = $this->createUser();
         $publisher = $this->createPublisher($user);
 
-        $response = $this->get(route('publisher', $publisher->id));
+        $response = $this->get(route('publisher.view', $publisher->id));
 
         $response->assertDontSee(route('publisher.edit', $publisher->id));
     }
 
     // User that creates the publisher is stored as the creator
+    public function test_create_publisher_form_adds_user_as_creator_data() {
+        $user = $this->CreateUserAndAuthenticate();
+        $data = $this->loadPublisherFormData();
+
+        $response = $this->post(route('publisher.store'), $data);
+
+        $data['creator'] = $user->id;
+        $this->assertDatabaseHas('publishers', $data);
+    }
 
     // Publisher section in dashboard is populated
+    public function test_publisher_info_shows_on_dashboard() {
+        $user = $this->CreateUserAndAuthenticate();
+        $publisher = $this->createPublisher($user);
+
+        $response = $this->get(route('dashboard'));
+
+        $response->assertSee($publisher->name);
+    }
 
     // User is added to the teams table
+    public function test_user_is_added_to_teams_table() {
+        $user = $this->CreateUserAndAuthenticate();
+        $data = $this->loadPublisherFormData();
+
+        $response = $this->post(route('publisher.store'), $data);
+
+        $publisher = Publisher::where('creator', '=', $user->id)->first();
+        $teamData['user_id'] = $user->id;
+        $teamData['publisher_id'] = $publisher->id;
+        $teamData['role'] = 'Owner';
+
+        $this->assertDatabaseHas('publisher_user', $teamData);
+    }
 
     // Team members show up in the publisher page
 

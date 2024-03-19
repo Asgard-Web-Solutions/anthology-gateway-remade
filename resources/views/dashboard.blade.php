@@ -8,14 +8,27 @@
             <h2 class="mx-2" style="color: #25e4e1">Business Profiles</h2>
 
             <div class="flex w-full">
-                <a href="{{ route('publisher.create') }}">
-                    <div class="w-48 p-2 m-2 text-black bg-gray-100 rounded-md hover:bg-gray-200">
-                        <h2 class="font-bold text-red-900"><i class="{{ config('ag.icons.publisher') }}"></i> Publisher Settings</h2>
-                        <p class="m-2 text-sm font-light">
-                            No Current Publisher
-                        </p>
-                    </div>
-                </a>
+                @if ($user->publishers->count())
+                    @foreach ($user->publishers as $publisher)
+                        <a href="{{ route('publisher.view', $publisher->id) }}">
+                            <div class="w-48 p-2 m-2 text-black bg-gray-100 rounded-md hover:bg-gray-200">
+                                <h2 class="font-bold text-red-900"><i class="{{ config('ag.icons.publisher') }}"></i> Publisher Settings</h2>
+                                <p class="m-2 text-sm font-light">
+                                   {{ $publisher->name }}
+                                </p>
+                            </div>
+                        </a>
+                    @endforeach
+                @else
+                    <a href="{{ route('publisher.create') }}">
+                        <div class="w-48 p-2 m-2 text-black bg-gray-100 rounded-md hover:bg-gray-200">
+                            <h2 class="font-bold text-red-900"><i class="{{ config('ag.icons.publisher') }}"></i> Publisher Settings</h2>
+                            <p class="m-2 text-sm font-light">
+                                No Current Publisher
+                            </p>
+                        </div>
+                    </a>
+                @endif
 
                 {{-- <div class="w-48 p-2 m-2 text-black bg-gray-200 rounded-md hover:bg-gray-300">
                     <h2 class="font-bold text-red-900"><i class="{{ config('ag.icons.publisher') }}"></i> Publisher Settings</h2>

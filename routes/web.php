@@ -20,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard')->middleware(['auth', 'verified']);
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
@@ -40,7 +38,7 @@ Route::post('/socials/add', [SocialController::class, 'store'])->name('socials.s
 Route::get('/publisher/new', [PublisherController::class, 'info'])->name('publisher.create');
 Route::get('/publisher/new/create', [PublisherController::class, 'create'])->name('publisher.create-detail');
 Route::post('/publisher/save', [PublisherController::class, 'store'])->name('publisher.store');
-Route::get('/publisher/{id}', [PublisherController::class, 'show'])->name('publisher');
+Route::get('/publisher/{id}', [PublisherController::class, 'show'])->name('publisher.view');
 Route::get('/publisher/{id}/edit', [PublisherController::class, 'edit'])->name('publisher.edit');
 
 Route::get('/settings', [HomeController::class, 'index'])->name('settings');
