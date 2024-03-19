@@ -34,6 +34,13 @@
         <div class="block col-span-1">
             <div class="p-3 m-3 text-gray-300 bg-gray-900 rounded-lg">
                 <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">{{ __('Team Members') }}</h2>
+                <div class="p-3 text-gray-800 bg-gray-300 rounded-lg">
+                    <ul>
+                        @foreach ($publisher->users as $teamMember)
+                            <li>{{ $teamMember->name }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
 
             <div class="p-3 m-3 text-gray-300 bg-gray-900 rounded-lg">

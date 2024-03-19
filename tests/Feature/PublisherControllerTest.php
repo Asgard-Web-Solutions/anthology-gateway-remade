@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use App\Models\Publisher;
+use DB;
 
 class PublisherControllerTest extends TestCase
 {
@@ -84,7 +85,7 @@ class PublisherControllerTest extends TestCase
     public function createPublisher($user = null) {
         if ($user) {
             $publisher = Publisher::factory()->creator($user->id)->create();
-            $user->publishers()->attach($user->id, ['role' => 'Owner']);
+            $user->publishers()->attach($publisher->id, ['role' => 'Owner']);
         } else {
             $publisher = Publisher::factory()->create();
         }
@@ -186,6 +187,15 @@ class PublisherControllerTest extends TestCase
     }
 
     // Team members show up in the publisher page
+    public function test_team_members_show_on_the_publisher_page() {
+        $this->CreateUserAndAuthenticate();
+        $user = $this->createUser();
+        $publisher = $this->createPublisher($user);
+
+        $response = $this->get(route('publisher.view', $publisher->id));
+
+        $response->assertSee($user->name);
+    }
 
     // User can edit the publisher info
 
