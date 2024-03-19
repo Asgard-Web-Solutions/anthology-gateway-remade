@@ -242,6 +242,12 @@ class PublisherControllerTest extends TestCase
         $dbData['url'] = 'testing';
         $this->assertDatabaseHas('publisher_social', $dbData);
     }
+    
+    // Social media links show on the manage page
+
+    // User can delete social media links
+
+    // Social media links show on the publisher view page
 
     // Publisher link shows in side menu if user is part of a publisher
 }
