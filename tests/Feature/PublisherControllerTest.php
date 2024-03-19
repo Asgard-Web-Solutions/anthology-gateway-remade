@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use App\Models\Publisher;
-use DB;
+use App\Models\Social;
 
 class PublisherControllerTest extends TestCase
 {
@@ -23,6 +23,7 @@ class PublisherControllerTest extends TestCase
             ['publisher.create-detail', false, 'get', 'publisher.create'],
             ['publisher.edit', true, 'get', 'publisher.edit'],
             ['publisher.update', true, 'post', null],
+            ['publisher.socials', true, 'get', 'publisher.socials'],
         ];
     }
 
@@ -62,7 +63,7 @@ class PublisherControllerTest extends TestCase
     }
 
     /** @dataProvider userAccessibleRoutesProvider */
-    public function test_guest_users_cannot_access_user_accessible_routes($routeName, $passIdIn, $method, $view)
+    public function test_guests_cannot_access_user_accessible_routes($routeName, $passIdIn, $method, $view)
     {
         $user = $this->createUser();
         $publisher = $this->createPublisher($user);
@@ -217,6 +218,16 @@ class PublisherControllerTest extends TestCase
     }
 
     // Social media sites can be added to publisher profile
+    public function test_publisher_socials_page_loads_social_media_and_publisher_data() {
+        $user = $this->CreateUserAndAuthenticate();
+        $publisher = $this->createPublisher($user);
+        
+        $response = $this->get(route('publisher.socials', $publisher->id));      
+        
+        $socials = Social::all();
+        $response->assertSee($publisher->name);
+        $response->assertSee($socials[0]->name);
+    }
 
     // Publisher link shows in side menu if user is part of a publisher
 }

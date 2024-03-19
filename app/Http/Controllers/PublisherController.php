@@ -6,14 +6,17 @@ use App\Models\Publisher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Repositories\PublisherRepositoryInterface;
+use App\Repositories\SocialRepositoryInterface;
 
 class PublisherController extends Controller
 {
     protected $PublisherRepository;
+    protected $SocialRepository;
 
     public function __construct()
     {
         $this->PublisherRepository = app(PublisherRepositoryInterface::class);
+        $this->SocialRepository = app(SocialRepositoryInterface::class);
     }
 
     /**
@@ -100,6 +103,18 @@ class PublisherController extends Controller
         $publisher->update($request->all());
 
         return redirect()->route('publisher.view', $publisher->id);
+    }
+
+    public function socials($id) {
+        $publisher = $this->PublisherRepository->getPublisher($id);
+        Gate::authorize('update', $publisher);
+
+        $socials = $this->SocialRepository->getAllSocials();
+
+        return view('publisher.socials')->with([
+            'publisher' => $publisher,
+            'socials' => $socials
+        ]);
     }
 
     /**
