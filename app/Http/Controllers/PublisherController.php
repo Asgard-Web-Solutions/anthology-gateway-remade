@@ -81,7 +81,12 @@ class PublisherController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $publisher = $this->PublisherRepository->getPublisher($id);
+        Gate::authorize('update', $publisher);
+
+        return view('publisher.edit')->with([
+            'publisher' => $publisher,
+        ]);
     }
 
     /**
@@ -89,7 +94,12 @@ class PublisherController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $publisher = $this->PublisherRepository->getPublisher($id);
+        Gate::authorize('update', $publisher);
+
+        $publisher->update($request->all());
+
+        return redirect()->route('publisher.view', $publisher->id);
     }
 
     /**

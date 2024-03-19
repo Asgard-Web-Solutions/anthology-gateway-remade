@@ -57,7 +57,8 @@ class PublisherPolicy
      */
     public function update(User $user, Publisher $publisher): bool
     {
-        return ($publisher->creator == $user->id);
+        // return ($publisher->creator == $user->id);
+        return ($publisher->users->contains($user->id));
     }
 
     /**

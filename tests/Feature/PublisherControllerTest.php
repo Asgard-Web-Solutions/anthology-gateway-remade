@@ -21,6 +21,7 @@ class PublisherControllerTest extends TestCase
             ['dashboard', false, 'get', 'dashboard'],
             ['publisher.create', false, 'get', 'publisher.create-info'],
             ['publisher.create-detail', false, 'get', 'publisher.create'],
+            ['publisher.edit', true, 'get', 'publisher.edit'],
             // ['publisher', true, 'get', 'publisher.view'],
         ];
     }
@@ -198,6 +199,18 @@ class PublisherControllerTest extends TestCase
     }
 
     // User can edit the publisher info
+    public function test_publisher_info_is_updated_via_form() {
+        $user = $this->CreateUserAndAuthenticate();
+        $publisher = $this->createPublisher($user);
+        $data = $this->loadPublisherFormData();
+        $data['name'] = 'Some new name';
+
+        $response = $this->post(route('publisher.update', $publisher->id), $data);
+
+        $this->assertDatabaseHas('publishers', $data);
+    }
+
+    // public function test_publisher_edit_page_loads()
 
     // Social media sites can be added to publisher profile
 

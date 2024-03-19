@@ -40,6 +40,7 @@ Route::get('/publisher/new/create', [PublisherController::class, 'create'])->nam
 Route::post('/publisher/save', [PublisherController::class, 'store'])->name('publisher.store');
 Route::get('/publisher/{id}', [PublisherController::class, 'show'])->name('publisher.view');
 Route::get('/publisher/{id}/edit', [PublisherController::class, 'edit'])->name('publisher.edit');
+Route::post('/publisher/{id}/update', [PublisherController::class, 'update'])->name('publisher.update');
 
 Route::get('/settings', [HomeController::class, 'index'])->name('settings');
 
