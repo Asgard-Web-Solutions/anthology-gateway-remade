@@ -20,4 +20,9 @@ class Publisher extends Model
     {
         return $this->belongsToMany(User::class)->withPivot('role')->withTimestamps();
     }
+
+    public function socials(): BelongsToMany
+    {
+        return $this->belongsToMany(Social::class)->withPivot('url')->withTimestamps();
+    }
 }

@@ -117,6 +117,15 @@ class PublisherController extends Controller
         ]);
     }
 
+    public function social_add(Request $request, $id) {
+        $publisher = $this->PublisherRepository->getPublisher($id);
+        Gate::authorize('update', $publisher);
+
+        $publisher->socials()->attach($request->platform, ['url' => $request->url]);
+
+        return redirect()->route('publisher.view', $publisher->id);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

@@ -28,7 +28,8 @@
             <thead class="text-white bg-gray-900 rounded-lg">
                 <tr>
                     <th class="px-6 py-4 text-sm font-bold uppercase border-b rounded-tl bg-grey-lightest text-grey-dark border-grey-light"><label id='name'>Platform</label></th>
-                    <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light" colspan="2"><label id='image'>URL</label></th>
+                    <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light"><label id='image'>URL</label></th>
+                    <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light"><label id='image'>ID</label></th>
                 </tr>
             </thead>
             <!-- Table Body -->
@@ -38,14 +39,14 @@
                     <tr>
                         <td>
                             <select name="platform" id="platform" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-3/4 m-2 p-2.5">
-                                <option value="0" data-url="https://">-- Select Platform --</option>
+                                <option value="0" data-url="-- Select a Platform --">-- Select a Platform --</option>
                                 @foreach ($socials as $social)
                                     <option value="{{ $social->id }}" data-url="{{ $social->base_url }}">{{ $social->name }}</option>
                                 @endforeach
                             </select>
                         </td>
-                        <td class="w-48"><div id="socialURL" class="text-gray-400">https://</div></td>
-                        <td><input type="text" id="base_url" name="base_url" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-32 m-2 p-2.5"></td>
+                        <td class="w-48"><div id="socialURL" class="text-gray-400">-- Select a Platform --</div></td>
+                        <td><input type="text" id="url" name="url" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-32 m-2 p-2.5"></td>
                     </tr>
                 </tbody>
             </form>
@@ -71,7 +72,7 @@
             const selectedUrl = this.querySelector(`option[value="${selectedId}"]`).dataset.url;
 
             // Update the display
-            socialUrlDisplay.textContent = selectedId == 0 ? 'Select a platform to see the URL' : selectedUrl;
+            socialUrlDisplay.textContent = selectedUrl;
         });
     });
 </script>

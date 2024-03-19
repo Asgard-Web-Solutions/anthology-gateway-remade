@@ -42,6 +42,7 @@ Route::get('/publisher/{id}', [PublisherController::class, 'show'])->name('publi
 Route::get('/publisher/{id}/edit', [PublisherController::class, 'edit'])->name('publisher.edit');
 Route::post('/publisher/{id}/update', [PublisherController::class, 'update'])->name('publisher.update');
 Route::get('/publisher/{id}/social-media', [PublisherController::class, 'socials'])->name('publisher.socials');
+Route::post('/publisher/{id}/social-add', [PublisherController::class, 'social_add'])->name('publisher.social-add');
 
 Route::get('/settings', [HomeController::class, 'index'])->name('settings');
 

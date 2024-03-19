@@ -229,5 +229,19 @@ class PublisherControllerTest extends TestCase
         $response->assertSee($socials[0]->name);
     }
 
+    public function test_publisher_can_add_social_media_to_its_profile() {
+        $user = $this->CreateUserAndAuthenticate();
+        $publisher = $this->createPublisher($user);
+        $data['platform'] = 1;
+        $data['url'] = 'testing';
+
+        $response = $this->post(route('publisher.social-add', $publisher->id), $data);
+
+        $dbData['publisher_id'] = $publisher->id;
+        $dbData['social_id'] = 1;
+        $dbData['url'] = 'testing';
+        $this->assertDatabaseHas('publisher_social', $dbData);
+    }
+
     // Publisher link shows in side menu if user is part of a publisher
 }
