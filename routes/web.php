@@ -43,6 +43,8 @@ Route::get('/publisher/{id}/edit', [PublisherController::class, 'edit'])->name('
 Route::post('/publisher/{id}/update', [PublisherController::class, 'update'])->name('publisher.update');
 Route::get('/publisher/{id}/social-media', [PublisherController::class, 'socials'])->name('publisher.socials');
 Route::post('/publisher/{id}/social-add', [PublisherController::class, 'social_add'])->name('publisher.social_add');
+Route::get('/publisher/{publisher_id}/social-edit/{social_id}', [PublisherController::class, 'social_edit'])->name('publisher.social_edit');
+Route::post('/publisher/{publisher_id}/social-update', [PublisherController::class, 'social_update'])->name('publisher.social_update');
 Route::get('/publisher/{publisher_id}/social-delete/{social_id}', [PublisherController::class, 'social_delete'])->name('publisher.social_delete');
 Route::get('/publisher/{publisher_id}/social-delete-confirm/{social_id}', [PublisherController::class, 'social_delete_confirm'])->name('publisher.social_delete_confirm');
 

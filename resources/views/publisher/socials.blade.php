@@ -15,7 +15,10 @@
                 <tr>
                     <td><x-site.social-icon>{{ $social->image }}</x-site.social-icon></td>
                     <td><a href="{{ $modifiedUrl }}">{{ $modifiedUrl }}</a></td>
-                    <td><x-buttons.warning-small href="{{ route('publisher.social_delete', ['publisher_id' => $publisher->id, 'social_id' => $social->id]) }}" icon="fa-regular fa-trash-can">Delete</x-buttons.warning-small></td>
+                    <td>
+                        <x-buttons.primary-small href="{{ route('publisher.social_edit', ['publisher_id' => $publisher->id, 'social_id' => $social->id]) }}" icon="{{ config('ag.icons.edit') }}">Edit</x-buttons.primary-small>
+                        <x-buttons.warning-small href="{{ route('publisher.social_delete', ['publisher_id' => $publisher->id, 'social_id' => $social->id]) }}" icon="{{ config('ag.icons.delete') }}">Delete</x-buttons.warning-small>
+                    </td>
                 </tr>
                 @endforeach
             </table>
@@ -62,6 +65,10 @@
             </div>
     
         </form>
+    </div>
+
+    <div class="w-full text-right">
+        <x-buttons.dim href="{{ route('publisher.view', $publisher->id) }}">Back</x-buttons.dim>
     </div>
 </div>
 

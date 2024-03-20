@@ -121,6 +121,10 @@ class PublisherController extends Controller
         $publisher = $this->PublisherRepository->getPublisher($id);
         Gate::authorize('update', $publisher);
 
+        if ($publisher->socials()->where('social_id', $request->platform)->exists()) {
+            return redirect()->route('publisher.socials', $publisher->id)->with('warning', 'You can only have one instance of each Social Media Setting');
+        }
+
         $publisher->socials()->attach($request->platform, ['url' => $request->url]);
 
         $this->PublisherRepository->clearCache($publisher->id);
@@ -128,9 +132,34 @@ class PublisherController extends Controller
         return redirect()->route('publisher.socials', $publisher->id);
     }
 
+    public function social_edit($publisher_id, $social_id)
+    {
+        $publisher = $this->PublisherRepository->getPublisher($publisher_id);
+        Gate::authorize('update', $publisher);
+
+        $social = $publisher->socials->firstWhere('id', $social_id);
+
+        return view('publisher.social_edit')->with([
+            'social' => $social,
+            'publisher' => $publisher,
+        ]);
+    }
+
+    public function social_update(Request $request, $id) {
+        $publisher = $this->PublisherRepository->getPublisher($id);
+        Gate::authorize('update', $publisher);
+
+        $publisher->socials()->updateExistingPivot($request->social_id, ['url' => $request->url]);
+        $this->PublisherRepository->clearCache($publisher->id);
+        
+        return redirect()->route('publisher.socials', $publisher->id);
+    }
+
     public function social_delete($publisher_id, $social_id)
     {
         $publisher = $this->PublisherRepository->getPublisher($publisher_id);
+        Gate::authorize('update', $publisher);
+
         $social = $publisher->socials->firstWhere('id', $social_id);
 
         return view('publisher.social_delete')->with([
@@ -142,6 +171,7 @@ class PublisherController extends Controller
     public function social_delete_confirm($publisher_id, $social_id)
     {
         $publisher = $this->PublisherRepository->getPublisher($publisher_id);
+        Gate::authorize('update', $publisher);
 
         $publisher->socials()->detach($social_id);
         $this->PublisherRepository->clearCache($publisher->id);

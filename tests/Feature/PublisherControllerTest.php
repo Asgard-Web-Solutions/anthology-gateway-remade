@@ -271,6 +271,18 @@ class PublisherControllerTest extends TestCase
     }
 
     // User can edit social media links
+    public function test_socials_edit_page_loads() {
+        $user = $this->CreateUserAndAuthenticate();
+        $publisher = $this->createPublisher($user);
+        $social = Social::find(3);
+        $publisher->socials()->attach($social->id, ['url' => 'temp']);
+
+        $response = $this->get(route('publisher.social_edit', ['publisher_id' => $publisher->id, 'social_id' => $social->id]));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertViewIs('publisher.social_edit');
+        $response->assertSee($social->name);
+    }
 
     // Publisher managers can see socials manage link in publisher view
 
