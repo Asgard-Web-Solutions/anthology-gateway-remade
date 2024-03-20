@@ -284,11 +284,18 @@ class PublisherControllerTest extends TestCase
         $response->assertSee($social->name);
     }
 
-    // Publisher managers can see socials manage link in publisher view
-
-    // Normal users cannot see socials manage link in publishers view
-
     // Social media links show on the publisher view page
+    public function test_socials_show_on_view_page() {
+        $user = $this->CreateUserAndAuthenticate();
+        $publisher = $this->createPublisher($user);
+        $social = Social::find(3);
+        $publisher->socials()->attach($social->id, ['url' => 'DoYouSeeMe']);
 
-    // Publisher link shows in side menu if user is part of a publisher
+        $response = $this->get(route('publisher.view', $publisher->id));
+
+        $response->assertSee('DoYouSeeMe');
+    }
+    
+
+    // Publisher.view link shows in side menu if user is part of a publisher
 }

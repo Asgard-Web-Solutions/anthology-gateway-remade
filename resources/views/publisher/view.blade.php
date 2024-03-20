@@ -3,7 +3,7 @@
 @section('content')
     <div class="flex w-full">
         <div class="w-full sm:w-1/2">
-            <x-site.header>{{ $publisher->name }}</x-site.header>
+            <x-site.header><i class="{{ config('ag.icons.publisher') }}"></i> {{ $publisher->name }}</x-site.header>
         </div>
 
         <div class="w-full my-auto text-right sm:w-1/2">
@@ -45,6 +45,23 @@
 
             <div class="p-3 m-3 text-gray-300 bg-gray-900 rounded-lg">
                 <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">{{ __('Websites') }}</h2>
+                <div class="p-3 text-gray-800 bg-gray-300 rounded-lg">
+                    <ul>
+                        @foreach ($publisher->socials as $social)
+                            @php
+                                $modifiedUrl = str_replace('{id}', $social->pivot->url, $social->base_url);
+                            @endphp
+    
+                            <li><a href="{{ $modifiedUrl }}"><x-site.social-icon>{{ $social->image }}</x-site.social-icon> {{ $social->pivot->url }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                @can('update', $publisher)
+                    <div class="w-full mt-6 mb-3 text-right">
+                        <x-buttons.primary href="{{ route('publisher.socials', $publisher->id) }}">Manage Socials</x-buttons.primary>
+                    </div>
+                @endcan
             </div>
         </div>
     </div>
