@@ -128,6 +128,27 @@ class PublisherController extends Controller
         return redirect()->route('publisher.socials', $publisher->id);
     }
 
+    public function social_delete($publisher_id, $social_id)
+    {
+        $publisher = $this->PublisherRepository->getPublisher($publisher_id);
+        $social = $publisher->socials->firstWhere('id', $social_id);
+
+        return view('publisher.social_delete')->with([
+            'social' => $social,
+            'publisher' => $publisher,
+        ]);
+    }
+
+    public function social_delete_confirm($publisher_id, $social_id)
+    {
+        $publisher = $this->PublisherRepository->getPublisher($publisher_id);
+
+        $publisher->socials()->detach($social_id);
+        $this->PublisherRepository->clearCache($publisher->id);
+
+        return redirect()->route('publisher.socials', $publisher->id);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

@@ -6,7 +6,7 @@
 <div class="block px-4 py-8 mx-auto">
     <div class="max-w-3xl p-6 mx-auto my-3 text-gray-300 bg-gray-900 rounded-md shadow-sm">
         <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">{{ __('Social Media Settings') }}</h2>
-        <div class="p-3 text-gray-800 bg-gray-300 rounded-lg">
+        <div class="p-3 text-gray-800 bg-gray-200 rounded-lg">
             <table class="w-full text-left border-collapse">
                 @foreach ($publisher->socials as $social)
                 @php
@@ -15,6 +15,7 @@
                 <tr>
                     <td><x-site.social-icon>{{ $social->image }}</x-site.social-icon></td>
                     <td><a href="{{ $modifiedUrl }}">{{ $modifiedUrl }}</a></td>
+                    <td><x-buttons.warning-small href="{{ route('publisher.social_delete', ['publisher_id' => $publisher->id, 'social_id' => $social->id]) }}" icon="fa-regular fa-trash-can">Delete</x-buttons.warning-small></td>
                 </tr>
                 @endforeach
             </table>

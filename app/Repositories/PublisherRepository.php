@@ -30,7 +30,7 @@ class PublisherRepository implements PublisherRepositoryInterface
     public function getPublisher($id)
     {
         return Cache::remember('publisher:id:'.$id, $this->resetWeekly, function () use ($id) {
-            return Publisher::find($id)->with(['users', 'socials'])->first();
+            return Publisher::with(['users', 'socials'])->find($id);
         });
     }
 
