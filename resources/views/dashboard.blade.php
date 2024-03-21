@@ -13,7 +13,7 @@
                         <a href="{{ route('publisher.view', $publisher->id) }}">
                             <div class="w-48 p-2 m-2 text-black bg-gray-100 rounded-md hover:bg-gray-200">
                                 <h2 class="font-bold text-red-900"><i class="{{ config('ag.icons.publisher') }}"></i> Publisher Settings</h2>
-                                <p class="m-2 text-sm font-light">
+                                <p class="m-2 text-sm font-bold">
                                    {{ $publisher->name }}
                                 </p>
                             </div>

@@ -20,7 +20,7 @@
                 <tbody class="text-gray-700">
                     @foreach ($publishers as $publisher)
                         <tr class="hover:bg-gray-100">
-                            <td class="px-6 py-4 border-b border-grey-light">{{ $publisher->name }}</td>
+                            <td class="px-6 py-4 border-b border-grey-light"><a href="{{ route('publisher.view', $publisher->id) }}" class="underline">{{ $publisher->name }}</a></td>
                             <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">{{ $publisher->creator->email }}</td>
                             <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">{{ $publisher->socials->count() }}</td>
                             <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell"> # </td>
