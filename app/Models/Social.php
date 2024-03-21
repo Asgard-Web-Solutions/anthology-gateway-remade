@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Social extends Model
 {
@@ -14,4 +15,9 @@ class Social extends Model
     ];
 
     use HasFactory;
+
+    public function publishers(): BelongsToMany
+    {
+        return $this->belongsToMany(Publisher::class)->withPivot('url')->withTimestamps();
+    }
 }

@@ -12,6 +12,15 @@
             <div class="w-3/4 h-px mx-auto my-2 bg-purple-700"></div>
             <a href="{{ route('dashboard') }}" class="{{ $linkStyle }}">{{ __('Dashboard') }}</a>
 
+            @if($authUser->publishers->count())
+            
+                @foreach ($authUser->publishers as $publisher)
+                    <x-site.mobile-nav-link href="{{ route('publisher.view', $publisher['id']) }}" icon="{{ config('ag.icons.publisher') }}">{{ $publisher['name'] }}</x-site.mobile-nav-link>
+                @endforeach
+            @endif
+
+            <br />
+
             <a href="{{ route('profile') }}" class="{{ $linkStyle }}">{{ __('Profile') }}</a>
             <button wire:click="logout" class="{{ $linkStyle }} w-full">{{ __('Log Out') }}</button>
             
