@@ -9,9 +9,9 @@
                 <!-- Table Header -->
                 <thead class="text-white bg-gray-900 rounded-lg">
                     <tr>
-                        <th class="px-6 py-4 text-sm font-bold uppercase border-b rounded-tl bg-grey-lightest text-grey-dark border-grey-light">Name</th>
+                        <th class="hidden px-6 py-4 text-sm font-bold uppercase border-b rounded-tl bg-grey-lightest text-grey-dark border-grey-light sm:table-cell">Name</th>
                         <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light">Email</th>
-                        <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light">Role</th>
+                        <th class="hidden px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light sm:table-cell">Role</th>
                         <th class="px-6 py-4 text-sm font-bold uppercase border-b rounded-tr bg-grey-lightest text-grey-dark border-grey-light">Actions</th>
                     </tr>
                 </thead>
@@ -19,9 +19,9 @@
                 <tbody class="text-gray-700">
                     @foreach ($users as $user)
                         <tr class="hover:bg-gray-100">
-                            <td class="px-6 py-4 border-b border-grey-light">{{ $user->name }}</td>
+                            <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">{{ $user->name }}</td>
                             <td class="px-6 py-4 border-b border-grey-light">{{ $user->email }}</td>
-                            <td class="px-6 py-4 border-b border-grey-light">
+                            <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">
                                 @foreach ($user->roles as $role)
                                     {{ $role->name }}
                                 @endforeach
