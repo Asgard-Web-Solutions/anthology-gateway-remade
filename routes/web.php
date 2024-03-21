@@ -35,6 +35,7 @@ Route::get('/socials/{id}/edit', [SocialController::class, 'edit'])->name('socia
 Route::put('/socials/{id}/update', [SocialController::class, 'update'])->name('socials.update');
 Route::post('/socials/add', [SocialController::class, 'store'])->name('socials.store');
 
+Route::get('/publishers', [PublisherController::class, 'index'])->name('publishers');
 Route::get('/publisher/new', [PublisherController::class, 'info'])->name('publisher.create');
 Route::get('/publisher/new/create', [PublisherController::class, 'create'])->name('publisher.create-detail');
 Route::post('/publisher/save', [PublisherController::class, 'store'])->name('publisher.store');

@@ -24,7 +24,11 @@ class PublisherController extends Controller
      */
     public function index()
     {
-        //
+        $publishers = $this->PublisherRepository->getAllPublishers();
+
+        return view('publisher.index', [
+            'publishers' => $publishers,
+        ]);
     }
 
     public function info()
@@ -56,7 +60,7 @@ class PublisherController extends Controller
         $publisher->name = $request->name;
         $publisher->description = $request->description;
         $publisher->logo_url = $request->logo_url;
-        $publisher->creator = auth()->user()->id;
+        $publisher->creator_id = auth()->user()->id;
 
         $publisher->save();
 

@@ -13,4 +13,6 @@ interface PublisherRepositoryInterface
     public function clearCache();
 
     public function countAllPublishers();
+
+    public function countNewPublishers();
 }

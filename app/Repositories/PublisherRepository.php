@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Publisher;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 class PublisherRepository implements PublisherRepositoryInterface
@@ -23,14 +24,14 @@ class PublisherRepository implements PublisherRepositoryInterface
     public function getAllPublishers()
     {
         return Cache::remember('publishers:all', $this->resetWeekly, function () {
-            return Publisher::all();
+            return Publisher::with(['users', 'socials', 'creator'])->get();
         });
     }
 
     public function getPublisher($id)
     {
         return Cache::remember('publisher:id:'.$id, $this->resetWeekly, function () use ($id) {
-            return Publisher::with(['users', 'socials'])->find($id);
+            return Publisher::with(['users', 'socials', 'creator'])->find($id);
         });
     }
 
@@ -61,4 +62,12 @@ class PublisherRepository implements PublisherRepositoryInterface
             return Publisher::count();
         });
     }
+
+    public function countNewPublishers()
+    {
+        return Cache::remember('publishers:countNew', $this->resetDaily, function () {
+            return Publisher::where('created_at', '>=', Carbon::now()->subDays(30))->count();
+        });
+    }
+
 }
