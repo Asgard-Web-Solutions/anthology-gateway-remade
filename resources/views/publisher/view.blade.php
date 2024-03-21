@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex w-full">
+    <div class="block w-full sm:flex">
         <div class="w-full sm:w-1/2">
             <x-site.header><i class="{{ config('ag.icons.publisher') }}"></i> {{ $publisher->name }}</x-site.header>
         </div>

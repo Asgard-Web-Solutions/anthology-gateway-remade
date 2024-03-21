@@ -31,7 +31,7 @@
                 </div>
     
                 <!-- Save Button -->
-                <div class="block w-full text-right">
+                <div class="flex w-full text-right sm:block ">
                     <x-buttons.dim href="{{ route('publisher.socials', $publisher->id) }}">Cancel</x-buttons.dim>
                     <x-buttons.primary type='submit'>Update Settings</x-buttons.primary>
                 </div>
