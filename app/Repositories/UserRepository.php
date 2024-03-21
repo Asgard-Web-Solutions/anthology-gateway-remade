@@ -8,9 +8,18 @@ use Illuminate\Support\Facades\Cache;
 
 class UserRepository implements UserRepositoryInterface
 {
-    private $resetDaily = (60 * 60 * 24);
+    protected $resetHourly;
 
-    private $resetHourly = (60 * 60);
+    protected $resetDaily;
+
+    protected $resetWeekly;
+
+    public function __construct()
+    {
+        $this->resetHourly = 60 * 60;
+        $this->resetDaily = $this->resetHourly * 24;
+        $this->resetWeekly = $this->resetDaily * 7;
+    }
 
     public function getAllUsers()
     {

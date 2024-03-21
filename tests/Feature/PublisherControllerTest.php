@@ -298,4 +298,12 @@ class PublisherControllerTest extends TestCase
     
 
     // Publisher.view link shows in side menu if user is part of a publisher
+    public function test_publisher_shows_in_side_menu() {
+        $user = $this->CreateUserAndAuthenticate();
+        $publisher = $this->createPublisher($user);
+
+        $response = $this->get(route('dashboard'));
+
+        $response->assertSeeInOrder(['Dashboard', $publisher->name, 'Profile']);
+    }
 }

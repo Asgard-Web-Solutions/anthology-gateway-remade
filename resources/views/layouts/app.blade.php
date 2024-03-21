@@ -19,7 +19,7 @@
 
     
     <div class="flex flex-col min-h-screen sm:grid sm:grid-cols-12">
-        <header class="grid grid-cols-4 p-2 text-white bg-black sm:grid-flow-row sm:auto-rows-max sm:grid-cols-1 min-h-16 max-h-16 sm:col-span-3 sm:min-h-screen lg:col-span-2" >
+        <header class="grid grid-cols-4 p-2 text-white bg-black sm:grid-flow-row sm:auto-rows-max sm:grid-cols-1 min-h-16 max-h-16 sm:col-span-4 sm:min-h-screen lg:col-span-3 xl:col-span-2" >
             <div class="flex items-center col-span-3 text-left sm:h-16">
                 <img src="{{ asset('images/AGLogo.jpg') }}" alt="AG Logo" class="object-cover w-12 h-12 rounded-full ">
                 <span class="ml-2 text-lg" style="color: #25e4e1"> Anthology Gateway</span>
@@ -34,7 +34,13 @@
             </nav>
         </header>
 
-        <main class="flex-1 p-4 bg-gray-200 sm:col-span-9 lg:col-span-10">
+        <main class="flex-1 p-4 bg-gray-200 sm:col-span-8 lg:col-span-9 xl:col-span-10">
+            {{-- <div class="block sm:hidden">Default</div>
+            <div class="hidden sm:block md:hidden">SM</div>
+            <div class="hidden md:block lg:hidden">MD</div>
+            <div class="hidden lg:block xl:hidden">LG</div>
+            <div class="hidden xl:block">XL</div> --}}
+            
             @foreach (['danger', 'warning', 'success', 'info'] as $msg)
                 @if(session()->has($msg))
                     <div class="alert alert-{{ $msg }}">
