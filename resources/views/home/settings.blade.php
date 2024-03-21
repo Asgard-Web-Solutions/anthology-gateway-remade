@@ -25,8 +25,27 @@
         @can('viewAny', App\Models\User::class)
             <div class="flex">
                 <div class="p-2 mx-2 bg-gray-900 rounded-md">
-                    <h2 class="mx-2" style="color: #25e4e1">Admin</h2>
+                    <h2 class="mx-2" style="color: #25e4e1">Gatekeeper</h2>
                     <livewire:dashboardPanels.UsersPanel />            
+                </div>
+            </div>
+        @endcan
+
+        @can('viewAny', App\Models\Publisher::class)
+            <div class="flex">
+                <div class="p-2 mx-2 bg-gray-900 rounded-md">
+                    <h2 class="mx-2" style="color: #25e4e1">Sentinels</h2>
+
+                    <a href="{{ route('publishers') }}">
+                        <div class="w-48 p-2 m-2 text-black bg-gray-200 rounded-md hover:bg-gray-300">
+                            <h2 class="font-bold text-red-900"><i class="fa-duotone fa-comments"></i> Publishers</h2>
+                            <p class="m-2 text-sm font-light">
+                                New: <span class="mr-4 font-bold">{{ $publisherInfo['new'] }}</span>
+                                Total: <span class="font-bold">{{ $publisherInfo['total'] }}</span>
+                            </p>
+                        </div>
+                    </a>
+
                 </div>
             </div>
         @endcan

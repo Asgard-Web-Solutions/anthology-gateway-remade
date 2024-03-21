@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('logo_url')->nullable();
-            $table->integer('creator');
+            $table->integer('creator_id');
             $table->timestamps();
         });
     }
