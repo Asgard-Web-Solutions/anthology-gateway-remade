@@ -165,7 +165,7 @@ class PublisherControllerTest extends TestCase
 
         $response = $this->post(route('publisher.store'), $data);
 
-        $data['creator'] = $user->id;
+        $data['creator_id'] = $user->id;
         $this->assertDatabaseHas('publishers', $data);
     }
 
@@ -186,7 +186,7 @@ class PublisherControllerTest extends TestCase
 
         $response = $this->post(route('publisher.store'), $data);
 
-        $publisher = Publisher::where('creator', '=', $user->id)->first();
+        $publisher = Publisher::where('creator_id', '=', $user->id)->first();
         $teamData['user_id'] = $user->id;
         $teamData['publisher_id'] = $publisher->id;
         $teamData['role'] = 'Owner';
