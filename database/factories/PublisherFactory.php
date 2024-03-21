@@ -20,7 +20,7 @@ class PublisherFactory extends Factory
             'name' => fake()->name(),
             'description' => fake()->text(),
             'logo_url' => fake()->url(),
-            'creator' => 1,
+            'creator_id' => 1,
         ];
     }
 
@@ -28,7 +28,7 @@ class PublisherFactory extends Factory
     {
         return $this->state(function (array $attributes) use ($userId) {
             return [
-                'creator' => $userId,
+                'creator_id' => $userId,
             ];
         });
     }
