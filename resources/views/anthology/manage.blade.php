@@ -3,26 +3,47 @@
 @section('content')
     <x-site.header><x-site.social-icon>{{ config('ag.icons.anthology') }}</x-site.social-icon> {{ $anthology->name }}</x-site.header>
 
-    <div class="container px-4 py-8 mx-auto">
-        <div class="max-w-3xl p-6 mx-auto text-gray-300 bg-gray-900 rounded-md shadow-sm">
-            <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">Anthology Details</h2>
+    <!-- Main Content Section -->
+    <div class="grid w-full grid-cols-1 sm:grid-cols-3">
 
-            <div class="p-3 my-4 text-gray-800 bg-gray-200 rounded-lg">
-                <p class="my-2">Give us the basics of your anthology. Don't worry if you don't have it all figured out at the moment. All of this information can be changed later before your project is searchable on Anthology Gateway.</p>
-            </div>
+        <!-- Left Column -->
+        <x-content.column size='lg'>
 
-            <form action="{{ route('anthology.store') }}" method="POST">
-                @csrf
-    
-                <x-form.input-text name='name' required='true'>Name</x-form.input-text>
-                <x-form.input-text name='description' required='true'>Description</x-form.input-text>
-                <x-form.date-picker name='open_date' required='true'>Open For Submissions Date</x-form.date-picker>
+            <!-- Content Box #1 -->
+            <x-content.box heading="Main Dashboard">
+                <x-content.section heading="Status">
+                    <p class="my-2">
+                        Is Public<br />
+                        Is Open for Submissions<br />
+                        Open Date {{ $anthology->open_date }}<br>
+                    </p>
+                </x-content.section>
+
+                <x-content.section heading="Settings">
+                    <x-table.table>
+                        <x-table.head>
+                            <x-table.head-row left>Status</x-table.head-row>
+                            <x-table.head-row>Step</x-table.head-row>
+                            <x-table.head-row right>&nbsp;</x-table.head-row>
+                        </x-table.head>
+                        <x-table.body>
+                            <x-table.row>
+                                <x-table.cell> <i class="bg-green-600 fa-solid fa-check"></i> </x-table.cell>
+                                <x-table.cell colspan='2'> Basic Anthology Info</x-table.cell>
+                            </x-table.row>
+                        </x-table.body>
+                    </x-table.table>
+                </x-content.section>
+            </x-content.box>
             
-                <div class="items-end block w-full text-right">
-                    <x-buttons.dim href="{{ route('dashboard') }}">Cancel</x-buttons.dim>
-                    <x-buttons.primary type='submit'>{{ __('Save Anthology Project') }}</x-buttons.primary>
-                </div>
-            </form>
-        </div>
+        </x-content.column>
+
+        <!-- Right Column -->
+        <x-content.column size='sm'>
+            <x-content.box heading="Team">
+
+            </x-content.box>
+        </x-content.column>
     </div>
+
 @endsection

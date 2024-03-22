@@ -65,6 +65,7 @@
     </div>
 </div>
 
+<!-- This is for the tool tip pop up -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const platformSelect = document.getElementById('platform');

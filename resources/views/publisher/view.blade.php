@@ -13,7 +13,10 @@
         </div>
     </div>
 
+    <!-- Main Content Area -->
     <div class="grid w-full grid-cols-1 sm:grid-cols-3">
+
+        <!-- Left Column -->
         <div class="block col-span-1 sm:col-span-2">
             <div class="p-3 m-3 text-gray-300 bg-gray-900 rounded-lg">
                 <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">{{ __('Description') }}</h2>
@@ -28,7 +31,6 @@
                     
                 </div>
             </div>
-
         </div>
 
         <div class="block col-span-1">
