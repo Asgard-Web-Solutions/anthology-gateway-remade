@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Anthology;
 use Illuminate\Support\Facades\Gate;
+use App\Repositories\AnthologyRepositoryInterface;
 
 class AnthologyController extends Controller
 {
+    protected $AnthologyRepository;
+
+    public function __construct()
+    {
+        $this->AnthologyRepository = app(AnthologyRepositoryInterface::class);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -49,6 +57,15 @@ class AnthologyController extends Controller
     public function show(string $id)
     {
         //
+    }
+
+    public function manage($id)
+    {
+        $anthology = $this->AnthologyRepository->getAnthology($id);
+
+        return view('anthology.manage', [
+            'anthology' => $anthology,
+        ]);
     }
 
     /**

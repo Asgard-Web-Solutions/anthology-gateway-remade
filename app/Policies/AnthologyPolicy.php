@@ -21,7 +21,7 @@ class AnthologyPolicy
      */
     public function view(User $user, Anthology $anthology): bool
     {
-        //
+        
     }
 
     /**

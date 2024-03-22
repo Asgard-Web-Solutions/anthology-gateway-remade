@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\Anthology;
 use Tests\TestCase;
 
 class AnthologyTest extends TestCase
@@ -26,6 +27,12 @@ class AnthologyTest extends TestCase
         $data['open_date'] = Carbon::tomorrow();
 
         return $data;
+    }
+
+    public function createAnthology() {
+        $anthology = Anthology::factory()->create();
+
+        return $anthology;
     }
 
     // DONE: Put a "create" button in the side menu
@@ -71,8 +78,14 @@ class AnthologyTest extends TestCase
     }
 
     // TODO: Anthology manage page
-    public function anthology_manage_page_loads() {
+    public function test_anthology_manage_page_loads() {
         $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology();
+
+        $response = $this->get(route('anthology.manage', $anthology->id));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertViewIs('anthology.manage');
     }
 
     // TODO: Anthology manage page has different sections
