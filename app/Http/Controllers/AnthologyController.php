@@ -31,7 +31,16 @@ class AnthologyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Gate::authorize('create', Anthology::class);
+        $request->validate([
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'open_date' => 'required|date|after:today',
+        ]);
+
+        $anthology = Anthology::create($request->all());
+
+        return redirect()->route('anthology.manage', $anthology->id);
     }
 
     /**

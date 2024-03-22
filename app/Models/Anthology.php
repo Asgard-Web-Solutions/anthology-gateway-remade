@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Anthology extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'name',
+        'description',
+        'open_date'
+    ];
 }
