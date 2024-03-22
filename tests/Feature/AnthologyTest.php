@@ -2,17 +2,35 @@
 
 namespace Tests\Feature;
 
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class AnthologyTest extends TestCase
 {
-    // TODO: Put a "create" button on the dashboard
+    // DONE: Put a "create" button in the side menu
+    public function test_sidebar_has_an_anthology_create_button() {
+        $this->CreateUserAndAuthenticate();
+
+        $response = $this->get('dashboard');
+
+        $response->assertSeeInOrder(['Dashboard', route('anthology.create')], 'Profile');
+    }
 
     // TODO: Put a "create" button on the publisher view page
 
     // TODO: Anthology create page which gathers limited details
+    public function test_anthology_creation_page_loads() {
+        $this->CreateUserAndAuthenticate();
+
+        $response = $this->get(route('anthology.create'));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertViewIs('anthology.create');
+    }
+
+    // TODO: Anthology create page saves project do database
 
     // TODO: Anthology view page
 

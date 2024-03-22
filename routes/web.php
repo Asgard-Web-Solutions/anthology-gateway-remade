@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublisherController;
+use App\Http\Controllers\AnthologyController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,9 @@ Route::get('/socials', \App\Livewire\SocialIndex::class)->name('socials');
 Route::get('/socials/{id}/edit', [SocialController::class, 'edit'])->name('socials.edit');
 Route::put('/socials/{id}/update', [SocialController::class, 'update'])->name('socials.update');
 Route::post('/socials/add', [SocialController::class, 'store'])->name('socials.store');
+
+Route::get('/anthology/create', [AnthologyController::class, 'create'])->name('anthology.create');
+Route::post('/anthology/store', [AnthologyController::class, 'store'])->name('anthology.store');
 
 Route::get('/publishers', [PublisherController::class, 'index'])->name('publishers');
 Route::get('/publisher/new', [PublisherController::class, 'info'])->name('publisher.create');

@@ -19,6 +19,10 @@
                 @endforeach
             @endif
 
+            @can('create', \App\Models\Anthology::class)
+                <x-site.mobile-nav-link href="{{ route('anthology.create') }}" icon="{{ config('ag.icons.anthology') }}">{{ __('Create Anthology') }}</x-site.mobile-nav-link>
+            @endcan
+
             <br />
 
             <a href="{{ route('profile') }}" class="{{ $linkStyle }}">{{ __('Profile') }}</a>
