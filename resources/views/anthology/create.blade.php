@@ -15,8 +15,8 @@
             @csrf
  
             <x-form.input-text name='name' required='true'>Name</x-form.input-text>
-            <x-form.input-text name='description'>Description</x-form.input-text>
-            <x-form.input-text name='open_date'>Open Submission Date</x-form.input-text>
+            <x-form.input-text name='description' required='true'>Description</x-form.input-text>
+            <x-form.date-picker name='open_date' required='true'>Open For Submissions Date</x-form.date-picker>
         
             <div class="items-end block w-full text-right">
                 <x-buttons.dim href="{{ route('dashboard') }}">Cancel</x-buttons.dim>

@@ -10,6 +10,7 @@
     <link href="https://cdn.tailwindcss.com" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/daisyui@1.3.6/dist/full.js"></script>
     <script src="https://kit.fontawesome.com/0cc3b28aa8.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -55,6 +56,7 @@
 
     
     @livewireScripts
-    {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
+    @stack('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
 </html>
