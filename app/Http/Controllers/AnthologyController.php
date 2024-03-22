@@ -62,6 +62,7 @@ class AnthologyController extends Controller
     public function manage($id)
     {
         $anthology = $this->AnthologyRepository->getAnthology($id);
+        Gate::authorize('update', $anthology);
 
         return view('anthology.manage', [
             'anthology' => $anthology,

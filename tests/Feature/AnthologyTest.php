@@ -99,4 +99,6 @@ class AnthologyTest extends TestCase
     // TODO: Launched anthologies show up on the dashboard if opening for submissions soon
 
     // TODO: Launched anthologies show up on the home page
+
+    // TODO: The dashboard shows users own anthologies
 }

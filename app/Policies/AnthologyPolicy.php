@@ -21,7 +21,7 @@ class AnthologyPolicy
      */
     public function view(User $user, Anthology $anthology): bool
     {
-        
+        return true;
     }
 
     /**
@@ -37,7 +37,8 @@ class AnthologyPolicy
      */
     public function update(User $user, Anthology $anthology): bool
     {
-        //
+        // TODO: Update this security rule to only allow appropriate users
+        return true;
     }
 
     /**
