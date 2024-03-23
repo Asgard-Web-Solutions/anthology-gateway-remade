@@ -44,9 +44,11 @@
                 @endforeach
             @endif
 
-            <div class="w-full text-right">
-                <x-button.primary-small icon="fa-solid fa-plus">{{ __('Create Anthology ') }}</x-button.primary-small>
-            </div>
+            @can('create', App\Models\Anthology::class)
+                <div class="w-full text-right">
+                    <x-button.primary-small icon="fa-solid fa-plus" href="{{ route('anthology.create') }}">{{ __('Create Anthology ') }}</x-button.primary-small>
+                </div>
+            @endcan
         </x-content.box>
     </x-content.page>
 
