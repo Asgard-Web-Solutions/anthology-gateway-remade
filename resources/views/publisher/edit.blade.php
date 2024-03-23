@@ -15,8 +15,8 @@
             <x-form.input-text name='logo_url' value="{{ $publisher->logo_url }}">Logo URL</x-form.input-text>
         
             <div class="flex items-end w-full text-right sm:block">
-                <x-buttons.dim href="{{ route('publisher.view', $publisher->id) }}">Cancel</x-buttons.dim>
-                <x-buttons.primary type='submit'>Save Publisher Profile</x-buttons.primary>
+                <x-button.dim href="{{ route('publisher.view', $publisher->id) }}">Cancel</x-button.dim>
+                <x-button.primary type='submit'>Save Publisher Profile</x-button.primary>
             </div>
         </form>
     </div>

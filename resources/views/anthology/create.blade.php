@@ -19,8 +19,8 @@
             <x-form.date-picker name='open_date' required='true'>Open For Submissions Date</x-form.date-picker>
         
             <div class="items-end block w-full text-right">
-                <x-buttons.dim href="{{ route('dashboard') }}">Cancel</x-buttons.dim>
-                <x-buttons.primary type='submit'>{{ __('Save Anthology Project') }}</x-buttons.primary>
+                <x-button.dim href="{{ route('dashboard') }}">Cancel</x-button.dim>
+                <x-button.primary type='submit'>{{ __('Save Anthology Project') }}</x-button.primary>
             </div>
         </form>
     </div>

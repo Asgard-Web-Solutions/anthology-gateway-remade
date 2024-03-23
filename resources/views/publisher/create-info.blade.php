@@ -17,8 +17,8 @@
         </div>
 
         <div class="w-full mt-4 text-right">
-            <x-buttons.dim href="{{ route('dashboard') }}">Cancel</x-buttons.dim>
-            <x-buttons.primary icon='fa-duotone fa-memo-pad' href="{{ route('publisher.create-detail') }}">Create Publisher Profile</x-buttons.primary-small>
+            <x-button.dim href="{{ route('dashboard') }}">Cancel</x-button.dim>
+            <x-button.primary icon='fa-duotone fa-memo-pad' href="{{ route('publisher.create-detail') }}">Create Publisher Profile</x-button.primary-small>
         </div>
     </div>
 </div> 

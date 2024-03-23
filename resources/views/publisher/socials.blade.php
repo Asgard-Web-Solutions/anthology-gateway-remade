@@ -17,8 +17,8 @@
                     <div class="block sm:flex">
                         <div class="w-full mb-2 sm:mb-2 sm:w-3/4"><x-site.social-icon>{{ $social->image }}</x-site.social-icon> <a href="{{ $modifiedUrl }}">{{ $modifiedUrl }}</a></div>
                         <div class="w-full mb-5 sm:w-1/4 sm:mb-2">
-                            <x-buttons.primary-small href="{{ route('publisher.social_edit', ['publisher_id' => $publisher->id, 'social_id' => $social->id]) }}" icon="{{ config('ag.icons.edit') }}">Edit</x-buttons.primary-small>
-                            <x-buttons.warning-small href="{{ route('publisher.social_delete', ['publisher_id' => $publisher->id, 'social_id' => $social->id]) }}" icon="{{ config('ag.icons.delete') }}">Delete</x-buttons.warning-small>
+                            <x-button.primary-small href="{{ route('publisher.social_edit', ['publisher_id' => $publisher->id, 'social_id' => $social->id]) }}" icon="{{ config('ag.icons.edit') }}">Edit</x-button.primary-small>
+                            <x-button.warning-small href="{{ route('publisher.social_delete', ['publisher_id' => $publisher->id, 'social_id' => $social->id]) }}" icon="{{ config('ag.icons.delete') }}">Delete</x-button.warning-small>
                         </div>
                     </div>
                 @endforeach
@@ -54,14 +54,14 @@
             </div>
 
             <div class="w-full mt-6 mb-3 text-right">
-                <x-buttons.primary type="submit" icon='fa-light fa-square-plus'>Add Social</x-buttons.primary_small>
+                <x-button.primary type="submit" icon='fa-light fa-square-plus'>Add Social</x-button.primary_small>
             </div>
     
         </form>
     </div>
 
     <div class="w-full text-right">
-        <x-buttons.dim href="{{ route('publisher.view', $publisher->id) }}">Back</x-buttons.dim>
+        <x-button.dim href="{{ route('publisher.view', $publisher->id) }}">Back</x-button.dim>
     </div>
 </div>
 

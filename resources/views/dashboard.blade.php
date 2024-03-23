@@ -43,6 +43,10 @@
                     <a href="{{ route('anthology.view', $anthology->id) }}">{{ $anthology->name }}</a>
                 @endforeach
             @endif
+
+            <div class="w-full text-right">
+                <x-button.primary-small icon="fa-solid fa-plus">{{ __('Create Anthology ') }}</x-button.primary-small>
+            </div>
         </x-content.box>
     </x-content.page>
 

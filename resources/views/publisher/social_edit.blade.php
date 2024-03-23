@@ -32,8 +32,8 @@
     
                 <!-- Save Button -->
                 <div class="flex w-full text-right sm:block ">
-                    <x-buttons.dim href="{{ route('publisher.socials', $publisher->id) }}">Cancel</x-buttons.dim>
-                    <x-buttons.primary type='submit'>Update Settings</x-buttons.primary>
+                    <x-button.dim href="{{ route('publisher.socials', $publisher->id) }}">Cancel</x-button.dim>
+                    <x-button.primary type='submit'>Update Settings</x-button.primary>
                 </div>
             </form>
         </div>

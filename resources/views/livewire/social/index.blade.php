@@ -30,7 +30,7 @@
                                 </td>
                                 <td class="px-6 py-4 border-b border-grey-light">{{ $social->base_url }}</td>
                                 <td class="flex justify-start px-6 py-4 space-x-2 border-b border-grey-light">
-                                    <x-buttons.primary-small href="{{ route('socials.edit', $social->id) }}" icon="fa-regular fa-pen-to-square">Edit</x-buttons.primary-small>
+                                    <x-button.primary-small href="{{ route('socials.edit', $social->id) }}" icon="fa-regular fa-pen-to-square">Edit</x-button.primary-small>
                                 </td>
                             </tr>
                         @endforeach
@@ -59,7 +59,7 @@
                                 <td><input type="text" id="name" name="name" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-3/4 m-2 p-2.5"></td>
                                 <td><input type="text" id="image" name="image" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-3/4 m-2 p-2.5"></td>
                                 <td><input type="text" id="base_url" name="base_url" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-3/4 m-2 p-2.5"></td>
-                                <td><x-buttons.primary-small type="submit" icon='fa-light fa-square-plus'>Add Social</x-buttons.primary_small></td>
+                                <td><x-button.primary-small type="submit" icon='fa-light fa-square-plus'>Add Social</x-button.primary_small></td>
                             </tr>
                         </tbody>
                     </form>

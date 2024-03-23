@@ -48,6 +48,15 @@ class AnthologyTest extends TestCase
         $response->assertSeeInOrder(['Dashboard', route('anthology.create')], 'Profile');
     }
 
+    // TODO: Put a create button on the dashboard
+    public function test_dashboard_has_anthology_create_button() {
+        $this->CreateUserAndAuthenticate();
+
+        $response = $this->get('dashboard');
+
+        $response->assertSeeInOrder(['Your Anthologies', route('anthology.create')]);
+    }
+
     // TODO: Put a "create" button on the publisher view page
 
     // DONE: Anthology create page which gathers limited details
@@ -104,7 +113,7 @@ class AnthologyTest extends TestCase
 
     // TODO: Launched anthologies show up on the home page
 
-    // TODO: The dashboard shows users own anthologies
+    // DONE: The dashboard shows users own anthologies
     public function test_users_anthology_shows_on_dashboard() {
         $user = $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology($user);

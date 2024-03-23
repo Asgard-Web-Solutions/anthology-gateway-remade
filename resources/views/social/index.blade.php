@@ -27,7 +27,7 @@
                             </td>
                             <td class="px-6 py-4 border-b border-grey-light">{{ $social->base_url }}</td>
                             <td class="flex justify-start px-6 py-4 space-x-2 border-b border-grey-light">
-                                <x-buttons.primary-small href="{{ route('socials.edit', $social->id) }}" icon="fa-regular fa-pen-to-square">Edit</x-buttons.primary-small>
+                                <x-button.primary-small href="{{ route('socials.edit', $social->id) }}" icon="fa-regular fa-pen-to-square">Edit</x-button.primary-small>
                             </td>
                         </tr>    
                     @endforeach
