@@ -6,7 +6,7 @@
         id="{{ $name }}" 
         name="{{ $name }}" 
         value="{{ old($name, $value) }}"
-        class="block mb-2 text-sm font-medium text-gray-300 rounded-md form-control flatpickr" 
+        class="block mb-2 text-sm font-medium text-gray-900 rounded-md form-control flatpickr" 
         placeholder="{{ $placeholder ?? 'Select Date...' }}"
         @if ($required) required @endif
     >

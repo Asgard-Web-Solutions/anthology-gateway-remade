@@ -6,14 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\Anthology;
 use Illuminate\Support\Facades\Gate;
 use App\Repositories\AnthologyRepositoryInterface;
+use App\Repositories\UserRepositoryInterface;
 
 class AnthologyController extends Controller
 {
     protected $AnthologyRepository;
+    protected $UserRepository;
 
     public function __construct()
     {
         $this->AnthologyRepository = app(AnthologyRepositoryInterface::class);
+        $this->UserRepository = app(UserRepositoryInterface::class);
     }
 
     /**
@@ -49,6 +52,8 @@ class AnthologyController extends Controller
         $anthology = Anthology::create($request->all());
 
         $anthology->users()->attach(auth()->user()->id, ['role' => 'Creator']);
+
+        $this->UserRepository->clearCache(auth()->user()->id);
 
         return redirect()->route('anthology.manage', $anthology->id);
     }

@@ -64,4 +64,15 @@ class UserRepository implements UserRepositoryInterface
             return User::where('created_at', '>=', Carbon::now()->subDays(30))->count();
         });
     }
+
+    public function clearCache($id) 
+    {
+        if ($id) {
+            Cache::forget('users:id:' . $id);
+        } else {
+            Cache::forget('userss:all');
+            Cache::forget('userss:countAll');
+        }
+
+    }
 }

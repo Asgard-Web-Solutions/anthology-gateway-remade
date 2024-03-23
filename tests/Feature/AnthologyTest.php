@@ -48,7 +48,7 @@ class AnthologyTest extends TestCase
         $response->assertSeeInOrder(['Dashboard', route('anthology.create')], 'Profile');
     }
 
-    // TODO: Put a create button on the dashboard
+    // DONE: Put a create button on the dashboard
     public function test_dashboard_has_anthology_create_button() {
         $this->CreateUserAndAuthenticate();
 
@@ -90,7 +90,7 @@ class AnthologyTest extends TestCase
         $response->assertSessionHasErrors($field);
     }
 
-    // TODO: Anthology manage page
+    // DONE: Anthology manage page loads
     public function test_anthology_manage_page_loads() {
         $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology();
@@ -136,4 +136,6 @@ class AnthologyTest extends TestCase
 
         $this->assertDatabaseHas('anthology_user', $verifyData);
     }
+
+    // TODO: Anthology view page loads
 }
