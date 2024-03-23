@@ -48,6 +48,8 @@ class AnthologyController extends Controller
 
         $anthology = Anthology::create($request->all());
 
+        $anthology->users()->attach(auth()->user()->id, ['role' => 'Creator']);
+
         return redirect()->route('anthology.manage', $anthology->id);
     }
 

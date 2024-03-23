@@ -31,7 +31,7 @@ class UserRepository implements UserRepositoryInterface
     public function getUser($id)
     {
         return Cache::remember('users:id:'.$id, $this->resetHourly, function () use ($id) {
-            return User::find($id);
+            return User::with(['publishers', 'anthologies'])->find($id);
         });
     }
 

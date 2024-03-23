@@ -29,8 +29,12 @@ class AnthologyTest extends TestCase
         return $data;
     }
 
-    public function createAnthology() {
+    public function createAnthology($user = null) {
         $anthology = Anthology::factory()->create();
+
+        if ($user) {
+            $anthology->users()->attach($user->id, ['role' => 'Creator']);
+        }
 
         return $anthology;
     }
@@ -101,4 +105,26 @@ class AnthologyTest extends TestCase
     // TODO: Launched anthologies show up on the home page
 
     // TODO: The dashboard shows users own anthologies
+    public function test_users_anthology_shows_on_dashboard() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+
+        $response = $this->get(route('dashboard'));
+
+        $response->assertSee($anthology->name);
+        $response->assertSee(route('anthology.view', $anthology->id));
+    }
+
+    // DONE: Users are added to the anthology team after creation
+    public function test_users_are_added_to_the_anthology_team() {
+        $user = $this->CreateUserAndAuthenticate();
+        $data = $this->loadDataAnthologyCreateForm();
+
+        $result = $this->post(route('anthology.store'), $data);
+
+        $verifyData['user_id'] = $user->id;
+        $verifyData['anthology_id'] = 1;
+
+        $this->assertDatabaseHas('anthology_user', $verifyData);
+    }
 }

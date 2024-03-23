@@ -35,7 +35,7 @@ class HomeController extends Controller
     public function dashboard() {
 
         $user = $this->userRepository->getUser(auth()->user()->id);
-
+        
         return view('dashboard')->with([
             'user' => $user
         ]); 

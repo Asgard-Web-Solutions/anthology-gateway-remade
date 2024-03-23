@@ -4,7 +4,7 @@
     <x-site.header><x-site.social-icon>{{ config('ag.icons.anthology') }}</x-site.social-icon> {{ $anthology->name }}</x-site.header>
 
     <!-- Main Content Section -->
-    <div class="grid w-full grid-cols-1 sm:grid-cols-3">
+    <x-content.page>
 
         <!-- Left Column -->
         <x-content.column size='lg'>
@@ -44,6 +44,6 @@
 
             </x-content.box>
         </x-content.column>
-    </div>
+    </x-content.page>
 
 @endsection
