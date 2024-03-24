@@ -29,7 +29,8 @@
                         <x-table.body>
                             <x-table.row>
                                 <x-table.cell> <i class="bg-green-600 fa-solid fa-check"></i> </x-table.cell>
-                                <x-table.cell colspan='2'> Basic Anthology Info</x-table.cell>
+                                <x-table.cell>Basic Anthology Info</x-table.cell>
+                                <x-table.cell><x-button.primary-small href="{{ route('anthology.edit', ['id' => $anthology->id, 'setting' => 'details']) }}">Change</x-button.primary-small></x-table.cell>
                             </x-table.row>
                         </x-table.body>
                     </x-table.table>

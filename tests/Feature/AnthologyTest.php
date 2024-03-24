@@ -103,7 +103,15 @@ class AnthologyTest extends TestCase
 
     // TODO: Anthology manage page has different sections
 
-    // TODO: Anthology info edit pages
+    // TODO: Anthology edit page loads
+    public function test_anthology_manage_page_links_to_info_edit() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+
+        $response = $this->get(route('anthology.manage', $anthology->id));
+
+        $response->assertSee(route('anthology.edit', ['id' => $anthology->id, 'setting' => 'details']));
+    }
 
     // TODO: Upload pics for Anthology header and book cover to an AWS like bucket
 
@@ -137,7 +145,7 @@ class AnthologyTest extends TestCase
         $this->assertDatabaseHas('anthology_user', $verifyData);
     }
 
-    // TODO: Anthology view page loads
+    // DONE: Anthology view page loads
     public function test_anthology_view_page_loads() {
         $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology();
