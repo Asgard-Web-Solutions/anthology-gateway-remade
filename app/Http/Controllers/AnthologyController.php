@@ -63,7 +63,12 @@ class AnthologyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $anthology = $this->AnthologyRepository->getAnthology($id);
+        Gate::authorize('view', $anthology);
+
+        return view('anthology.view', [
+            'anthology' => $anthology,
+        ]);
     }
 
     public function manage($id)

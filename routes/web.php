@@ -38,7 +38,7 @@ Route::post('/socials/add', [SocialController::class, 'store'])->name('socials.s
 
 Route::get('/anthology/create', [AnthologyController::class, 'create'])->name('anthology.create');
 Route::post('/anthology/store', [AnthologyController::class, 'store'])->name('anthology.store');
-Route::get('/anthology/{id}', [AnthologyController::class, 'view'])->name('anthology.view');
+Route::get('/anthology/{id}', [AnthologyController::class, 'show'])->name('anthology.view');
 Route::get('/anthology/{id}/manage', [AnthologyController::class, 'manage'])->name('anthology.manage');
 
 Route::get('/publishers', [PublisherController::class, 'index'])->name('publishers');

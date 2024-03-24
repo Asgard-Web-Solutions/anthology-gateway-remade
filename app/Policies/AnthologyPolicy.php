@@ -21,6 +21,7 @@ class AnthologyPolicy
      */
     public function view(User $user, Anthology $anthology): bool
     {
+        // Any user can view an anthology project
         return true;
     }
 
@@ -29,6 +30,7 @@ class AnthologyPolicy
      */
     public function create(User $user): bool
     {
+        // Any user is allowed to create an anthology
         return true;
     }
 
@@ -37,8 +39,8 @@ class AnthologyPolicy
      */
     public function update(User $user, Anthology $anthology): bool
     {
-        // TODO: Update this security rule to only allow appropriate users
-        return true;
+        // DONE: Update this security rule to only allow appropriate users
+        return ($anthology->users->contains($user->id)) ? true : false;
     }
 
     /**

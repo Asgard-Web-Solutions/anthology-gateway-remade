@@ -57,7 +57,7 @@ class AnthologyTest extends TestCase
         $response->assertSeeInOrder(['Your Anthologies', route('anthology.create')]);
     }
 
-    // TODO: Put a "create" button on the publisher view page
+    // TODO: Put a "create" button on the publisher view page that connects the anthology to the publisher
 
     // DONE: Anthology create page which gathers limited details
     public function test_anthology_creation_page_loads() {
@@ -92,8 +92,8 @@ class AnthologyTest extends TestCase
 
     // DONE: Anthology manage page loads
     public function test_anthology_manage_page_loads() {
-        $this->CreateUserAndAuthenticate();
-        $anthology = $this->createAnthology();
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
 
         $response = $this->get(route('anthology.manage', $anthology->id));
 
@@ -138,4 +138,14 @@ class AnthologyTest extends TestCase
     }
 
     // TODO: Anthology view page loads
+    public function test_anthology_view_page_loads() {
+        $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology();
+
+        $response = $this->get(route('anthology.view', $anthology->id));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertViewIs('anthology.view');
+        $response->assertSee($anthology->name);
+    }
 }
