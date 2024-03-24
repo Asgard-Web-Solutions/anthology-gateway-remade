@@ -41,6 +41,7 @@ Route::post('/anthology/store', [AnthologyController::class, 'store'])->name('an
 Route::get('/anthology/{id}', [AnthologyController::class, 'show'])->name('anthology.view');
 Route::get('/anthology/{id}/manage', [AnthologyController::class, 'manage'])->name('anthology.manage');
 Route::get('/anthology/{id}/manage/{setting}', [AnthologyController::class, 'edit'])->name('anthology.edit');
+Route::post('/anthology/{id}/update', [AnthologyController::class, 'update'])->name('anthology.update');
 
 Route::get('/publishers', [PublisherController::class, 'index'])->name('publishers');
 Route::get('/publisher/new', [PublisherController::class, 'info'])->name('publisher.create');

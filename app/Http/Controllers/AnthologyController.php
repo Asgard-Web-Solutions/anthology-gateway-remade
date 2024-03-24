@@ -84,9 +84,15 @@ class AnthologyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, $setting)
     {
-        //
+        $anthology = $this->AnthologyRepository->getAnthology($id);
+        Gate::authorize('update', $anthology);
+
+        return view('anthology.edit', [
+            'anthology' => $anthology,
+            'setting' => $setting,
+        ]);
     }
 
     /**
@@ -94,7 +100,12 @@ class AnthologyController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $anthology = $this->AnthologyRepository->getAnthology($id);
+        Gate::authorize('update', $anthology);
+
+        $this->AnthologyRepository->updateAnthology($id, $request->all());
+
+        return redirect()->route('anthology.manage', $anthology->id);
     }
 
     /**
