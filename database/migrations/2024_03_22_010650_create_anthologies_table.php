@@ -30,12 +30,12 @@ return new class extends Migration
             $table->string('header_image')->nullable();
             $table->string('cover_image')->nullable();
 
-            // Submission Settings
+            // Submission Details
             $table->integer('sub_ideal_count')->default(20);
             $table->string('sub_guidelines')->nullable();
             $table->integer('sub_min_length')->default(1000);
             $table->integer('sub_max_length')->default(10000);
-            $table->boolean('sub_prefer_anon')->default(0);
+            $table->tinyInteger('sub_prefer_anon')->default(0);
             
             // Message Text
             $table->string('msg_accept_text')->nullable();
@@ -46,6 +46,14 @@ return new class extends Migration
             $table->string('pay_currency')->default('usd');
             $table->string('pay_supplemental')->nullable();
 
+            // MetaData
+            $table->tinyInteger('configured_basic_details')->default(0);
+            $table->tinyInteger('configured_dates')->default(0);
+            $table->tinyInteger('configured_images')->default(0);
+            $table->tinyInteger('configured_submission_details')->default(0);
+            $table->tinyInteger('configured_message_text')->default(0);
+            $table->tinyInteger('configured_payment_details')->default(0);
+            $table->string('status')->default('setup');
 
             $table->timestamps();
         });

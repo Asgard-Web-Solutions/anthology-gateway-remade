@@ -13,7 +13,29 @@ class Anthology extends Model
     protected $fillable = [
         'name',
         'description',
-        'open_date'
+        'about_publishers',
+        'distribution',
+
+        'open_date',
+        'close_date',
+        'end_review_date',
+        'est_pub_date',
+
+        'header_image',
+        'cover_image',
+
+        'sub_ideal_count',
+        'sub_guidelines',
+        'sub_min_length',
+        'sub_max_length',
+        'sub_prefer_anon',
+
+        'msg_accept_text',
+        'msg_decline_text',
+
+        'pay_amount',
+        'pay_currency',
+        'pay_supplemental'
     ];
 
     public function users(): BelongsToMany

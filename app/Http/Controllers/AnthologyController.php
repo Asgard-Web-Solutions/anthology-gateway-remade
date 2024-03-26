@@ -76,8 +76,18 @@ class AnthologyController extends Controller
         $anthology = $this->AnthologyRepository->getAnthology($id);
         Gate::authorize('update', $anthology);
 
+        $steps = [
+            ['name' => 'Basic Details', 'config' => 'basic', 'status' => $anthology->configured_basic_details],
+            ['name' => 'Dates', 'config' => 'dates', 'status' => $anthology->configured_dates],
+            ['name' => 'Images', 'config' => 'images', 'status' => $anthology->configured_images],
+            ['name' => 'Submission Details', 'config' => 'submissions', 'status' => $anthology->configured_submission_details],
+            ['name' => 'Message Text', 'config' => 'messages', 'status' => $anthology->configured_message_text],
+            ['name' => 'Payment Details', 'config' => 'payments', 'status' => $anthology->configured_payment_details]
+        ];
+
         return view('anthology.manage', [
             'anthology' => $anthology,
+            'steps' => $steps,
         ]);
     }
 
@@ -104,6 +114,18 @@ class AnthologyController extends Controller
         Gate::authorize('update', $anthology);
 
         $this->AnthologyRepository->updateAnthology($id, $request->all());
+
+        switch($request->setting) {
+            case 'basic':
+                $anthology->configured_basic_details = 1;
+                break;
+            
+            case 'dates':
+                $anthology->configured_dates = 1;
+                break;
+        }
+
+        $anthology->update();
 
         return redirect()->route('anthology.manage', $anthology->id);
     }

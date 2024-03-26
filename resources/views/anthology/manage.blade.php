@@ -27,11 +27,19 @@
                             <x-table.head-row right>&nbsp;</x-table.head-row>
                         </x-table.head>
                         <x-table.body>
-                            <x-table.row>
-                                <x-table.cell> <i class="bg-green-600 fa-solid fa-check"></i> </x-table.cell>
-                                <x-table.cell>Basic Anthology Info</x-table.cell>
-                                <x-table.cell><x-button.primary-small href="{{ route('anthology.edit', ['id' => $anthology->id, 'setting' => 'details']) }}">Change</x-button.primary-small></x-table.cell>
-                            </x-table.row>
+                            @foreach ($steps as $step)
+                                <x-table.row>
+                                    <x-table.cell> 
+                                        @if (isset($step['status']) && $step['status'] == 1) 
+                                            <i class="text-green-600 fa-solid fa-check"></i> 
+                                        @else
+                                            <i class="text-red-700 fa-solid fa-x"></i>
+                                        @endif    
+                                    </x-table.cell>
+                                    <x-table.cell>{{ $step['name'] }}</x-table.cell>
+                                    <x-table.cell><x-button.primary-small href="{{ route('anthology.edit', ['id' => $anthology->id, 'setting' => $step['config']]) }}">Change</x-button.primary-small></x-table.cell>
+                                </x-table.row>
+                            @endforeach
                         </x-table.body>
                     </x-table.table>
                 </x-content.section>
