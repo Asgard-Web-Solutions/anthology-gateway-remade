@@ -17,8 +17,8 @@
                     @case ('basic')
                         <x-form.input-text name='name' value='{{ $anthology->name }}'>Anthology Name</x-form.input-text>
                         <x-form.input-text name='description' value='{{ $anthology->description }}'>Anthology Name</x-form.input-text>
-                        <x-form.input-text name='about_publishers' value='{{ $anthology->about_publishers }}'>About the Publisher</x-form.input-text>
-                        <x-form.input-text name='distribution' value='{{ $anthology->distribution }}'>Anthology Distribution Plans</x-form.input-text>
+                        <x-form.input-text-large name='about_publishers' value='{{ $anthology->about_publishers }}'>About the Publisher</x-form.input-text>
+                        <x-form.input-text-large name='distribution' value='{{ $anthology->distribution }}'>Anthology Distribution Plans</x-form.input-text>
                     @break
 
                     @case ('dates')
@@ -30,10 +30,20 @@
 
                     @case ('submissions')
                         <x-form.input-text-small name='sub_ideal_count' value='{{ $anthology->sub_ideal_count }}' description="Approximately how many submissions do you plan to accept?">Acceptance Count</x-form.input-text>
-                        <x-form.input-text name='sub_guidelines' value='{{ $anthology->sub_guidelines }}'>Submission Guidelines</x-form.input-text>
                         <x-form.input-text-small name='sub_min_length' value='{{ $anthology->sub_min_length }}'>Minimum Submission Length</x-form.input-text>
                         <x-form.input-text-small name='sub_max_length' value='{{ $anthology->sub_max_length }}'>Maximum Submission Length</x-form.input-text>
-                        <x-form.input-text name='sub_prefer_anon' value='{{ $anthology->sub_prefer_anon }}' description="Prefering anonymous submissions means we will instruct the author to not give their name in their submission and Anthology Gateway will hide the authors name until after you vote on the submission.">Prefer Anonymous?</x-form.input-text>
+                        <x-form.input-text-large name='sub_guidelines' value='{{ $anthology->sub_guidelines }}'>Submission Guidelines</x-form.input-text>
+                        <x-form.input-checkbox name='sub_prefer_anon' value='{{ $anthology->sub_prefer_anon }}' description="Prefering anonymous submissions means we will instruct the author to not give their name in their submission and Anthology Gateway will hide the authors name until after you vote on the submission.">Prefer Anonymous?</x-form.input-text>
+                    @break
+
+                    @case ('messages')
+                        <x-form.input-text-large name='msg_accept_text' value='{{ $anthology->msg_accept_text }}' description="What message do you want to send to authors when you accept their submission? {name} and {message} will be substituted at teh time the message is sent.">Acceptance Message</x-form.input-text>
+                        <x-form.input-text-large name='msg_decline_text' value='{{ $anthology->msg_decline_text }}' description="What message do you want to send to authors when you Decline their submission? {name} and {message} will be substituted at the time the message is sent.">Decline Message</x-form.input-text>
+                    @break
+
+                    @case ('payments')
+                        <x-form.input-text-small name='pay_amount' value='{{ $anthology->pay_amount }}' description="How much will the auther be paid if you accept their story?">Author Payment</x-form.input-text>
+                        <x-form.input-text-large name='pay_supplemental' value='{{ $anthology->pay_supplemental }}' description="What other ways will you offer to the author?">Supplemental Payment</x-form.input-text>
                     @break
 
                     @default

@@ -123,6 +123,18 @@ class AnthologyController extends Controller
             case 'dates':
                 $anthology->configured_dates = 1;
                 break;
+            
+            case 'submissions':
+                $anthology->configured_submission_details = 1;
+                break;
+            
+            case 'messages':
+                $anthology->configured_message_text = 1;
+                break;
+
+            case 'payments':
+                $anthology->configured_payment_details = 1;
+                break;
         }
 
         $anthology->update();
