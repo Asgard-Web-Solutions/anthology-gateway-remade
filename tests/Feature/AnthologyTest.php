@@ -101,7 +101,7 @@ class AnthologyTest extends TestCase
         $response->assertViewIs('anthology.manage');
     }
 
-    // TODO: Anthology manage page has different sections
+    // DONE: Anthology manage page has different sections
 
     // DONE: Anthology edit page loads
     public function test_anthology_manage_page_links_to_info_edit() {
@@ -110,17 +110,17 @@ class AnthologyTest extends TestCase
 
         $response = $this->get(route('anthology.manage', $anthology->id));
 
-        $response->assertSee(route('anthology.edit', ['id' => $anthology->id, 'setting' => 'details']));
+        $response->assertSee(route('anthology.edit', ['id' => $anthology->id, 'setting' => 'basic']));
     }
 
     public function test_anthology_edit_page_lists_specific_settings() {
         $user = $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology($user);
 
-        $response = $this->get(route('anthology.edit', ['id' => $anthology->id, 'setting' => 'details']));
+        $response = $this->get(route('anthology.edit', ['id' => $anthology->id, 'setting' => 'basic']));
 
-        $response->assertSee('Anthology Name');
-        $response->assertSee('Description');
+        $response->assertSee($anthology->name);
+        $response->assertSee($anthology->description);
     }
 
     public function test_anthology_update_saves_data() {
