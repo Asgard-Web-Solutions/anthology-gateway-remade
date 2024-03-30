@@ -15,7 +15,7 @@
 
     @if ($anthology->header_image)
         <div class="block w-full">
-            <img src="{{ Storage::url($anthology->header_image) }}" width="720" height="1280">
+            <img src="{{ $anthology->header }}" width="720" height="1280">
         </div>
     @endif
 
@@ -41,8 +41,8 @@
 
             <x-content.box heading="Cover Image">
                 <x-content.section>
-                    @if ($anthology->cover_image)
-                        <img src="{{ Storage::url($anthology->cover_image) }}" width="600px">
+                    @if ($anthology->cover)
+                        <img src="{{ $anthology->cover }}" width="600px">
                     @else
                         Cover Image In Progress...
                     @endif

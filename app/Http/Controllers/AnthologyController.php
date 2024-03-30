@@ -67,6 +67,9 @@ class AnthologyController extends Controller
         $anthology = $this->AnthologyRepository->getAnthology($id);
         Gate::authorize('view', $anthology);
 
+        $anthology->header = $this->AnthologyRepository->getAnthologyHeader($id);
+        $anthology->cover = $this->AnthologyRepository->getAnthologyCover($id);
+
         return view('anthology.view', [
             'anthology' => $anthology,
         ]);
@@ -76,6 +79,9 @@ class AnthologyController extends Controller
     {
         $anthology = $this->AnthologyRepository->getAnthology($id);
         Gate::authorize('update', $anthology);
+
+        $anthology->header = $this->AnthologyRepository->getAnthologyHeader($id);
+        $anthology->cover = $this->AnthologyRepository->getAnthologyCover($id);
 
         $steps = [
             ['name' => 'Basic Details', 'config' => 'basic', 'status' => $anthology->configured_basic_details],
@@ -99,6 +105,9 @@ class AnthologyController extends Controller
     {
         $anthology = $this->AnthologyRepository->getAnthology($id);
         Gate::authorize('update', $anthology);
+
+        $anthology->header = $this->AnthologyRepository->getAnthologyHeader($id);
+        $anthology->cover = $this->AnthologyRepository->getAnthologyCover($id);
 
         return view('anthology.edit', [
             'anthology' => $anthology,
@@ -143,20 +152,20 @@ class AnthologyController extends Controller
         }
 
         if ($request->header_image) {
-            $header_image = $request->file('header_image')->store("anthology/{$id}/header", 'public');
+            $header_image = $request->file('header_image')->store("anthology/{$id}/header", 's3');
 
             if ($header_image && $anthology->header_image) {
-                Storage::disk('public')->delete($anthology->header_image);
+                Storage::disk('s3')->delete($anthology->header_image);
             }
 
             $anthology->header_image = $header_image;
         }
 
         if ($request->cover_image) {
-            $cover_image = $request->file('cover_image')->store("anthology/{$id}/header", 'public');
+            $cover_image = $request->file('cover_image')->store("anthology/{$id}/cover", 's3');
 
             if ($cover_image && $anthology->cover_image) {
-                Storage::disk('public')->delete($anthology->cover_image);
+                Storage::disk('s3')->delete($anthology->cover_image);
             }
 
             $anthology->cover_image = $cover_image;

@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Anthology;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class AnthologyRepository implements AnthologyRepositoryInterface
 {
@@ -35,6 +36,31 @@ class AnthologyRepository implements AnthologyRepositoryInterface
         });
     }
 
+    public function getAnthologyHeader($id)
+    {
+        return Cache::remember('anthology:id:'.$id . ':header', ($this->resetHourly - 5), function () use ($id) {
+            $anthology = $this->getAnthology($id);
+
+            if ($anthology->header_image)
+                return Storage::disk('s3')->temporaryUrl($anthology->header_image, now()->addMinutes(60));
+            else
+                return null;
+        });
+    }
+
+    public function getAnthologyCover($id)
+    {
+        return Cache::remember('anthology:id:'.$id . ':cover', ($this->resetHourly - 5), function () use ($id) {
+            $anthology = $this->getAnthology($id);
+
+            if ($anthology->cover_image)
+                return Storage::disk('s3')->temporaryUrl($anthology->cover_image, now()->addMinutes(60));
+            else
+                return null;
+        });
+    }
+
+
     public function updateAnthology($id, array $attributes)
     {
         $Anthology = $this->getAnthology($id);
@@ -50,6 +76,7 @@ class AnthologyRepository implements AnthologyRepositoryInterface
     {
         if ($id) {
             Cache::forget('anthology:id:' . $id);
+            Cache::forget('anthology:id:' . $id . ':header');
         } else {
             Cache::forget('anthologies:all');
             Cache::forget('anthologies:countAll');
