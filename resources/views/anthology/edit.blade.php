@@ -34,7 +34,7 @@
                                 <img src="{{ Storage::url($anthology->header_image) }}" class="mx-auto" width="250px">
                             </div>
                         @endif
-                        <x-form.input-file name='header_image' accept='image/*' description="An image that will be displayed at the top of your anthology page.">Header Image</x-form.input-text>
+                        <x-form.input-file name='header_image' accept='image/*' description="An image that will be displayed at the top of your anthology page. 1280x720 for best results">Header Image</x-form.input-text>
 
                         <br />
                         @if ($anthology->cover_image)
