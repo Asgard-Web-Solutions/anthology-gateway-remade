@@ -2,7 +2,6 @@
 
 @section('content')
     <x-site.header><x-site.social-icon>{{ config('ag.icons.anthology') }}</x-site.social-icon> {{ $anthology->name }}</x-site.header>
-
     <!-- Main Content Section -->
     <x-content.page>
 
@@ -51,6 +50,10 @@
         <x-content.column size='sm'>
             <x-content.box heading="Team">
 
+            </x-content.box>
+
+            <x-content.box heading="Project">
+                <x-button.primary href="{{ route('anthology.view', $anthology->id) }}">View Anthology</x-button.primary>
             </x-content.box>
         </x-content.column>
     </x-content.page>

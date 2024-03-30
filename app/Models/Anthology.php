@@ -21,9 +21,6 @@ class Anthology extends Model
         'end_review_date',
         'est_pub_date',
 
-        'header_image',
-        'cover_image',
-
         'sub_ideal_count',
         'sub_guidelines',
         'sub_min_length',

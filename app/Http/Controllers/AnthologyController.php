@@ -7,6 +7,7 @@ use App\Models\Anthology;
 use Illuminate\Support\Facades\Gate;
 use App\Repositories\AnthologyRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
+use Illuminate\Support\Facades\Storage;
 
 class AnthologyController extends Controller
 {
@@ -131,10 +132,34 @@ class AnthologyController extends Controller
             case 'messages':
                 $anthology->configured_message_text = 1;
                 break;
+            
+            case 'images':
+                $anthology->configured_images = 1;
+                break;
 
             case 'payments':
                 $anthology->configured_payment_details = 1;
                 break;
+        }
+
+        if ($request->header_image) {
+            $header_image = $request->file('header_image')->store("anthology/{$id}/header", 'public');
+
+            if ($header_image && $anthology->header_image) {
+                Storage::disk('public')->delete($anthology->header_image);
+            }
+
+            $anthology->header_image = $header_image;
+        }
+
+        if ($request->cover_image) {
+            $cover_image = $request->file('cover_image')->store("anthology/{$id}/header", 'public');
+
+            if ($cover_image && $anthology->cover_image) {
+                Storage::disk('public')->delete($anthology->cover_image);
+            }
+
+            $anthology->cover_image = $cover_image;
         }
 
         $anthology->update();

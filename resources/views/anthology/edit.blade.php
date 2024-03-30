@@ -8,7 +8,7 @@
     <x-content.column size='full'>
         <x-content.box heading="{{ ucfirst($setting) }}" size='half'>
             
-            <form action="{{ route('anthology.update', $anthology->id) }}" method="POST">
+            <form action="{{ route('anthology.update', $anthology->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @php $valid_setting = true; @endphp
                 <input type='hidden' value='{{ $setting }}' name='setting' />
@@ -26,6 +26,24 @@
                         <x-form.date-picker name='close_date' required='true' value="{{ $anthology->close_date }}" description="When is the last day authors can submit stories?">Submission Deadline</x-form.date-picker>
                         <x-form.date-picker name='end_review_date' required='true' value="{{ $anthology->end_review_date }}" description="What date do you plan on having a decision to the authors by?">Estimated Decision Date</x-form.date-picker>
                         <x-form.date-picker name='est_pub_date' required='true' value="{{ $anthology->est_pub_date }}" description="What date do you hope to publish the anthology by?">Estimated Publish Date</x-form.date-picker>
+                    @break
+
+                    @case ('images')
+                        @if ($anthology->header_image)
+                            <div class="w-full mx-auto">
+                                <img src="{{ Storage::url($anthology->header_image) }}" class="mx-auto" width="250px">
+                            </div>
+                        @endif
+                        <x-form.input-file name='header_image' accept='image/*' description="An image that will be displayed at the top of your anthology page.">Header Image</x-form.input-text>
+
+                        <br />
+                        @if ($anthology->cover_image)
+                            <div class="w-full mx-auto">
+                                <img src="{{ Storage::url($anthology->cover_image) }}" class="mx-auto" width="250px">
+                            </div>
+                        @endif
+
+                        <x-form.input-file name='cover_image' accept='image/*' description="An image that will be displayed as your book cover.">Cover Image</x-form.input-text>
                     @break
 
                     @case ('submissions')
