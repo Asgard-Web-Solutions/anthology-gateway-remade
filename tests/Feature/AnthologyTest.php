@@ -144,7 +144,7 @@ class AnthologyTest extends TestCase
         $this->assertDatabaseHas('anthologies', $data);
     }
 
-    // TODO: Upload pics for Anthology header and book cover to an AWS like bucket
+    // DONE: Upload pics for Anthology header and book cover to an AWS like bucket
 
     // TODO: Anthologies can change status to "Launch"
 
@@ -191,7 +191,7 @@ class AnthologyTest extends TestCase
         $response->assertSee($anthology->name);
     }
 
-    // TODO: Create an anthology management page
+    // DONE: Create an anthology management page
     public function test_anthology_index_page_loads()
     {
         $this->CreateAdminAndAuthenticate();
