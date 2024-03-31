@@ -54,6 +54,7 @@ return new class extends Migration
             $table->tinyInteger('configured_message_text')->default(0);
             $table->tinyInteger('configured_payment_details')->default(0);
             $table->string('status')->default('setup');
+            $table->integer('creator_id')->nullable();
 
             $table->timestamps();
         });

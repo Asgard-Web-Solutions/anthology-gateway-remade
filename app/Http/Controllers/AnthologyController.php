@@ -25,7 +25,13 @@ class AnthologyController extends Controller
      */
     public function index()
     {
-        //
+        Gate::authorize('viewAny', Anthology::class);
+
+        $anthologies = $this->AnthologyRepository->getAllAnthologies();
+
+        return view('anthology.index', [
+            'anthologies' => $anthologies,
+        ]);
     }
 
     /**
@@ -53,6 +59,9 @@ class AnthologyController extends Controller
         $anthology = Anthology::create($request->all());
 
         $anthology->users()->attach(auth()->user()->id, ['role' => 'Creator']);
+
+        $anthology->creator_id = auth()->user()->id;
+        $anthology->save();
 
         $this->UserRepository->clearCache(auth()->user()->id);
 

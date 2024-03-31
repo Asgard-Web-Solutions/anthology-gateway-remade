@@ -26,5 +26,14 @@ class HomeControllerTest extends TestCase
         $response->assertSee(route('socials'));
     }
 
+    public function test_anthology_manager_shows_on_settings_page()
+    {
+        $this->CreateAdminAndAuthenticate();
+
+        $response = $this->get(route('settings'));
+
+        $response->assertSee(route('anthologies'));
+    }
+
     // TODO: Create a home page
 }

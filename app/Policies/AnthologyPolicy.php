@@ -5,15 +5,34 @@ namespace App\Policies;
 use App\Models\Anthology;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Cache;
 
 class AnthologyPolicy
 {
+    protected $cacheTime = 60 * 60;
+
+    private function isAdmin(User $user): bool
+    {
+        return Cache::remember('user:id:'.$user->id.':isAdmin', $this->cacheTime, function () use ($user) {
+            return $user->roles()->where('name', 'Admin')->exists();
+        });
+    }
+
+    public function before(User $user, string $ability): ?bool
+    {
+        if ($this->isAdmin($user)) {
+            return true;
+        }
+
+        return null;
+    }
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return false;
     }
 
     /**

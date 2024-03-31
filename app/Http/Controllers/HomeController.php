@@ -5,18 +5,21 @@ namespace App\Http\Controllers;
 use App\Repositories\SocialRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\PublisherRepositoryInterface;
+use App\Repositories\AnthologyRepositoryInterface;
 
 class HomeController extends Controller
 {
     protected $socialRepository;
     protected $userRepository;
     protected $publisherRepository;
+    protected $anthologyRepository;
 
     public function __construct()
     {
         $this->socialRepository = app(SocialRepositoryInterface::class);
         $this->userRepository = app(UserRepositoryInterface::class);
         $this->publisherRepository = app(PublisherRepositoryInterface::class);
+        $this->anthologyRepository = app(AnthologyRepositoryInterface::class);
     }
 
     public function index()
@@ -25,10 +28,13 @@ class HomeController extends Controller
         $publisherInfo['new'] = $this->publisherRepository->countNewPublishers();
         $publisherInfo['total'] = $this->publisherRepository->countAllPublishers();
 
+        $anthologyInfo['new'] = $this->anthologyRepository->countNewAnthologies();
+        $anthologyInfo['total'] = $this->anthologyRepository->countAllAnthologies();
 
         return view('home.settings', [
             'socialsCount' => $socialsCount,
             'publisherInfo' => $publisherInfo,
+            'anthologyInfo' => $anthologyInfo,
         ]);
     }
 

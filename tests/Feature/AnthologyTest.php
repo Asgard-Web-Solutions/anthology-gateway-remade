@@ -177,4 +177,16 @@ class AnthologyTest extends TestCase
         $response->assertViewIs('anthology.view');
         $response->assertSee($anthology->name);
     }
+
+    // TODO: Create an anthology management page
+    public function test_anthology_index_page_loads() {
+        $this->CreateAdminAndAuthenticate();
+        $anthology = $this->createAnthology();
+
+        $response = $this->get(route('anthologies'));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertViewIs('anthology.index');
+        $response->assertSee($anthology->name);
+    }
 }
