@@ -12,8 +12,8 @@
         </div>
 
         <div class="w-full mt-6 text-right">
-            <x-buttons.dim href="{{ route('publisher.socials', $publisher->id) }}">Cancel</x-buttons.dim>
-            <x-buttons.warning href="{{ route('publisher.social_delete_confirm', ['publisher_id' => $publisher->id, 'social_id' => $social->id]) }}" icon="{{ config('ag.icons.delete') }}">Confirm Delete</x-buttons.warning>
+            <x-button.dim href="{{ route('publisher.socials', $publisher->id) }}">Cancel</x-button.dim>
+            <x-button.warning href="{{ route('publisher.social_delete_confirm', ['publisher_id' => $publisher->id, 'social_id' => $social->id]) }}" icon="{{ config('ag.icons.delete') }}">Confirm Delete</x-button.warning>
         </div>
     </div>
 </div> 

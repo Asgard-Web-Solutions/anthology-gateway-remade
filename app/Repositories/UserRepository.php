@@ -31,7 +31,7 @@ class UserRepository implements UserRepositoryInterface
     public function getUser($id)
     {
         return Cache::remember('users:id:'.$id, $this->resetHourly, function () use ($id) {
-            return User::find($id);
+            return User::with(['publishers', 'anthologies'])->find($id);
         });
     }
 
@@ -63,5 +63,16 @@ class UserRepository implements UserRepositoryInterface
         return Cache::remember('users:countNew', $this->resetDaily, function () {
             return User::where('created_at', '>=', Carbon::now()->subDays(30))->count();
         });
+    }
+
+    public function clearCache($id) 
+    {
+        if ($id) {
+            Cache::forget('users:id:' . $id);
+        } else {
+            Cache::forget('userss:all');
+            Cache::forget('userss:countAll');
+        }
+
     }
 }

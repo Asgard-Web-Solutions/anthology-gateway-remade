@@ -15,8 +15,8 @@
             <x-form.input-text name='logo_url'>Logo URL</x-form.input-text>
         
             <div class="items-end block w-full text-right">
-                <x-buttons.dim href="{{ route('dashboard') }}">Cancel</x-buttons.dim>
-                <x-buttons.primary type='submit'>Save Publisher Profile</x-buttons.primary>
+                <x-button.dim href="{{ route('dashboard') }}">Cancel</x-button.dim>
+                <x-button.primary type='submit'>Save Publisher Profile</x-button.primary>
             </div>
         </form>
     </div>

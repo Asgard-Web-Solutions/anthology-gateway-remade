@@ -25,4 +25,6 @@ class HomeControllerTest extends TestCase
 
         $response->assertSee(route('socials'));
     }
+
+    // TODO: Create a home page
 }

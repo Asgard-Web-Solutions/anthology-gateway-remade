@@ -8,6 +8,8 @@ use App\Repositories\SocialRepository;
 use App\Repositories\SocialRepositoryInterface;
 use App\Repositories\PublisherRepository;
 use App\Repositories\PublisherRepositoryInterface;
+use App\Repositories\AnthologyRepository;
+use App\Repositories\AnthologyRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
         $this->app->bind(SocialRepositoryInterface::class, SocialRepository::class);
         $this->app->bind(PublisherRepositoryInterface::class, PublisherRepository::class);
+        $this->app->bind(AnthologyRepositoryInterface::class, AnthologyRepository::class);
     }
 
     /**

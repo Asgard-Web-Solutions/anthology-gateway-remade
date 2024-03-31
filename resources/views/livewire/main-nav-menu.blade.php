@@ -8,6 +8,10 @@
                 <x-site.main-nav-link href="{{ route('publisher.view', $publisher['id']) }}" icon="{{ config('ag.icons.publisher') }}">{{ $publisher['name'] }}</x-site.main-nav-link>
             @endforeach
         @endif
+
+        @can('create', \App\Models\Anthology::class)
+            <x-site.main-nav-link href="{{ route('anthology.create') }}" icon="{{ config('ag.icons.anthology') }}">{{ __('Create Anthology') }}</x-site.main-nav-link>
+        @endcan
     </div>
 
     @can('viewAny', \App\Models\User::class)

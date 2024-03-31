@@ -8,12 +8,15 @@
 
         <div class="w-full my-auto text-right sm:w-1/2">
             @can('update', $publisher)
-                <x-buttons.primary href="{{ route('publisher.edit', $publisher->id) }}" icon="fa-light fa-gear-complex">{{ __('Edit Publisher Details') }}</x-buttons.primary>
+                <x-button.primary href="{{ route('publisher.edit', $publisher->id) }}" icon="fa-light fa-gear-complex">{{ __('Edit Publisher Details') }}</x-button.primary>
             @endcan
         </div>
     </div>
 
+    <!-- Main Content Area -->
     <div class="grid w-full grid-cols-1 sm:grid-cols-3">
+
+        <!-- Left Column -->
         <div class="block col-span-1 sm:col-span-2">
             <div class="p-3 m-3 text-gray-300 bg-gray-900 rounded-lg">
                 <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">{{ __('Description') }}</h2>
@@ -28,7 +31,6 @@
                     
                 </div>
             </div>
-
         </div>
 
         <div class="block col-span-1">
@@ -59,7 +61,7 @@
 
                 @can('update', $publisher)
                     <div class="w-full mt-6 mb-3 text-right">
-                        <x-buttons.primary href="{{ route('publisher.socials', $publisher->id) }}">Manage Socials</x-buttons.primary>
+                        <x-button.primary href="{{ route('publisher.socials', $publisher->id) }}">Manage Socials</x-button.primary>
                     </div>
                 @endcan
             </div>
