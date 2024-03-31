@@ -48,6 +48,6 @@ class UserPromote extends Command
         Cache::clear('users:id:'.$user->id.':isAdmin');
         Cache::clear('users:id:'.$user->id);
 
-        $this->info('User {$user->Name} promoted to Admin.');
+        $this->info("User {$user->name} promoted to Admin.");
     }
 }
