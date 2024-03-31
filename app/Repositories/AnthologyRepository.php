@@ -38,28 +38,29 @@ class AnthologyRepository implements AnthologyRepositoryInterface
 
     public function getAnthologyHeader($id)
     {
-        return Cache::remember('anthology:id:'.$id . ':header', ($this->resetHourly - 5), function () use ($id) {
+        return Cache::remember('anthology:id:'.$id.':header', ($this->resetHourly - 5), function () use ($id) {
             $anthology = $this->getAnthology($id);
 
-            if ($anthology->header_image)
+            if ($anthology->header_image) {
                 return Storage::disk('s3')->temporaryUrl($anthology->header_image, now()->addMinutes(60));
-            else
+            } else {
                 return null;
+            }
         });
     }
 
     public function getAnthologyCover($id)
     {
-        return Cache::remember('anthology:id:'.$id . ':cover', ($this->resetHourly - 5), function () use ($id) {
+        return Cache::remember('anthology:id:'.$id.':cover', ($this->resetHourly - 5), function () use ($id) {
             $anthology = $this->getAnthology($id);
 
-            if ($anthology->cover_image)
+            if ($anthology->cover_image) {
                 return Storage::disk('s3')->temporaryUrl($anthology->cover_image, now()->addMinutes(60));
-            else
+            } else {
                 return null;
+            }
         });
     }
-
 
     public function updateAnthology($id, array $attributes)
     {
@@ -75,8 +76,8 @@ class AnthologyRepository implements AnthologyRepositoryInterface
     public function clearCache($id = 0)
     {
         if ($id) {
-            Cache::forget('anthology:id:' . $id);
-            Cache::forget('anthology:id:' . $id . ':header');
+            Cache::forget('anthology:id:'.$id);
+            Cache::forget('anthology:id:'.$id.':header');
         } else {
             Cache::forget('anthologies:all');
             Cache::forget('anthologies:countAll');
@@ -96,5 +97,4 @@ class AnthologyRepository implements AnthologyRepositoryInterface
             return Anthology::where('created_at', '>=', Carbon::now()->subDays(30))->count();
         });
     }
-
 }

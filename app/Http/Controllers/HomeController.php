@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\AnthologyRepositoryInterface;
+use App\Repositories\PublisherRepositoryInterface;
 use App\Repositories\SocialRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
-use App\Repositories\PublisherRepositoryInterface;
-use App\Repositories\AnthologyRepositoryInterface;
 
 class HomeController extends Controller
 {
     protected $socialRepository;
+
     protected $userRepository;
+
     protected $publisherRepository;
+
     protected $anthologyRepository;
 
     public function __construct()
@@ -38,12 +41,13 @@ class HomeController extends Controller
         ]);
     }
 
-    public function dashboard() {
+    public function dashboard()
+    {
 
         $user = $this->userRepository->getUser(auth()->user()->id);
-        
+
         return view('dashboard')->with([
-            'user' => $user
-        ]); 
+            'user' => $user,
+        ]);
     }
 }

@@ -4,9 +4,7 @@ namespace App\Policies;
 
 use App\Models\Publisher;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Cache;
-
 
 class PublisherPolicy
 {
@@ -58,7 +56,7 @@ class PublisherPolicy
     public function update(User $user, Publisher $publisher): bool
     {
         // return ($publisher->creator == $user->id);
-        return ($publisher->users->contains($user->id));
+        return $publisher->users->contains($user->id);
     }
 
     /**

@@ -65,10 +65,10 @@ class UserRepository implements UserRepositoryInterface
         });
     }
 
-    public function clearCache($id) 
+    public function clearCache($id)
     {
         if ($id) {
-            Cache::forget('users:id:' . $id);
+            Cache::forget('users:id:'.$id);
         } else {
             Cache::forget('userss:all');
             Cache::forget('userss:countAll');

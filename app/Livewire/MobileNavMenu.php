@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use App\Repositories\UserRepositoryInterface;
 
 class MobileNavMenu extends Component
 {
@@ -19,7 +19,6 @@ class MobileNavMenu extends Component
         $this->userRepository = app(UserRepositoryInterface::class);
         $this->authUser = $this->userRepository->getuser(auth()->user()->id);
     }
-
 
     public function toggleNavigation()
     {
