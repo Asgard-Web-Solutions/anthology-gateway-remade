@@ -8,6 +8,7 @@ use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use App\Enums\AnthologyStatus;
 
 class AnthologyController extends Controller
 {
@@ -62,6 +63,7 @@ class AnthologyController extends Controller
         $anthology->users()->attach(auth()->user()->id, ['role' => 'Creator']);
 
         $anthology->creator_id = auth()->user()->id;
+        $anthology->status = AnthologyStatus::Draft;
         $anthology->save();
 
         $this->UserRepository->clearCache(auth()->user()->id);
@@ -179,6 +181,10 @@ class AnthologyController extends Controller
             }
 
             $anthology->cover_image = $cover_image;
+        }
+
+        if ($anthology->status == AnthologyStatus::Draft && $anthology->isFullyConfigured()) {
+            $anthology->status = AnthologyStatus::Prelaunch;
         }
 
         $anthology->update();

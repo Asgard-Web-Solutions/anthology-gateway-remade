@@ -22,6 +22,7 @@ class AnthologyFactory extends Factory
             'description' => fake()->text(),
             'open_date' => Carbon::tomorrow(),
             'creator_id' => 1,
+            'status' => 'draft',
         ];
     }
 }
