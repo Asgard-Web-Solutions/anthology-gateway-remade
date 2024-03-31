@@ -49,7 +49,7 @@ class PublisherRepository implements PublisherRepositoryInterface
     public function clearCache($id = 0)
     {
         if ($id) {
-            Cache::forget('publisher:id:' . $id);
+            Cache::forget('publisher:id:'.$id);
         } else {
             Cache::forget('publishers:all');
             Cache::forget('publishers:countAll');
@@ -69,5 +69,4 @@ class PublisherRepository implements PublisherRepositoryInterface
             return Publisher::where('created_at', '>=', Carbon::now()->subDays(30))->count();
         });
     }
-
 }

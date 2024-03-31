@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('about_publishers')->nullable();
             $table->string('distribution')->nullable();
-            
+
             // Dates
             $table->date('open_date')->nullable();
             $table->date('close_date')->nullable();
@@ -36,7 +36,7 @@ return new class extends Migration
             $table->integer('sub_min_length')->default(1000);
             $table->integer('sub_max_length')->default(10000);
             $table->tinyInteger('sub_prefer_anon')->default(0);
-            
+
             // Message Text
             $table->string('msg_accept_text')->nullable();
             $table->string('msg_decline_text')->nullable();

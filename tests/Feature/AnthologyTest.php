@@ -2,17 +2,16 @@
 
 namespace Tests\Feature;
 
+use App\Models\Anthology;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use App\Models\Anthology;
 use Tests\TestCase;
 
 class AnthologyTest extends TestCase
 {
     // These are form responses that should give an error
-    public static function dataProviderAnthologyCreateFormData() {
+    public static function dataProviderAnthologyCreateFormData()
+    {
         return [
             ['name', ''],
             ['description', ''],
@@ -21,7 +20,8 @@ class AnthologyTest extends TestCase
         ];
     }
 
-    private function loadDataAnthologyCreateForm() {
+    private function loadDataAnthologyCreateForm()
+    {
         $data['name'] = 'Test Anthology';
         $data['description'] = 'This is a test anthology';
         $data['open_date'] = Carbon::tomorrow();
@@ -29,7 +29,8 @@ class AnthologyTest extends TestCase
         return $data;
     }
 
-    public function createAnthology($user = null) {
+    public function createAnthology($user = null)
+    {
         $anthology = Anthology::factory()->create();
 
         if ($user) {
@@ -40,7 +41,8 @@ class AnthologyTest extends TestCase
     }
 
     // DONE: Put a "create" button in the side menu
-    public function test_sidebar_has_an_anthology_create_button() {
+    public function test_sidebar_has_an_anthology_create_button()
+    {
         $this->CreateUserAndAuthenticate();
 
         $response = $this->get('dashboard');
@@ -49,7 +51,8 @@ class AnthologyTest extends TestCase
     }
 
     // DONE: Put a create button on the dashboard
-    public function test_dashboard_has_anthology_create_button() {
+    public function test_dashboard_has_anthology_create_button()
+    {
         $this->CreateUserAndAuthenticate();
 
         $response = $this->get('dashboard');
@@ -60,7 +63,8 @@ class AnthologyTest extends TestCase
     // TODO: Put a "create" button on the publisher view page that connects the anthology to the publisher
 
     // DONE: Anthology create page which gathers limited details
-    public function test_anthology_creation_page_loads() {
+    public function test_anthology_creation_page_loads()
+    {
         $this->CreateUserAndAuthenticate();
 
         $response = $this->get(route('anthology.create'));
@@ -70,7 +74,8 @@ class AnthologyTest extends TestCase
     }
 
     // DONE: Anthology create page saves project do database
-    public function test_anthology_create_page_saves_data() {
+    public function test_anthology_create_page_saves_data()
+    {
         $this->CreateUserAndAuthenticate();
         $data = $this->loadDataAnthologyCreateForm();
 
@@ -80,7 +85,8 @@ class AnthologyTest extends TestCase
     }
 
     /** @dataProvider dataProviderAnthologyCreateFormData */
-    public function test_anthology_create_page_validates_data($field, $data) {
+    public function test_anthology_create_page_validates_data($field, $data)
+    {
         $this->CreateUserAndAuthenticate();
         $data = $this->loadDataAnthologyCreateForm();
         $data[$field] = $data;
@@ -91,7 +97,8 @@ class AnthologyTest extends TestCase
     }
 
     // DONE: Anthology manage page loads
-    public function test_anthology_manage_page_loads() {
+    public function test_anthology_manage_page_loads()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology($user);
 
@@ -104,7 +111,8 @@ class AnthologyTest extends TestCase
     // DONE: Anthology manage page has different sections
 
     // DONE: Anthology edit page loads
-    public function test_anthology_manage_page_links_to_info_edit() {
+    public function test_anthology_manage_page_links_to_info_edit()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology($user);
 
@@ -113,7 +121,8 @@ class AnthologyTest extends TestCase
         $response->assertSee(route('anthology.edit', ['id' => $anthology->id, 'setting' => 'basic']));
     }
 
-    public function test_anthology_edit_page_lists_specific_settings() {
+    public function test_anthology_edit_page_lists_specific_settings()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology($user);
 
@@ -123,7 +132,8 @@ class AnthologyTest extends TestCase
         $response->assertSee($anthology->description);
     }
 
-    public function test_anthology_update_saves_data() {
+    public function test_anthology_update_saves_data()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology($user);
         $data['name'] = 'Test Updated Name';
@@ -143,7 +153,8 @@ class AnthologyTest extends TestCase
     // TODO: Launched anthologies show up on the home page
 
     // DONE: The dashboard shows users own anthologies
-    public function test_users_anthology_shows_on_dashboard() {
+    public function test_users_anthology_shows_on_dashboard()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology($user);
 
@@ -154,7 +165,8 @@ class AnthologyTest extends TestCase
     }
 
     // DONE: Users are added to the anthology team after creation
-    public function test_users_are_added_to_the_anthology_team() {
+    public function test_users_are_added_to_the_anthology_team()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $data = $this->loadDataAnthologyCreateForm();
 
@@ -167,7 +179,8 @@ class AnthologyTest extends TestCase
     }
 
     // DONE: Anthology view page loads
-    public function test_anthology_view_page_loads() {
+    public function test_anthology_view_page_loads()
+    {
         $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology();
 
@@ -179,7 +192,8 @@ class AnthologyTest extends TestCase
     }
 
     // TODO: Create an anthology management page
-    public function test_anthology_index_page_loads() {
+    public function test_anthology_index_page_loads()
+    {
         $this->CreateAdminAndAuthenticate();
         $anthology = $this->createAnthology();
 

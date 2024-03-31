@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Anthology;
-use Illuminate\Support\Facades\Gate;
 use App\Repositories\AnthologyRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class AnthologyController extends Controller
 {
     protected $AnthologyRepository;
+
     protected $UserRepository;
 
     public function __construct()
@@ -98,7 +99,7 @@ class AnthologyController extends Controller
             ['name' => 'Images', 'config' => 'images', 'status' => $anthology->configured_images],
             ['name' => 'Submission Details', 'config' => 'submissions', 'status' => $anthology->configured_submission_details],
             ['name' => 'Message Text', 'config' => 'messages', 'status' => $anthology->configured_message_text],
-            ['name' => 'Payment Details', 'config' => 'payments', 'status' => $anthology->configured_payment_details]
+            ['name' => 'Payment Details', 'config' => 'payments', 'status' => $anthology->configured_payment_details],
         ];
 
         return view('anthology.manage', [
@@ -134,23 +135,23 @@ class AnthologyController extends Controller
 
         $this->AnthologyRepository->updateAnthology($id, $request->all());
 
-        switch($request->setting) {
+        switch ($request->setting) {
             case 'basic':
                 $anthology->configured_basic_details = 1;
                 break;
-            
+
             case 'dates':
                 $anthology->configured_dates = 1;
                 break;
-            
+
             case 'submissions':
                 $anthology->configured_submission_details = 1;
                 break;
-            
+
             case 'messages':
                 $anthology->configured_message_text = 1;
                 break;
-            
+
             case 'images':
                 $anthology->configured_images = 1;
                 break;

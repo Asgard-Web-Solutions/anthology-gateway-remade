@@ -9,7 +9,7 @@ interface AnthologyRepositoryInterface
     public function getAnthology($id);
 
     public function getAnthologyHeader($id);
-    
+
     public function getAnthologyCover($id);
 
     public function updateAnthology($id, array $attributes);

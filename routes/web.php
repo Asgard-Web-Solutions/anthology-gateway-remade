@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\AnthologyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PublisherController;
-use App\Http\Controllers\AnthologyController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

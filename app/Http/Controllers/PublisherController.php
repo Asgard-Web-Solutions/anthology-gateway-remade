@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publisher;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use App\Repositories\PublisherRepositoryInterface;
 use App\Repositories\SocialRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PublisherController extends Controller
 {
     protected $PublisherRepository;
+
     protected $SocialRepository;
 
     public function __construct()
@@ -109,7 +110,8 @@ class PublisherController extends Controller
         return redirect()->route('publisher.view', $publisher->id);
     }
 
-    public function socials($id) {
+    public function socials($id)
+    {
         $publisher = $this->PublisherRepository->getPublisher($id);
         Gate::authorize('update', $publisher);
 
@@ -117,11 +119,12 @@ class PublisherController extends Controller
 
         return view('publisher.socials')->with([
             'publisher' => $publisher,
-            'socials' => $socials
+            'socials' => $socials,
         ]);
     }
 
-    public function social_add(Request $request, $id) {
+    public function social_add(Request $request, $id)
+    {
         $publisher = $this->PublisherRepository->getPublisher($id);
         Gate::authorize('update', $publisher);
 
@@ -149,13 +152,14 @@ class PublisherController extends Controller
         ]);
     }
 
-    public function social_update(Request $request, $id) {
+    public function social_update(Request $request, $id)
+    {
         $publisher = $this->PublisherRepository->getPublisher($id);
         Gate::authorize('update', $publisher);
 
         $publisher->socials()->updateExistingPivot($request->social_id, ['url' => $request->url]);
         $this->PublisherRepository->clearCache($publisher->id);
-        
+
         return redirect()->route('publisher.socials', $publisher->id);
     }
 

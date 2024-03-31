@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use App\Repositories\UserRepositoryInterface;
 
 class MainNavMenu extends Component
 {

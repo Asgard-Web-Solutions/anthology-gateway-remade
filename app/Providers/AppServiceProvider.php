@@ -2,14 +2,14 @@
 
 namespace App\Providers;
 
+use App\Repositories\AnthologyRepository;
+use App\Repositories\AnthologyRepositoryInterface;
+use App\Repositories\PublisherRepository;
+use App\Repositories\PublisherRepositoryInterface;
 use App\Repositories\RoleRepository;
 use App\Repositories\RoleRepositoryInterface;
 use App\Repositories\SocialRepository;
 use App\Repositories\SocialRepositoryInterface;
-use App\Repositories\PublisherRepository;
-use App\Repositories\PublisherRepositoryInterface;
-use App\Repositories\AnthologyRepository;
-use App\Repositories\AnthologyRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;

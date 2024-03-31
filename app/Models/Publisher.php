@@ -14,7 +14,7 @@ class Publisher extends Model
     protected $fillable = [
         'name',
         'description',
-        'logo_url'
+        'logo_url',
     ];
 
     public function users(): BelongsToMany

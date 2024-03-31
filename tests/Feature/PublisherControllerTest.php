@@ -2,16 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Symfony\Component\HttpFoundation\Response;
-use Tests\TestCase;
 use App\Models\Publisher;
 use App\Models\Social;
+use Symfony\Component\HttpFoundation\Response;
+use Tests\TestCase;
 
 class PublisherControllerTest extends TestCase
 {
-
     //** Data Providers */
 
     public static function userAccessibleRoutesProvider()
@@ -82,7 +79,7 @@ class PublisherControllerTest extends TestCase
                 break;
             default:
         }
-        
+
         // The Response::HTTP_FOUND is a 302 / Redirect status code
         $status_codes = [Response::HTTP_NOT_FOUND, Response::HTTP_UNAUTHORIZED, Response::HTTP_FORBIDDEN, Response::HTTP_FOUND];
 
@@ -90,7 +87,8 @@ class PublisherControllerTest extends TestCase
     }
 
     //** Helper functions */
-    public function createPublisher($user = null) {
+    public function createPublisher($user = null)
+    {
         if ($user) {
             $publisher = Publisher::factory()->creator($user->id)->create();
             $user->publishers()->attach($publisher->id, ['role' => 'Owner']);
@@ -101,7 +99,8 @@ class PublisherControllerTest extends TestCase
         return $publisher;
     }
 
-    public function loadPublisherFormData() {
+    public function loadPublisherFormData()
+    {
         $data['name'] = 'Test Pubby';
         $data['description'] = 'We have an awesome publishing company that nobody has ever heard of.';
         $data['logo_url'] = 'https://example.com/somepic.jpg';
@@ -111,7 +110,8 @@ class PublisherControllerTest extends TestCase
 
     //** Normal test methods */
 
-    public function test_create_publisher_link_shows_on_dashboard() {
+    public function test_create_publisher_link_shows_on_dashboard()
+    {
         $this->CreateUserAndAuthenticate();
 
         $response = $this->get('dashboard');
@@ -120,7 +120,8 @@ class PublisherControllerTest extends TestCase
         $response->assertSee(route('publisher.create'));
     }
 
-    public function test_create_publisher_form_saves_data() {
+    public function test_create_publisher_form_saves_data()
+    {
         $this->CreateUserAndAuthenticate();
         $data = $this->loadPublisherFormData();
 
@@ -130,7 +131,8 @@ class PublisherControllerTest extends TestCase
     }
 
     // Publisher page loads data
-    public function test_publisher_view_page_loads_data() {
+    public function test_publisher_view_page_loads_data()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
 
@@ -139,7 +141,8 @@ class PublisherControllerTest extends TestCase
         $response->assertSee($publisher->name);
     }
 
-    public function test_publisher_view_page_shows_config_button() {
+    public function test_publisher_view_page_shows_config_button()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
 
@@ -148,7 +151,8 @@ class PublisherControllerTest extends TestCase
         $response->assertSee(route('publisher.edit', $publisher->id));
     }
 
-    public function test_publisher_view_does_not_show_for_other_users() {
+    public function test_publisher_view_does_not_show_for_other_users()
+    {
         $this->CreateUserAndAuthenticate();
         $user = $this->createUser();
         $publisher = $this->createPublisher($user);
@@ -159,7 +163,8 @@ class PublisherControllerTest extends TestCase
     }
 
     // User that creates the publisher is stored as the creator
-    public function test_create_publisher_form_adds_user_as_creator_data() {
+    public function test_create_publisher_form_adds_user_as_creator_data()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $data = $this->loadPublisherFormData();
 
@@ -170,7 +175,8 @@ class PublisherControllerTest extends TestCase
     }
 
     // Publisher section in dashboard is populated
-    public function test_publisher_info_shows_on_dashboard() {
+    public function test_publisher_info_shows_on_dashboard()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
 
@@ -180,7 +186,8 @@ class PublisherControllerTest extends TestCase
     }
 
     // User is added to the teams table
-    public function test_user_is_added_to_teams_table() {
+    public function test_user_is_added_to_teams_table()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $data = $this->loadPublisherFormData();
 
@@ -195,7 +202,8 @@ class PublisherControllerTest extends TestCase
     }
 
     // Team members show up in the publisher page
-    public function test_team_members_show_on_the_publisher_page() {
+    public function test_team_members_show_on_the_publisher_page()
+    {
         $this->CreateUserAndAuthenticate();
         $user = $this->createUser();
         $publisher = $this->createPublisher($user);
@@ -206,7 +214,8 @@ class PublisherControllerTest extends TestCase
     }
 
     // User can edit the publisher info
-    public function test_publisher_info_is_updated_via_form() {
+    public function test_publisher_info_is_updated_via_form()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
         $data = $this->loadPublisherFormData();
@@ -218,18 +227,20 @@ class PublisherControllerTest extends TestCase
     }
 
     // Social media sites can be added to publisher profile
-    public function test_publisher_socials_page_loads_social_media_and_publisher_data() {
+    public function test_publisher_socials_page_loads_social_media_and_publisher_data()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
-        
-        $response = $this->get(route('publisher.socials', $publisher->id));      
-        
+
+        $response = $this->get(route('publisher.socials', $publisher->id));
+
         $socials = Social::all();
         $response->assertSee($publisher->name);
         $response->assertSee($socials[0]->name);
     }
 
-    public function test_publisher_can_add_social_media_to_its_profile() {
+    public function test_publisher_can_add_social_media_to_its_profile()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
         $data['platform'] = 1;
@@ -242,9 +253,10 @@ class PublisherControllerTest extends TestCase
         $dbData['url'] = 'testing';
         $this->assertDatabaseHas('publisher_social', $dbData);
     }
-    
+
     // Social media links show on the manage page
-    public function test_social_links_show_in_manager() {
+    public function test_social_links_show_in_manager()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
         $useId = 1;
@@ -257,7 +269,8 @@ class PublisherControllerTest extends TestCase
     }
 
     // User can delete social media links
-    public function test_socials_delete_confirmation_page_loads() {
+    public function test_socials_delete_confirmation_page_loads()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
         $social = Social::find(3);
@@ -271,7 +284,8 @@ class PublisherControllerTest extends TestCase
     }
 
     // User can edit social media links
-    public function test_socials_edit_page_loads() {
+    public function test_socials_edit_page_loads()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
         $social = Social::find(3);
@@ -285,7 +299,8 @@ class PublisherControllerTest extends TestCase
     }
 
     // Social media links show on the publisher view page
-    public function test_socials_show_on_view_page() {
+    public function test_socials_show_on_view_page()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
         $social = Social::find(3);
@@ -295,10 +310,10 @@ class PublisherControllerTest extends TestCase
 
         $response->assertSee('DoYouSeeMe');
     }
-    
 
     // Publisher.view link shows in side menu if user is part of a publisher
-    public function test_publisher_shows_in_side_menu() {
+    public function test_publisher_shows_in_side_menu()
+    {
         $user = $this->CreateUserAndAuthenticate();
         $publisher = $this->createPublisher($user);
 
