@@ -43,6 +43,8 @@ Route::get('/anthology/{id}', [AnthologyController::class, 'show'])->name('antho
 Route::get('/anthology/{id}/manage', [AnthologyController::class, 'manage'])->name('anthology.manage');
 Route::get('/anthology/{id}/manage/{setting}', [AnthologyController::class, 'edit'])->name('anthology.edit');
 Route::post('/anthology/{id}/update', [AnthologyController::class, 'update'])->name('anthology.update');
+Route::get('/anthology/{id}/launch', [AnthologyController::class, 'launch'])->name('anthology.launch');
+Route::get('/anthology/{id}/launch/confirm', [AnthologyController::class, 'launch_confirm'])->name('anthology.launch_confirm');
 
 Route::get('/publishers', [PublisherController::class, 'index'])->name('publishers');
 Route::get('/publisher/new', [PublisherController::class, 'info'])->name('publisher.create');

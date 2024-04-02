@@ -42,7 +42,7 @@ return new class extends Migration
             $table->string('msg_decline_text')->nullable();
 
             // Payment Settings
-            $table->integer('pay_amount')->nullable();
+            $table->decimal('pay_amount', 8, 2)->nullable();
             $table->string('pay_currency')->default('usd');
             $table->string('pay_supplemental')->nullable();
 
@@ -53,7 +53,7 @@ return new class extends Migration
             $table->tinyInteger('configured_submission_details')->default(0);
             $table->tinyInteger('configured_message_text')->default(0);
             $table->tinyInteger('configured_payment_details')->default(0);
-            $table->string('status')->default('setup');
+            $table->string('status')->default('draft');
             $table->integer('creator_id')->nullable();
 
             $table->timestamps();

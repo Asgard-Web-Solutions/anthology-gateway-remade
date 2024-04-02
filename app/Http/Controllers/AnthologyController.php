@@ -8,6 +8,7 @@ use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use App\Enums\AnthologyStatus;
 
 class AnthologyController extends Controller
 {
@@ -62,6 +63,7 @@ class AnthologyController extends Controller
         $anthology->users()->attach(auth()->user()->id, ['role' => 'Creator']);
 
         $anthology->creator_id = auth()->user()->id;
+        $anthology->status = AnthologyStatus::Draft;
         $anthology->save();
 
         $this->UserRepository->clearCache(auth()->user()->id);
@@ -181,9 +183,43 @@ class AnthologyController extends Controller
             $anthology->cover_image = $cover_image;
         }
 
+        if ($anthology->status == AnthologyStatus::Draft && $anthology->isFullyConfigured()) {
+            $anthology->status = AnthologyStatus::Prelaunch;
+        }
+
         $anthology->update();
 
         return redirect()->route('anthology.manage', $anthology->id);
+    }
+
+    public function launch(String $id)
+    {
+        $anthology = $this->AnthologyRepository->getAnthology($id);
+        Gate::authorize('update', $anthology);
+
+        if ($anthology->status != AnthologyStatus::Prelaunch) {
+            return redirect()->route('anthology.manage', $id)->with('warning', 'Cannot launch project from its current state.');
+        }
+
+        return view('anthology.launch', [
+            'anthology' => $anthology,
+        ]);
+    }
+
+
+    public function launch_confirm(String $id)
+    {
+        $anthology = $this->AnthologyRepository->getAnthology($id);
+        Gate::authorize('update', $anthology);
+
+        if ($anthology->status != AnthologyStatus::Prelaunch) {
+            return redirect()->route('anthology.manage', $id)->with('warning', 'Cannot launch project from its current state.');
+        }
+
+        $attributes = (['status' => AnthologyStatus::Launched]);
+        $this->AnthologyRepository->updateAnthology($id, $attributes);
+
+        return redirect()->route('anthology.manage', $id);
     }
 
     /**

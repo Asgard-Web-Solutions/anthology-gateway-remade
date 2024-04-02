@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Enums\AnthologyStatus;
+use Illuminate\Support\Str;
 
 class Anthology extends Model
 {
@@ -34,6 +36,12 @@ class Anthology extends Model
         'pay_amount',
         'pay_currency',
         'pay_supplemental',
+
+        'status'
+    ];
+
+    protected $casts = [
+        'status' => AnthologyStatus::class,
     ];
 
     public function users(): BelongsToMany
@@ -45,4 +53,16 @@ class Anthology extends Model
     {
         return $this->belongsTo(User::class, 'creator_id', 'id');
     }
+
+    public function isFullyConfigured(): bool
+    {
+        foreach ($this->getAttributes() as $key => $value) {
+            if (Str::startsWith($key, 'configured_') && !$value) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

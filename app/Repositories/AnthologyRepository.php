@@ -64,13 +64,12 @@ class AnthologyRepository implements AnthologyRepositoryInterface
 
     public function updateAnthology($id, array $attributes)
     {
-        $Anthology = $this->getAnthology($id);
-        $Anthology->update($attributes);
+        $anthology = $this->getAnthology($id);
+        $anthology->update($attributes);
 
-        Cache::forget('anthology:id:'.$id);
-        Cache::forget('anthologies:all');
+        $this->clearCache($id);
 
-        return $Anthology;
+        return $anthology;
     }
 
     public function clearCache($id = 0)

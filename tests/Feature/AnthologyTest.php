@@ -6,6 +6,7 @@ use App\Models\Anthology;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
+use App\Enums\AnthologyStatus;
 
 class AnthologyTest extends TestCase
 {
@@ -144,9 +145,131 @@ class AnthologyTest extends TestCase
         $this->assertDatabaseHas('anthologies', $data);
     }
 
-    // TODO: Upload pics for Anthology header and book cover to an AWS like bucket
+    // DONE: Upload pics for Anthology header and book cover to an AWS like bucket
 
     // TODO: Anthologies can change status to "Launch"
+    public function test_disabled_launch_button_appears_on_management_page()
+    {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+
+        $response = $this->get(route('anthology.manage', $anthology->id));
+
+        $response->assertSeeInOrder(['cursor-not-allowed', 'Launch']);
+    }
+
+    public function test_configuring_final_section_changes_status_to_prelaunch()
+    {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->configured_basic_details = 1;
+        $anthology->configured_dates = 1;
+        $anthology->configured_images = 1;
+        $anthology->configured_submission_details = 1;
+        $anthology->configured_message_text = 1;
+        $anthology->configured_payment_details = 0;
+        $anthology->save();
+
+        $data['pay_amount'] = '12.00';
+        $data['pay_supplemental'] = 'blah';
+        $data['setting'] = 'payments';
+
+        $response = $this->post(route('anthology.update', $anthology->id), $data);
+
+        $verifyData['id'] = $anthology->id;
+        $verifyData['configured_payment_details'] = 1;
+        $verifyData['status'] = 'prelaunch';
+        $this->assertDatabaseHas('anthologies', $verifyData);
+    }
+
+    public function test_prelaunch_anthologies_show_launch_button() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Prelaunch;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.manage', $anthology->id));
+
+        $response->assertDontSee('cursor-not-allowed');
+        $response->assertSee('fa-rocket-launch');
+    }
+
+    public function test_launch_page_loads() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Prelaunch;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.launch', $anthology->id));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertViewIs('anthology.launch');
+        $response->assertSee($anthology->name);
+    }
+
+    public function test_launch_confirm_page_launches_project()
+    {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Prelaunch;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.launch_confirm', $anthology->id));
+
+        $verifyData['id'] = $anthology->id;
+        $verifyData['status'] = AnthologyStatus::Launched;
+
+        $this->assertDatabaseHas('anthologies', $verifyData);
+    }
+
+    public function test_launch_confirm_redirects_to_manage_page() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Prelaunch;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.launch_confirm', $anthology->id));
+
+        $response->assertRedirect(route('anthology.manage', $anthology->id));
+    }
+
+    public function test_launch_button_does_not_show_for_launched_projects() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Launched;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.manage', $anthology->id));
+
+        $response->assertDontSee(route('anthology.launch', $anthology->id));
+    }
+
+    public function test_launch_page_checks_for_appropriate_status() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Launched;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.launch', $anthology->id));
+
+        $response->assertRedirectToRoute('anthology.manage', $anthology->id);
+    }
+
+    public function test_launch_confirm_checks_for_appropriate_status() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Launched;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.launch_confirm', $anthology->id));
+
+        $verifyData['id'] = $anthology->id;
+        $verifyData['status'] = AnthologyStatus::Launched;
+
+        $response->assertRedirectToRoute('anthology.manage', $anthology->id);
+        $response->assertSessionHas('warning');
+        $this->assertDatabaseHas('anthologies', $verifyData);
+    }
 
     // TODO: Launched anthologies show up on the dashboard if opening for submissions soon
 
@@ -191,7 +314,7 @@ class AnthologyTest extends TestCase
         $response->assertSee($anthology->name);
     }
 
-    // TODO: Create an anthology management page
+    // DONE: Create an anthology management page
     public function test_anthology_index_page_loads()
     {
         $this->CreateAdminAndAuthenticate();
@@ -203,4 +326,6 @@ class AnthologyTest extends TestCase
         $response->assertViewIs('anthology.index');
         $response->assertSee($anthology->name);
     }
+
+    // TODO: Write a command to delete all images from s3 for dev environments only 
 }
