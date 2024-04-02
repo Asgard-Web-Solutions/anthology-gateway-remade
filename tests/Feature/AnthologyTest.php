@@ -186,11 +186,89 @@ class AnthologyTest extends TestCase
         $user = $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology($user);
         $anthology->status = AnthologyStatus::Prelaunch;
+        $anthology->save();
 
         $response = $this->get(route('anthology.manage', $anthology->id));
 
         $response->assertDontSee('cursor-not-allowed');
         $response->assertSee('fa-rocket-launch');
+    }
+
+    public function test_launch_page_loads() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Prelaunch;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.launch', $anthology->id));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertViewIs('anthology.launch');
+        $response->assertSee($anthology->name);
+    }
+
+    public function test_launch_confirm_page_launches_project()
+    {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Prelaunch;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.launch_confirm', $anthology->id));
+
+        $verifyData['id'] = $anthology->id;
+        $verifyData['status'] = AnthologyStatus::Launched;
+
+        $this->assertDatabaseHas('anthologies', $verifyData);
+    }
+
+    public function test_launch_confirm_redirects_to_manage_page() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Prelaunch;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.launch_confirm', $anthology->id));
+
+        $response->assertRedirect(route('anthology.manage', $anthology->id));
+    }
+
+    public function test_launch_button_does_not_show_for_launched_projects() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Launched;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.manage', $anthology->id));
+
+        $response->assertDontSee(route('anthology.launch', $anthology->id));
+    }
+
+    public function test_launch_page_checks_for_appropriate_status() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Launched;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.launch', $anthology->id));
+
+        $response->assertRedirectToRoute('anthology.manage', $anthology->id);
+    }
+
+    public function test_launch_confirm_checks_for_appropriate_status() {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology($user);
+        $anthology->status = AnthologyStatus::Launched;
+        $anthology->save();
+
+        $response = $this->get(route('anthology.launch_confirm', $anthology->id));
+
+        $verifyData['id'] = $anthology->id;
+        $verifyData['status'] = AnthologyStatus::Launched;
+
+        $response->assertRedirectToRoute('anthology.manage', $anthology->id);
+        $response->assertSessionHas('warning');
+        $this->assertDatabaseHas('anthologies', $verifyData);
     }
 
     // TODO: Launched anthologies show up on the dashboard if opening for submissions soon

@@ -36,6 +36,8 @@ class Anthology extends Model
         'pay_amount',
         'pay_currency',
         'pay_supplemental',
+
+        'status'
     ];
 
     protected $casts = [

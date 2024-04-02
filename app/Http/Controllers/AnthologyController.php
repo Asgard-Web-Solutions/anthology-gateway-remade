@@ -192,6 +192,36 @@ class AnthologyController extends Controller
         return redirect()->route('anthology.manage', $anthology->id);
     }
 
+    public function launch(String $id)
+    {
+        $anthology = $this->AnthologyRepository->getAnthology($id);
+        Gate::authorize('update', $anthology);
+
+        if ($anthology->status != AnthologyStatus::Prelaunch) {
+            return redirect()->route('anthology.manage', $id)->with('warning', 'Cannot launch project from its current state.');
+        }
+
+        return view('anthology.launch', [
+            'anthology' => $anthology,
+        ]);
+    }
+
+
+    public function launch_confirm(String $id)
+    {
+        $anthology = $this->AnthologyRepository->getAnthology($id);
+        Gate::authorize('update', $anthology);
+
+        if ($anthology->status != AnthologyStatus::Prelaunch) {
+            return redirect()->route('anthology.manage', $id)->with('warning', 'Cannot launch project from its current state.');
+        }
+
+        $attributes = (['status' => AnthologyStatus::Launched]);
+        $this->AnthologyRepository->updateAnthology($id, $attributes);
+
+        return redirect()->route('anthology.manage', $id);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

@@ -11,6 +11,7 @@
             <!-- Content Box #1 -->
             <x-content.box heading="Main Dashboard">
                 <x-content.section heading="Status">
+                    <x-content.paragraph>Status: {{ ucfirst($anthology->status->value) }}</x-content.paragraph>
                     <p class="my-2">
                         Is Public<br />
                         Is Open for Submissions<br />
