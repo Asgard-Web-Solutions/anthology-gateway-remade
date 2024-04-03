@@ -17,7 +17,7 @@ class MobileNavMenu extends Component
     public function mount()
     {
         $this->userRepository = app(UserRepositoryInterface::class);
-        $this->authUser = $this->userRepository->getuser(auth()->user()->id);
+        $this->authUser = (auth()->check()) ? $this->userRepository->getuser(auth()->user()->id) : null;
     }
 
     public function toggleNavigation()

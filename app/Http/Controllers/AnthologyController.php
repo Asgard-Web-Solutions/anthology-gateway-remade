@@ -77,7 +77,7 @@ class AnthologyController extends Controller
     public function show(string $id)
     {
         $anthology = $this->AnthologyRepository->getAnthology($id);
-        Gate::authorize('view', $anthology);
+        // Gate::allows('view', $anthology);
 
         $anthology->header = $this->AnthologyRepository->getAnthologyHeader($id);
         $anthology->cover = $this->AnthologyRepository->getAnthologyCover($id);
