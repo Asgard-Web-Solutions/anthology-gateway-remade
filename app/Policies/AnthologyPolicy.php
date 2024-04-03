@@ -17,14 +17,14 @@ class AnthologyPolicy
         });
     }
 
-    public function before(User $user, string $ability): ?bool
-    {
-        if ($this->isAdmin($user)) {
-            return true;
-        }
+        public function before(User $user, string $ability): ?bool
+        {
+            if ($this->isAdmin($user)) {
+                return true;
+            }
 
-        return null;
-    }
+            return null;
+        }
 
     /**
      * Determine whether the user can view any models.
@@ -37,7 +37,7 @@ class AnthologyPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Anthology $anthology): bool
+    public function view(?User $user, Anthology $anthology): bool
     {
         // Any user can view an anthology project
         return true;
