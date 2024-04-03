@@ -26,39 +26,47 @@ Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard'
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
-
-Route::get('/users', [UserController::class, 'index'])->name('users');
-Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
+    
+Route::prefix('users')->name('users.')->controller(UserController::class)->middleware('auth')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/{id}/edit', 'edit')->name('edit');
+    Route::put('/{id}/update', 'update')->name('update');
+});
 
 Route::get('/socials', \App\Livewire\SocialIndex::class)->name('socials');
-Route::get('/socials/{id}/edit', [SocialController::class, 'edit'])->name('socials.edit');
-Route::put('/socials/{id}/update', [SocialController::class, 'update'])->name('socials.update');
-Route::post('/socials/add', [SocialController::class, 'store'])->name('socials.store');
+Route::prefix('socials')->name('socials.')->controller(SocialController::class)->middleware('auth')->group(function () {
+    Route::get('/{id}/edit', 'edit')->name('edit');
+    Route::put('/{id}/update', 'update')->name('update');
+    Route::post('/add', 'store')->name('store');
+});
 
 Route::get('/anthologies', [AnthologyController::class, 'index'])->name('anthologies');
-Route::get('/anthology/create', [AnthologyController::class, 'create'])->name('anthology.create');
-Route::post('/anthology/store', [AnthologyController::class, 'store'])->name('anthology.store');
+Route::prefix('anthology')->name('anthology.')->controller(AnthologyController::class)->middleware('auth')->group(function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/{id}/manage', 'manage')->name('manage');
+    Route::get('/{id}/manage/{setting}', 'edit')->name('edit');
+    Route::post('/{id}/update', 'update')->name('update');
+    Route::get('/{id}/launch', 'launch')->name('launch');
+    Route::get('/{id}/launch/confirm', 'launch_confirm')->name('launch_confirm');
+});
 Route::get('/anthology/{id}', [AnthologyController::class, 'show'])->name('anthology.view');
-Route::get('/anthology/{id}/manage', [AnthologyController::class, 'manage'])->name('anthology.manage');
-Route::get('/anthology/{id}/manage/{setting}', [AnthologyController::class, 'edit'])->name('anthology.edit');
-Route::post('/anthology/{id}/update', [AnthologyController::class, 'update'])->name('anthology.update');
-Route::get('/anthology/{id}/launch', [AnthologyController::class, 'launch'])->name('anthology.launch');
-Route::get('/anthology/{id}/launch/confirm', [AnthologyController::class, 'launch_confirm'])->name('anthology.launch_confirm');
 
 Route::get('/publishers', [PublisherController::class, 'index'])->name('publishers');
-Route::get('/publisher/new', [PublisherController::class, 'info'])->name('publisher.create');
-Route::get('/publisher/new/create', [PublisherController::class, 'create'])->name('publisher.create-detail');
-Route::post('/publisher/save', [PublisherController::class, 'store'])->name('publisher.store');
+Route::prefix('publisher')->name('publisher.')->controller(PublisherController::class)->middleware('auth')->group(function () {
+    Route::get('/new', 'info')->name('create');
+    Route::get('/new/create', 'create')->name('create-detail');
+    Route::post('/save', 'store')->name('store');
+    Route::get('/{id}/edit', 'edit')->name('edit');
+    Route::post('/{id}/update', 'update')->name('update');
+    Route::get('/{id}/social-media', 'socials')->name('socials');
+    Route::post('/{id}/social-add', 'social_add')->name('social_add');
+    Route::get('/{publisher_id}/social-edit/{social_id}', 'social_edit')->name('social_edit');
+    Route::post('/{publisher_id}/social-update', 'social_update')->name('social_update');
+    Route::get('/{publisher_id}/social-delete/{social_id}', 'social_delete')->name('social_delete');
+    Route::get('/{publisher_id}/social-delete-confirm/{social_id}', 'social_delete_confirm')->name('social_delete_confirm');
+});
 Route::get('/publisher/{id}', [PublisherController::class, 'show'])->name('publisher.view');
-Route::get('/publisher/{id}/edit', [PublisherController::class, 'edit'])->name('publisher.edit');
-Route::post('/publisher/{id}/update', [PublisherController::class, 'update'])->name('publisher.update');
-Route::get('/publisher/{id}/social-media', [PublisherController::class, 'socials'])->name('publisher.socials');
-Route::post('/publisher/{id}/social-add', [PublisherController::class, 'social_add'])->name('publisher.social_add');
-Route::get('/publisher/{publisher_id}/social-edit/{social_id}', [PublisherController::class, 'social_edit'])->name('publisher.social_edit');
-Route::post('/publisher/{publisher_id}/social-update', [PublisherController::class, 'social_update'])->name('publisher.social_update');
-Route::get('/publisher/{publisher_id}/social-delete/{social_id}', [PublisherController::class, 'social_delete'])->name('publisher.social_delete');
-Route::get('/publisher/{publisher_id}/social-delete-confirm/{social_id}', [PublisherController::class, 'social_delete_confirm'])->name('publisher.social_delete_confirm');
 
 Route::get('/settings', [HomeController::class, 'index'])->name('settings');
 

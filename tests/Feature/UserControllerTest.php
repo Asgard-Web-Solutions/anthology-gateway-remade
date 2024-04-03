@@ -22,7 +22,7 @@ class UserControllerTest extends TestCase
         $user = $this->createUser();
         $this->createAdminAndAuthenticate();
 
-        $response = $this->get(route('users'));
+        $response = $this->get(route('users.index'));
 
         $response->assertSee($user->name);
         $response->assertSee($user->email);
@@ -57,7 +57,7 @@ class UserControllerTest extends TestCase
 
         $response = $this->put(route('users.update', $user->id), $data);
 
-        $response->assertRedirectToRoute('users');
+        $response->assertRedirectToRoute('users.index');
     }
 
     /** ROLES */
@@ -92,7 +92,7 @@ class UserControllerTest extends TestCase
     {
         $this->CreateUserAndAuthenticate();
 
-        $response = $this->get(route('users'));
+        $response = $this->get(route('users.index'));
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
@@ -154,7 +154,7 @@ class UserControllerTest extends TestCase
 
         $response = $this->get(route('settings'));
 
-        $response->assertSee(route('users'));
+        $response->assertSee(route('users.index'));
     }
 
     public function test_admin_user_manger_does_not_show_on_settings_for_users()
@@ -163,7 +163,7 @@ class UserControllerTest extends TestCase
 
         $response = $this->get(route('settings'));
 
-        $response->assertDontSee(route('users'));
+        $response->assertDontSee(route('users.index'));
     }
 
     private function getUserUpdateData()
@@ -178,7 +178,7 @@ class UserControllerTest extends TestCase
     {
         // Route name, requires user id, method, view
         return [
-            ['users', false, 'get', 'users.index'],
+            ['users.index', false, 'get', 'users.index'],
             ['users.edit', true, 'get', 'users.edit'],
             ['users.update', true, 'put', ''],
         ];
