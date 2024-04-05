@@ -6,6 +6,8 @@ interface AnthologyRepositoryInterface
 {
     public function getAllAnthologies();
 
+    public function getOpenSoonAnthologies();
+
     public function getAnthology($id);
 
     public function getAnthologyHeader($id);

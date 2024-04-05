@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\AnthologyStatus;
 use App\Models\Anthology;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -26,6 +27,14 @@ class AnthologyRepository implements AnthologyRepositoryInterface
     {
         return Cache::remember('anthologies:all', $this->resetWeekly, function () {
             return Anthology::all();
+        });
+    }
+
+    public function getOpenSoonAnthologies()
+    {
+        return Cache::remember('anthologies:openSoon', $this->resetDaily, function () {
+            $statuses = [AnthologyStatus::Launched, AnthologyStatus::OpenCall];
+            return Anthology::whereIn('status', $statuses)->get();
         });
     }
 
@@ -80,6 +89,7 @@ class AnthologyRepository implements AnthologyRepositoryInterface
         } else {
             Cache::forget('anthologies:all');
             Cache::forget('anthologies:countAll');
+            Cache::forget('anthologies:openSoon');
         }
     }
 

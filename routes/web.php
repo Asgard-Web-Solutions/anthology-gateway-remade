@@ -40,6 +40,7 @@ Route::prefix('socials')->name('socials.')->controller(SocialController::class)-
     Route::post('/add', 'store')->name('store');
 });
 
+Route::get('/browse', [AnthologyController::class, 'list'])->name('anthology.list');
 Route::get('/anthologies', [AnthologyController::class, 'index'])->name('anthologies');
 Route::prefix('anthology')->name('anthology.')->controller(AnthologyController::class)->middleware('auth')->group(function () {
     Route::get('/create', 'create')->name('create');
