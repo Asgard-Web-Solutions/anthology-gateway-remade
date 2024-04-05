@@ -8,7 +8,5 @@
 ">
     @if ($heading) <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">{!! $heading !!}</h2> @endif
 
-    <div class="flex w-full">
-        {{ $slot }}
-    </div>
+    {{ $slot }}
 </div>

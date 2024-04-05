@@ -8,11 +8,17 @@
     <x-content.page>
         <x-content.column size="full">
             <x-content.box heading='Open Now/Soon'>
-                @foreach ($anthologies as $anthology)
-                    <x-content.mini-box heading="{{ $anthology->name }}">
-                        <img src="{{ $anthology->cover }}" />
-                    </x-content.mini-box>
-                @endforeach
+                <div class="flex w-full">
+                    @foreach ($anthologies as $anthology)
+                        <x-content.mini-box heading="{{ $anthology->name }}">
+                            @if ($anthology->cover)
+                                <img src="{{ $anthology->cover }}" />
+                            @else
+                                <img src="{{ $anthology->header }}" />
+                            @endif
+                        </x-content.mini-box>
+                    @endforeach
+                </div>
             </x-content.box>
         </x-content.column>
     </x-content.page>

@@ -237,6 +237,7 @@ class AnthologyController extends Controller
 
         $attributes = (['status' => AnthologyStatus::Launched]);
         $this->AnthologyRepository->updateAnthology($id, $attributes);
+        $this->AnthologyRepository->clearCache();
 
         return redirect()->route('anthology.manage', $id);
     }
