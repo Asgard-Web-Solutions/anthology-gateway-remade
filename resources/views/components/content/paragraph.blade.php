@@ -1,3 +1,6 @@
 @props(['heading' => ''])
 
-<p class="p-2 my-3">{{ $slot }}</p>
+<p class="">
+    @if ($heading) <h3 class="mb-2 font-bold">{{ $heading }}</h3> @endif
+    {{ $slot }}
+</p>

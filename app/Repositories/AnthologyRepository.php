@@ -87,10 +87,11 @@ class AnthologyRepository implements AnthologyRepositoryInterface
             Cache::forget('anthology:id:'.$id);
             Cache::forget('anthology:id:'.$id.':header');
         } else {
-            Cache::forget('anthologies:all');
             Cache::forget('anthologies:countAll');
-            Cache::forget('anthologies:openSoon');
         }
+        
+        Cache::forget('anthologies:all');
+        Cache::forget('anthologies:openSoon');
     }
 
     public function countAllAnthologies()

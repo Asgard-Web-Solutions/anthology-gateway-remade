@@ -9,15 +9,32 @@
         <x-content.column size="full">
             <x-content.box heading='Open Now/Soon'>
                 <div class="flex w-full">
-                    @foreach ($anthologies as $anthology)
+                    @forelse ($anthologies as $anthology)
                         <x-content.mini-box heading="{{ $anthology->name }}">
-                            @if ($anthology->cover)
-                                <img src="{{ $anthology->cover }}" />
-                            @else
-                                <img src="{{ $anthology->header }}" />
-                            @endif
+                            <div class="items-center h-96">
+                                <a href="{{ route('anthology.view', $anthology->id) }}">
+                                    @if ($anthology->cover)
+                                        <img src="{{ $anthology->cover }}" class="mx-auto h-96"/>
+                                    @else
+                                        <img src="{{ $anthology->header }}" />
+                                    @endif
+                                </a>
+                            </div>
+                            <div class="h-64 p-2 my-3 border-2 border-collapse border-gray-600">
+                                <x-content.paragraph heading="Description">{{ \Illuminate\Support\Str::limit($anthology->description, 250, $end='...') }}</x-content.paragraph>
+                            </div>
+
+                            <x-content.button-section>
+                                <x-button.primary href="{{ route('anthology.view', $anthology->id) }}">More Info</x-button.primary>
+                            </x-content.button-section>
+
                         </x-content.mini-box>
-                    @endforeach
+                    @empty
+                        <x-content.section>
+                            <x-content.paragraph>There are currently no anthology projects that will be opening soon. Consider starting one?</x-content.paragraph>
+                        </x-content.section>
+                    @endforelse
+
                 </div>
             </x-content.box>
         </x-content.column>
