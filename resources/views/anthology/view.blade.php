@@ -26,7 +26,7 @@
             <x-content.box heading='Details'>
                 <x-content.section heading='Description'>
                     <p>
-                        {{ $anthology->description }}
+                        {!! nl2br(htmlspecialchars($anthology->description, ENT_QUOTES)) !!}
                     </p>
                 </x-content.section>
             </x-content.box>
