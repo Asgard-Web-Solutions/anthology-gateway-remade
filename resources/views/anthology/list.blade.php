@@ -20,8 +20,16 @@
                                     @endif
                                 </a>
                             </div>
-                            <div class="h-64 p-2 my-3 border-2 border-collapse border-gray-600">
+                            <div class="h-64 p-2 my-3 border-2 border-collapse border-gray-400 rounded-md">
                                 <x-content.paragraph heading="Description">{{ \Illuminate\Support\Str::limit($anthology->description, 250, $end='...') }}</x-content.paragraph>
+                            </div>
+
+                            <div class="h-20 p-2 my-3 border-2 border-collapse border-gray-400 rounded-md">
+                                <x-content.paragraph heading="Submission Period">
+                                    <span class="text-sm">@if ($anthology->open_date) {{ \Carbon\Carbon::parse($anthology->open_date)->format('F j, Y') }} @else TBD @endif</span>
+                                     --
+                                     <span class="text-sm">@if ($anthology->close_date) {{ \Carbon\Carbon::parse($anthology->close_date)->format('F j, Y') }} @else TBD @endif</span>
+                                    </x-content.paragraph>
                             </div>
 
                             <x-content.button-section>
