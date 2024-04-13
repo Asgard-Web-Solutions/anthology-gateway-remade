@@ -334,6 +334,8 @@ class AnthologyTest extends TestCase
     {
         $this->CreateUserAndAuthenticate();
         $anthology = $this->createAnthology();
+        $anthology->status = AnthologyStatus::Launched;
+        $anthology->save();
         
         $response = $this->get(route('anthology.list'));
 
