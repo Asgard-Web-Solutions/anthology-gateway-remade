@@ -42,7 +42,6 @@
                             <x-content.paragraph>There are currently no anthology projects that will be opening soon. Consider starting one?</x-content.paragraph>
                         </x-content.section>
                     @endforelse
-
                 </div>
             </x-content.box>
         </x-content.column>

@@ -37,30 +37,36 @@
         </div>
 
     <x-content.page>
-        <x-content.box heading="<i class='{{ config('ag.icons.anthology') }}'></i> Your Anthologies">
-            @if ($user->anthologies->count())
-                @foreach ($user->anthologies as $anthology)
-                    <a href="{{ route('anthology.view', $anthology->id) }}">{{ $anthology->name }}</a>
-                @endforeach
-            @endif
+        <x-content.column size="full">
+            <x-content.box heading="<i class='{{ config('ag.icons.anthology') }}'></i> Your Anthologies">
+                <div class="flex w-full">
 
-            @can('create', App\Models\Anthology::class)
-                <x-content.button-section>
-                    <x-button.primary-small icon="fa-solid fa-plus" href="{{ route('anthology.create') }}">{{ __('Create Anthology ') }}</x-button.primary-small>
-                </x-content.button-section>
-            @endcan
-        </x-content.box>
+                    @forelse ($user->anthologies as $anthology)
+                        <x-content.mini-box heading="{{ $anthology->name }}">
+                            <div class="items-center h-96">
+                                <a href="{{ route('anthology.view', $anthology->id) }}">
+                                    @if ($anthology->cover)
+                                        <img src="{{ $anthology->cover }}" class="mx-auto h-96"/>
+                                    @else
+                                        <img src="{{ $anthology->header }}" class="mx-auto max-h-96"/>
+                                    @endif
+                                </a>
+                            </div>
+                        </x-content.mini-box>
+                    @empty
+                        <x-content.section>
+                            <x-content.paragraph>There are currently no anthology projects that will be opening soon. Consider starting one?</x-content.paragraph>
+                        </x-content.section>
+                    @endforelse
+                </div>
+
+                @can('create', App\Models\Anthology::class)
+                    <x-content.button-section>
+                        <x-button.primary-small icon="fa-solid fa-plus" href="{{ route('anthology.create') }}">{{ __('Create Anthology ') }}</x-button.primary-small>
+                    </x-content.button-section>
+                @endcan
+            </x-content.box>
+        </x-content.column>
     </x-content.page>
 
-
-
-    <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

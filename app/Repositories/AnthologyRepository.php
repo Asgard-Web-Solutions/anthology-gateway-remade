@@ -47,11 +47,11 @@ class AnthologyRepository implements AnthologyRepositoryInterface
 
     public function getAnthologyHeader($id)
     {
-        return Cache::remember('anthology:id:'.$id.':header', ($this->resetHourly - 5), function () use ($id) {
+        return Cache::remember('anthology:id:'.$id.':header', ($this->resetWeekly - 5), function () use ($id) {
             $anthology = $this->getAnthology($id);
 
             if ($anthology->header_image) {
-                return Storage::disk('s3')->temporaryUrl($anthology->header_image, now()->addMinutes(60));
+                return Storage::disk('s3')->temporaryUrl($anthology->header_image, now()->addDays(7));
             } else {
                 return null;
             }
@@ -60,11 +60,11 @@ class AnthologyRepository implements AnthologyRepositoryInterface
 
     public function getAnthologyCover($id)
     {
-        return Cache::remember('anthology:id:'.$id.':cover', ($this->resetHourly - 5), function () use ($id) {
+        return Cache::remember('anthology:id:'.$id.':cover', ($this->resetWeekly - 5), function () use ($id) {
             $anthology = $this->getAnthology($id);
 
             if ($anthology->cover_image) {
-                return Storage::disk('s3')->temporaryUrl($anthology->cover_image, now()->addMinutes(60));
+                return Storage::disk('s3')->temporaryUrl($anthology->cover_image, now()->addDays(7));
             } else {
                 return null;
             }
