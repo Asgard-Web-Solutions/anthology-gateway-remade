@@ -11,6 +11,7 @@
             
             <div class="w-3/4 h-px mx-auto my-2 bg-purple-700"></div>
             <a href="{{ route('dashboard') }}" class="{{ $linkStyle }}">{{ __('Dashboard') }}</a>
+            <a href="{{ route('anthology.list') }}" class="{{ $linkStyle }}"><x-site.social-icon>{{ config('ag.icons.anthology') }}</x-site.social-icon> {{ __('Browse Antholgoies') }}</a>
 
             @if($authUser->publishers->count())
             

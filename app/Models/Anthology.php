@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Enums\AnthologyStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Enums\AnthologyStatus;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+
 
 class Anthology extends Model
 {
@@ -65,4 +68,29 @@ class Anthology extends Model
         return true;
     }
 
+    public function getCoverAttribute()
+    {
+        $cacheKey = 'anthology:id:'.$this->id.':cover';
+        $resetTime = (60 * 60 * 24 * 7);  // Adjust according to your specific use case
+
+        return Cache::remember($cacheKey, ($resetTime - 5), function () {
+            if ($this->cover_image) {
+                return Storage::disk('s3')->temporaryUrl($this->cover_image, now()->addDays(7));
+            }
+            return null;
+        });
+    }
+
+    public function getHeaderAttribute()
+    {
+        $cacheKey = 'anthology:id:'.$this->id.':header';
+        $resetTime = (60 * 60 * 24 * 7);  // Adjust according to your specific use case
+
+        return Cache::remember($cacheKey, ($resetTime - 5), function () {
+            if ($this->header_image) {
+                return Storage::disk('s3')->temporaryUrl($this->header_image, now()->addDays(7));
+            }
+            return null;
+        });
+    }
 }

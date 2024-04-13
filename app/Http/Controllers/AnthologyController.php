@@ -36,6 +36,23 @@ class AnthologyController extends Controller
         ]);
     }
 
+    public function list()
+    {
+        Gate::authorize('list', Anthology::class);
+
+        $anthologies = $this->AnthologyRepository->getOpenSoonAnthologies();
+
+        foreach ($anthologies as $anthology)
+        {
+            $anthology->header = $this->AnthologyRepository->getAnthologyHeader($anthology->id);
+            $anthology->cover = $this->AnthologyRepository->getAnthologyCover($anthology->id);    
+        }
+
+        return view('anthology.list', [
+            'anthologies' => $anthologies,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -78,6 +95,8 @@ class AnthologyController extends Controller
     {
         $anthology = $this->AnthologyRepository->getAnthology($id);
         // Gate::allows('view', $anthology);
+
+        abort_if(is_null($anthology), 404);
 
         $anthology->header = $this->AnthologyRepository->getAnthologyHeader($id);
         $anthology->cover = $this->AnthologyRepository->getAnthologyCover($id);
@@ -218,6 +237,7 @@ class AnthologyController extends Controller
 
         $attributes = (['status' => AnthologyStatus::Launched]);
         $this->AnthologyRepository->updateAnthology($id, $attributes);
+        $this->AnthologyRepository->clearCache();
 
         return redirect()->route('anthology.manage', $id);
     }

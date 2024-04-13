@@ -84,4 +84,9 @@ class AnthologyPolicy
     {
         //
     }
+
+    public function list(?User $user): bool
+    {
+        return true;
+    }
 }

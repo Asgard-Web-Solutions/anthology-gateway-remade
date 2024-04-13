@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\AnthologyStatus;
 use App\Models\Anthology;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -29,6 +30,14 @@ class AnthologyRepository implements AnthologyRepositoryInterface
         });
     }
 
+    public function getOpenSoonAnthologies()
+    {
+        return Cache::remember('anthologies:openSoon', $this->resetDaily, function () {
+            $statuses = [AnthologyStatus::Launched, AnthologyStatus::OpenCall];
+            return Anthology::whereIn('status', $statuses)->get();
+        });
+    }
+
     public function getAnthology($id)
     {
         return Cache::remember('anthology:id:'.$id, $this->resetWeekly, function () use ($id) {
@@ -38,11 +47,11 @@ class AnthologyRepository implements AnthologyRepositoryInterface
 
     public function getAnthologyHeader($id)
     {
-        return Cache::remember('anthology:id:'.$id.':header', ($this->resetHourly - 5), function () use ($id) {
+        return Cache::remember('anthology:id:'.$id.':header', ($this->resetWeekly - 5), function () use ($id) {
             $anthology = $this->getAnthology($id);
 
             if ($anthology->header_image) {
-                return Storage::disk('s3')->temporaryUrl($anthology->header_image, now()->addMinutes(60));
+                return Storage::disk('s3')->temporaryUrl($anthology->header_image, now()->addDays(7));
             } else {
                 return null;
             }
@@ -51,11 +60,11 @@ class AnthologyRepository implements AnthologyRepositoryInterface
 
     public function getAnthologyCover($id)
     {
-        return Cache::remember('anthology:id:'.$id.':cover', ($this->resetHourly - 5), function () use ($id) {
+        return Cache::remember('anthology:id:'.$id.':cover', ($this->resetWeekly - 5), function () use ($id) {
             $anthology = $this->getAnthology($id);
 
             if ($anthology->cover_image) {
-                return Storage::disk('s3')->temporaryUrl($anthology->cover_image, now()->addMinutes(60));
+                return Storage::disk('s3')->temporaryUrl($anthology->cover_image, now()->addDays(7));
             } else {
                 return null;
             }
@@ -78,9 +87,11 @@ class AnthologyRepository implements AnthologyRepositoryInterface
             Cache::forget('anthology:id:'.$id);
             Cache::forget('anthology:id:'.$id.':header');
         } else {
-            Cache::forget('anthologies:all');
             Cache::forget('anthologies:countAll');
         }
+        
+        Cache::forget('anthologies:all');
+        Cache::forget('anthologies:openSoon');
     }
 
     public function countAllAnthologies()

@@ -147,7 +147,7 @@ class AnthologyTest extends TestCase
 
     // DONE: Upload pics for Anthology header and book cover to an AWS like bucket
 
-    // TODO: Anthologies can change status to "Launch"
+    // DONE: Anthologies can change status to "Launch"
     public function test_disabled_launch_button_appears_on_management_page()
     {
         $user = $this->CreateUserAndAuthenticate();
@@ -328,4 +328,19 @@ class AnthologyTest extends TestCase
     }
 
     // TODO: Write a command to delete all images from s3 for dev environments only 
+
+    // TODO: Create a public page to list all launched anthology projects
+    public function test_anthology_list_page_loads()
+    {
+        $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology();
+        $anthology->status = AnthologyStatus::Launched;
+        $anthology->save();
+        
+        $response = $this->get(route('anthology.list'));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertViewIs('anthology.list');
+        $response->assertSee($anthology->name);
+    }
 }
