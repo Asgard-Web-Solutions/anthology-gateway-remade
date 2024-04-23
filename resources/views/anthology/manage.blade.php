@@ -57,6 +57,16 @@
 
         <!-- Right Column -->
         <x-content.column size='sm'>
+            <x-content.box heading="Publisher">
+                <x-content.section>
+                    @if ($anthology->publisher_id)
+                        <x-site.link href="{{ route('publisher.view', $anthology->publisher_id) }}">{{ $anthology->publisher->name }}</x-site.link>
+                    @else
+                        No Publisher Assigned
+                    @endif
+                </x-content.section>
+            </x-content.box>
+
             <x-content.box heading="Team">
 
             </x-content.box>

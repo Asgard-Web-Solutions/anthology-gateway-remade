@@ -19,6 +19,7 @@ class Anthology extends Model
     protected $fillable = [
         'name',
         'description',
+        'publisher_id',
         'about_publishers',
         'distribution',
 
@@ -92,5 +93,10 @@ class Anthology extends Model
             }
             return null;
         });
+    }
+
+    public function publisher(): BelongsTo
+    {
+        return $this->belongsTo(Publisher::class, 'publisher_id', 'id');
     }
 }
