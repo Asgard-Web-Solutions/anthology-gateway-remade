@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Publisher;
 use App\Repositories\PublisherRepositoryInterface;
 use App\Repositories\SocialRepositoryInterface;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,11 +14,13 @@ class PublisherController extends Controller
     protected $PublisherRepository;
 
     protected $SocialRepository;
+    protected $UserRepository;
 
     public function __construct()
     {
         $this->PublisherRepository = app(PublisherRepositoryInterface::class);
         $this->SocialRepository = app(SocialRepositoryInterface::class);
+        $this->UserRepository = app(UserRepositoryInterface::class);
     }
 
     /**
@@ -65,8 +68,10 @@ class PublisherController extends Controller
 
         $publisher->save();
 
-        // ADd the user to the teams table
+        // Add the user to the teams table
         $publisher->users()->attach(auth()->user()->id, ['role' => 'Owner']);
+
+        $this->UserRepository->clearCache($publisher->creator_id);
 
         return redirect()->route('publisher.view', $publisher->id);
     }

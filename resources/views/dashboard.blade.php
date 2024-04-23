@@ -12,8 +12,7 @@
                     @if ($user->publishers->count())
                         @foreach ($user->publishers as $publisher)
                             <a href="{{ route('publisher.view', $publisher->id) }}">
-                                @php $heading = "<i class=\"{{ config('ag.icons.publisher') }}\"></i> Publisher Settings"; @endphp
-                                <x-content.section heading="{{ $heading }}">
+                                <x-content.section heading="Publisher Settings" heading_icon="{{ config('ag.icons.publisher') }}">
                                     <p class="m-2 text-sm font-bold">
                                         {{ $publisher->name }}
                                     </p>

@@ -17,6 +17,9 @@
                     @case ('basic')
                         <x-form.input-text name='name' value='{{ $anthology->name }}'>Anthology Name</x-form.input-text>
                         <x-form.input-text-large name='description' value='{{ $anthology->description }}'>Anthology Name</x-form.input-text-large>
+                        <x-form.input-select name='publisher' description='Manage all publisher anthology projects in the same place.' title='Publisher'>
+
+                        </x-form.input-select>
                         <x-form.input-text-large name='about_publishers' value='{{ $anthology->about_publishers }}'>About the Publisher</x-form.input-text-large>
                         <x-form.input-text-large name='distribution' value='{{ $anthology->distribution }}'>Anthology Distribution Plans</x-form.input-text-large>
                     @break
