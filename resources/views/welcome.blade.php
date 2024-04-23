@@ -62,7 +62,7 @@
                         <x-content.column size="lg">
                             <x-content.box heading="<i class='{{ config('ag.icons.anthology') }}'></i> Anthology Production Made Delightfull">
                                 <x-content.section>
-                                    <x-content.paragraph>It's a lot of work to put together an anthology, and that work should be a delight, not a headache.</x-content.paragraph>
+                                    <x-content.paragraph>It's a lot of work to put together an anthology, and that work should be easy, fun, and delightful, not a headache.</x-content.paragraph>
                                 </x-content.section>
                             </x-content.box>
 
