@@ -24,14 +24,14 @@ class PublisherRepository implements PublisherRepositoryInterface
     public function getAllPublishers()
     {
         return Cache::remember('publishers:all', $this->resetWeekly, function () {
-            return Publisher::with(['users', 'socials', 'creator'])->get();
+            return Publisher::with(['users', 'socials', 'creator', 'anthologies'])->get();
         });
     }
 
     public function getPublisher($id)
     {
         return Cache::remember('publisher:id:'.$id, $this->resetWeekly, function () use ($id) {
-            return Publisher::with(['users', 'socials', 'creator'])->find($id);
+            return Publisher::with(['users', 'socials', 'creator', 'anthologies'])->find($id);
         });
     }
 
