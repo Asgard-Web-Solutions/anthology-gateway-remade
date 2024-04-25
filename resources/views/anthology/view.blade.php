@@ -81,8 +81,16 @@
                         </x-content.paragraph>
                     </x-content.section>
                 
+                    @foreach ($anthology->publisher->socials as $social)
+                        @php
+                            $modifiedUrl = str_replace('{id}', $social->pivot->url, $social->base_url);
+                        @endphp
+
+                        <span class="mx-1"><a href="{{ $modifiedUrl }}" class="text-purple-300 hover:text-purple-500"><x-site.social-icon>{{ $social->image }}</x-site.social-icon> {{ $social->pivot->url }}</a></span>
+                    @endforeach
+
                     <x-content.button-section>
-                        <x-button.primary href="{{ route('publisher.view', $anthology->publisher->id) }}">View Publisher</x-button.dim>
+                        <x-button.primary href="{{ route('publisher.view', $anthology->publisher->id) }}">Publisher Profile</x-button.dim>
                     </x-content.button-section>
                 @else
                     <x-content.section>
