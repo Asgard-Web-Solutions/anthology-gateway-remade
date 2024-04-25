@@ -27,22 +27,20 @@
 
             <div class="p-3 m-3 text-gray-300 bg-gray-900 rounded-lg">
                 <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">{{ __('Anthologies') }}</h2>
-                <div class="p-3 text-gray-800 bg-gray-300 rounded-lg">
-                    <div class="grid w-full grid-cols-1 xl:grid-cols-3">
-                        @foreach ($publisher->anthologies as $anthology)
-                            <x-content.mini-box heading="{{ $anthology->name }}">
-                                <div class="items-center h-96">
-                                    <a href="{{ route('anthology.view', $anthology->id) }}">
-                                        @if ($anthology->cover)
-                                            <img src="{{ $anthology->cover }}" class="mx-auto h-96"/>
-                                        @else
-                                            <img src="{{ $anthology->header }}" class="mx-auto max-h-96"/>
-                                        @endif
-                                    </a>
-                                </div>
-                            </x-content.mini-box>
-                        @endforeach
-                    </div>
+                <div class="grid w-full grid-cols-1 xl:grid-cols-3">
+                    @foreach ($publisher->anthologies as $anthology)
+                        <x-content.mini-box heading="{{ $anthology->name }}">
+                            <div class="items-center h-96">
+                                <a href="{{ route('anthology.view', $anthology->id) }}">
+                                    @if ($anthology->cover)
+                                        <img src="{{ $anthology->cover }}" class="mx-auto h-96"/>
+                                    @else
+                                        <img src="{{ $anthology->header }}" class="mx-auto max-h-96"/>
+                                    @endif
+                                </a>
+                            </div>
+                        </x-content.mini-box>
+                    @endforeach
                 </div>
             </div>
         </div>
