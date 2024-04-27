@@ -23,7 +23,7 @@
                             <td class="px-6 py-4 border-b border-grey-light"><a href="{{ route('publisher.view', $publisher->id) }}" class="underline">{{ $publisher->name }}</a></td>
                             <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">{{ $publisher->creator->email }}</td>
                             <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">{{ $publisher->socials->count() }}</td>
-                            <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell"> # </td>
+                            <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">{{ $publisher->anthologies->count() }}</td>
                             <td class="flex justify-start px-6 py-4 space-x-2 border-b border-grey-light">
                                 <a href="{{ route('publisher.edit', $publisher->id) }}" class="px-2 py-1 text-sm text-white bg-purple-800 rounded hover:bg-purple-950 focus:outline-none focus:shadow-outline">Edit</a>
                             </td>
