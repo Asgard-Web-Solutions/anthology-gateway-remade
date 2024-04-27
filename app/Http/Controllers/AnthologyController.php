@@ -140,9 +140,12 @@ class AnthologyController extends Controller
         $anthology->header = $this->AnthologyRepository->getAnthologyHeader($id);
         $anthology->cover = $this->AnthologyRepository->getAnthologyCover($id);
 
+        $user = $this->UserRepository->getUser(auth()->user()->id);
+
         return view('anthology.edit', [
             'anthology' => $anthology,
             'setting' => $setting,
+            'user' => $user,
         ]);
     }
 

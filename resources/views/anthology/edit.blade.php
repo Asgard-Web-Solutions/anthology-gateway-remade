@@ -17,7 +17,13 @@
                     @case ('basic')
                         <x-form.input-text name='name' value='{{ $anthology->name }}'>Anthology Name</x-form.input-text>
                         <x-form.input-text-large name='description' value='{{ $anthology->description }}'>Anthology Name</x-form.input-text-large>
-                        <x-form.input-text-large name='about_publishers' value='{{ $anthology->about_publishers }}'>About the Publisher</x-form.input-text-large>
+                        <x-form.input-select name='publisher_id' description='Manage all publisher anthology projects in the same place.' title='Publisher'>
+                            <option value="0" dsiabled>-- No Publisher --</option>
+                            @foreach ($user->publishers as $publisher)
+                                <option value="{{ $publisher->id }}" @if ($anthology->publisher_id == $publisher->id) selected @endif>{{ $publisher->name }}</option>
+                            @endforeach    
+                        </x-form.input-select>
+                        <x-form.input-text-large name='about_publishers' value='{{ $anthology->about_publishers }}' description='If no publisher is assigned, then this will be displayed as the publisher information instead.'>About the Publisher</x-form.input-text-large>
                         <x-form.input-text-large name='distribution' value='{{ $anthology->distribution }}'>Anthology Distribution Plans</x-form.input-text-large>
                     @break
 

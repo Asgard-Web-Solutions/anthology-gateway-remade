@@ -70,8 +70,8 @@ class UserRepository implements UserRepositoryInterface
         if ($id) {
             Cache::forget('users:id:'.$id);
         } else {
-            Cache::forget('userss:all');
-            Cache::forget('userss:countAll');
+            Cache::forget('users:all');
+            Cache::forget('users:countAll');
         }
 
     }

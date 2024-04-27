@@ -11,10 +11,17 @@
             <!-- Content Box #1 -->
             <x-content.box heading="Main Dashboard">
                 <x-content.section heading="Status">
-                    <x-content.paragraph>Status: {{ ucfirst($anthology->status->value) }}</x-content.paragraph>
+                    <x-content.paragraph>Status: 
+                        {{-- <i class="inline-flex items-center px-3 py-1 mx-1 text-sm font-medium text-gray-200 bg-gray-700 rounded-lg fa-duotone fa-compass-drafting ring-1 ring-inset ring-gray-500/10"></i>
+                        <i class="fa-regular fa-paper-plane"></i> 
+                        <i class="fa-duotone fa-rocket-launch"></i>
+                        <i class="fa-solid fa-door-open"></i>
+                        <i class="fa-sharp fa-solid fa-filter"></i>
+                        <i class="fa-sharp fa-solid fa-conveyor-belt-arm"></i>
+                        <i class="fa-duotone fa-flag-checkered"></i> --}}
+                         {{ ucfirst($anthology->status->value) }}
+                    </x-content.paragraph>
                     <p class="my-2">
-                        Is Public<br />
-                        Is Open for Submissions<br />
                         Open Date {{ $anthology->open_date }}<br>
                     </p>
                 </x-content.section>
@@ -57,6 +64,16 @@
 
         <!-- Right Column -->
         <x-content.column size='sm'>
+            <x-content.box heading="Publisher">
+                <x-content.section>
+                    @if ($anthology->publisher_id)
+                        <x-site.link href="{{ route('publisher.view', $anthology->publisher_id) }}">{{ $anthology->publisher->name }}</x-site.link>
+                    @else
+                        No Publisher Assigned
+                    @endif
+                </x-content.section>
+            </x-content.box>
+
             <x-content.box heading="Team">
 
             </x-content.box>
