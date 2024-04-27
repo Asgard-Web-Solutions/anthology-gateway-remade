@@ -2,32 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use Illuminate\Http\Request;
 use App\Models\User;
-use App\Repositories\UserRepositoryInterface;
 use App\Repositories\RoleRepositoryInterface;
+use App\Repositories\UserRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
     protected $userRepository;
+
     protected $roleRepository;
 
     public function __construct()
     {
-        $this->userRepository = app(UserRepositoryInterface::class);  
-        $this->roleRepository = app(RoleRepositoryInterface::class); 
+        $this->userRepository = app(UserRepositoryInterface::class);
+        $this->roleRepository = app(RoleRepositoryInterface::class);
     }
 
-    public function index() 
+    public function index()
     {
         Gate::authorize('viewAny', User::class);
 
         $users = $this->userRepository->getAllUsers();
 
         return view('users.index')->with([
-            'users' => $users
+            'users' => $users,
         ]);
     }
 
@@ -41,11 +41,12 @@ class UserController extends Controller
 
         return view('users.edit')->with([
             'user' => $user,
-            'roles' => $roles
+            'roles' => $roles,
         ]);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
 
         $user = $this->userRepository->getUser($id);
 
@@ -54,14 +55,14 @@ class UserController extends Controller
         $data = $request->validate([
             'roles' => 'sometimes:array',
             'roles.*' => 'exists:roles,id',
-        ]);    
+        ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
 
         $user->save();
-        $user->roles()->sync( $data['roles'] ?? [] );
+        $user->roles()->sync($data['roles'] ?? []);
 
-        return redirect()->route('users');
+        return redirect()->route('users.index');
     }
 }

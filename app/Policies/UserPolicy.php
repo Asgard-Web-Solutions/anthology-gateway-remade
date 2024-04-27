@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Cache;
 class UserPolicy
 {
     protected $cacheTime = 60 * 60;
+
     private function isAdmin(User $user): bool
     {
-        return Cache::remember('user:id:' . $user->id . ':isAdmin', $this->cacheTime, function() use ($user) {
-            return ($user->roles()->where('name', 'Admin')->exists());
+        return Cache::remember('user:id:'.$user->id.':isAdmin', $this->cacheTime, function () use ($user) {
+            return $user->roles()->where('name', 'Admin')->exists();
         });
     }
 

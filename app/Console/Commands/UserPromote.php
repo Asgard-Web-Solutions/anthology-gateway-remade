@@ -30,21 +30,24 @@ class UserPromote extends Command
     {
         $user = User::where('email', '=', $this->argument('email'))->first();
 
-        if (!$user) {
+        if (! $user) {
             $this->error('User not found.');
+
             return 1;
         }
 
         $adminRole = Role::where('Name', '=', 'Admin')->first();
 
-        if (!$adminRole) {
+        if (! $adminRole) {
             $this->error('Admin role not found.');
+
+            return 1;
         }
 
         $user->roles()->attach($adminRole->id);
-        Cache::clear('users:id:' . $user->id . ':isAdmin');
-        Cache::clear('users:id:' . $user->id);
+        Cache::clear('users:id:'.$user->id.':isAdmin');
+        Cache::clear('users:id:'.$user->id);
 
-        $this->info('User {$user->Name} promoted to Admin.');
+        $this->info("User {$user->name} promoted to Admin.");
     }
 }

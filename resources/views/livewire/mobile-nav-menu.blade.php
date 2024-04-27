@@ -11,6 +11,20 @@
             
             <div class="w-3/4 h-px mx-auto my-2 bg-purple-700"></div>
             <a href="{{ route('dashboard') }}" class="{{ $linkStyle }}">{{ __('Dashboard') }}</a>
+            <a href="{{ route('anthology.list') }}" class="{{ $linkStyle }}"><x-site.social-icon>{{ config('ag.icons.anthology') }}</x-site.social-icon> {{ __('Browse Antholgoies') }}</a>
+
+            @if($authUser->publishers->count())
+            
+                @foreach ($authUser->publishers as $publisher)
+                    <x-site.mobile-nav-link href="{{ route('publisher.view', $publisher['id']) }}" icon="{{ config('ag.icons.publisher') }}">{{ $publisher['name'] }}</x-site.mobile-nav-link>
+                @endforeach
+            @endif
+
+            @can('create', \App\Models\Anthology::class)
+                <x-site.mobile-nav-link href="{{ route('anthology.create') }}" icon="{{ config('ag.icons.anthology') }}">{{ __('Create Anthology') }}</x-site.mobile-nav-link>
+            @endcan
+
+            <br />
 
             <a href="{{ route('profile') }}" class="{{ $linkStyle }}">{{ __('Profile') }}</a>
             <button wire:click="logout" class="{{ $linkStyle }} w-full">{{ __('Log Out') }}</button>

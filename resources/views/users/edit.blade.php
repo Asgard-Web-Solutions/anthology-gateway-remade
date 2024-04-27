@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app');
+
+@section('content')
     <x-site.header>{{ __('Editing User') }} {{ $user->email }}</x-site.header>
 
     <div class="container px-4 py-8 mx-auto">
@@ -39,11 +41,10 @@
                         <button type="submit" class="text-white bg-purple-800 hover:bg-purple-950 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Save Changes</button>
                     </div>
                     <div class="w-1/2 p-2 text-right">
-                        <a href="{{ route('users') }}" class="text-white bg-gray-800 hover:bg-gray-950 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">{{ __('Cancel') }}</a>
+                        <a href="{{ route('users.index') }}" class="text-white bg-gray-800 hover:bg-gray-950 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">{{ __('Cancel') }}</a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-        
-</x-app-layout>
+@endsection

@@ -1,5 +1,5 @@
-<div class="flex items-center h-12 align-middle">
-    <h1 class='text-xl font-bold text-purple-800'>
+<div class="flex items-center h-12 mb-4 align-middle">
+    <h1 class='text-2xl font-bold text-purple-700'>
         {{ $slot }}
     </h1>
 </div>
