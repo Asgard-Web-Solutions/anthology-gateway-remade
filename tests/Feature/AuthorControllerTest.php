@@ -75,4 +75,15 @@ class AuthorControllerTest extends TestCase
 
         $response->assertSee(route('author.edit', $author->id));
     }
+
+    public function test_author_edit_page_loads()
+    {
+        $user = $this->CreateUserAndAuthenticate();
+        $author = $this->CreateAuthor($user);
+
+        $response = $this->get(route('author.edit', $author->id));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertViewIs('author.edit');
+    }
 }

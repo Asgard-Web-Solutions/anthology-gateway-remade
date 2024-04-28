@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Author;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepositoryInterface;
+use App\Repositories\AuthorRepositoryInterface;
 
 
 class AuthorController extends Controller
 {
 
     protected $UserRepository;
+    protected $AuthorRepository;
 
     public function __construct()
     {
         $this->UserRepository = app(UserRepositoryInterface::class);
+        $this->AuthorRepository = app(AuthorRepositoryInterface::class);
     }
 
     /**
@@ -61,7 +64,7 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        //
+        
     }
 
     /**
