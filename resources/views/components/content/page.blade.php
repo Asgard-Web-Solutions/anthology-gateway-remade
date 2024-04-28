@@ -1,3 +1,3 @@
-<div class="grid w-full grid-cols-1 sm:grid-cols-3">
+<div class="grid items-center w-full grid-cols-1 xl:grid-cols-3">
     {{ $slot }}
 </div>

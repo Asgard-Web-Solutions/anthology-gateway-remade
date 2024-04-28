@@ -36,11 +36,11 @@
         </header>
 
         <main class="flex-1 p-4 bg-gray-200 sm:col-span-8 lg:col-span-9 xl:col-span-10">
-            {{-- <div class="block sm:hidden">Default</div>
+            <div class="block sm:hidden">Default</div>
             <div class="hidden sm:block md:hidden">SM</div>
             <div class="hidden md:block lg:hidden">MD</div>
             <div class="hidden lg:block xl:hidden">LG</div>
-            <div class="hidden xl:block">XL</div> --}}
+            <div class="hidden xl:block">XL</div>
             
             @foreach (['danger', 'warning', 'success', 'info'] as $msg)
                 @if(session()->has($msg))
