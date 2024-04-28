@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Anthology;
 use App\Repositories\AnthologyRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
+use App\Repositories\PublisherRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -16,10 +17,13 @@ class AnthologyController extends Controller
 
     protected $UserRepository;
 
+    protected $PublisherRepository;
+
     public function __construct()
     {
         $this->AnthologyRepository = app(AnthologyRepositoryInterface::class);
         $this->UserRepository = app(UserRepositoryInterface::class);
+        $this->PublisherRepository = app(PublisherRepositoryInterface::class);
     }
 
     /**
@@ -56,11 +60,19 @@ class AnthologyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($publisher_id = null)
     {
         Gate::authorize('create', Anthology::class);
+        $publisher = null;
 
-        return view('anthology.create');
+        if ($publisher_id) {
+            $publisher = $this->PublisherRepository->getPublisher($publisher_id);
+            Gate::authorize('update', $publisher);
+        }
+
+        return view('anthology.create', [
+            'publisher' => $publisher,
+        ]);
     }
 
     /**
@@ -84,6 +96,10 @@ class AnthologyController extends Controller
         $anthology->save();
 
         $this->UserRepository->clearCache(auth()->user()->id);
+
+        if (isset($request->publisher_id)) {
+            $this->PublisherRepository->clearCache($request->publisher_id);
+        }
 
         return redirect()->route('anthology.manage', $anthology->id);
     }

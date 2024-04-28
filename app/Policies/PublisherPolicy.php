@@ -37,7 +37,7 @@ class PublisherPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Publisher $publisher): bool
+    public function view(?User $user, Publisher $publisher): bool
     {
         return true;
     }

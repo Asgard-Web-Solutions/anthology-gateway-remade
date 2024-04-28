@@ -27,6 +27,9 @@
                     <span class="ml-2 text-lg" style="color: #25e4e1"> Anthology Gateway</span>
                 </div>
                 <div class="w-full text-right">
+                    @guest
+                        <x-button.primary href="/register">Create Account</x-button.primary>
+                    @endguest
                     <x-button.primary href="{{ route('dashboard') }}">Dashboard</x-button.primary>
                 </div>
             </div>

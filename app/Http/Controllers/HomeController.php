@@ -43,10 +43,18 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-
         $user = $this->userRepository->getUser(auth()->user()->id);
 
         return view('dashboard')->with([
+            'user' => $user,
+        ]);
+    }
+
+    public function welcome()
+    {
+        $user = (auth()) ?? $this->userRepository->getUser(auth()->user()->id);
+
+        return view('welcome')->with([
             'user' => $user,
         ]);
     }
