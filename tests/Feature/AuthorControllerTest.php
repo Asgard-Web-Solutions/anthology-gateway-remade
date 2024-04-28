@@ -85,5 +85,31 @@ class AuthorControllerTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertViewIs('author.edit');
+        $response->assertSee($author->name);
+    }
+
+    public function test_users_cannot_load_edit_page()
+    {
+        $user = $this->createUser();
+        $author = $this->CreateAuthor($user);
+        $authUser = $this->CreateUserAndAuthenticate();
+
+        $response = $this->get(route('author.edit', $author->id));
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+    }
+
+    // TODO: Make sure a user cannot load the create page if they already have an author profile
+
+    public function test_author_update_saves_data()
+    {
+        $user = $this->CreateUserAndAuthenticate();
+        $author = $this->CreateAuthor($user);
+        $data = $this->loadAuthorData();
+
+        $response = $this->post(route('author.update', $author->id), $data);
+
+        $this->assertDatabaseHas('authors', $data);
+        $response->assertRedirect(route('dashboard'));
     }
 }

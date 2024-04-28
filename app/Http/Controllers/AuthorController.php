@@ -6,7 +6,7 @@ use App\Models\Author;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\AuthorRepositoryInterface;
-
+use Illuminate\Support\Facades\Gate;
 
 class AuthorController extends Controller
 {
@@ -64,7 +64,11 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        
+        Gate::authorize('update', $author);
+
+        return view('author.edit', [
+            'author' => $author,
+        ]);
     }
 
     /**
@@ -72,7 +76,11 @@ class AuthorController extends Controller
      */
     public function update(Request $request, Author $author)
     {
-        //
+        Gate::authorize('update', $author);
+
+        $this->AuthorRepository->updateAuthor($author->id, $request->all());
+
+        return redirect()->route('dashboard')->with(['success' => 'Author profile updated']);
     }
 
     /**
