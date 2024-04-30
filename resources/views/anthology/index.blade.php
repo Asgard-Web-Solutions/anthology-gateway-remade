@@ -22,7 +22,11 @@
                         <tr class="hover:bg-gray-100">
                             <td class="px-6 py-4 border-b border-grey-light"><a href="{{ route('anthology.view', $anthology->id) }}" class="text-purple-600 underline hover:text-purple-900 hover:no-underline">{{ $anthology->name }}</a></td>
                             <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">{{ $anthology->creator->email }}</td>
-                            <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell"><a class="text-purple-600 underline hover:text-purple-900 hover:no-underline" href="{{ route('publisher.view', $anthology->publisher->id) }}">{{ $anthology->publisher->name }}</a></td>
+                            <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">
+                                @if ($anthology->publisher_id)
+                                    <a class="text-purple-600 underline hover:text-purple-900 hover:no-underline" href="{{ route('publisher.view', $anthology->publisher->id) }}">{{ $anthology->publisher->name }}</a>
+                                @endif
+                            </td>
                             <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">{{ ucfirst($anthology->status->value) }}</td>
                             <td class="flex justify-start px-6 py-4 space-x-2 border-b border-grey-light">
                                 <a href="{{ route('anthology.manage', $anthology->id) }}" class="px-2 py-1 text-sm text-white bg-purple-800 rounded hover:bg-purple-950 focus:outline-none focus:shadow-outline">Edit</a>

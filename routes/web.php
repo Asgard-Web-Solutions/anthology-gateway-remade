@@ -55,7 +55,6 @@ Route::prefix('anthology')->name('anthology.')->controller(AnthologyController::
 Route::get('/anthology/{id}', [AnthologyController::class, 'show'])->name('anthology.view');
 
 Route::get('/publishers', [PublisherController::class, 'index'])->name('publishers');
-Route::get('/publisher/{id}', [PublisherController::class, 'show'])->name('publisher.view');
 Route::prefix('publisher')->name('publisher.')->controller(PublisherController::class)->middleware('auth')->group(function () {
     Route::get('/new', 'info')->name('create');
     Route::get('/new/create', 'create')->name('create-detail');
@@ -70,6 +69,7 @@ Route::prefix('publisher')->name('publisher.')->controller(PublisherController::
     Route::get('/{publisher_id}/social-delete-confirm/{social_id}', 'social_delete_confirm')->name('social_delete_confirm');
 });
 Route::get('/{publisher_id}/new-anthology', [AnthologyController::class, 'create'])->name('publisher.create_anthology');
+Route::get('/publisher/{id}', [PublisherController::class, 'show'])->name('publisher.view');
 
 Route::prefix('author')->name('author.')->controller(AuthorController::class)->middleware('auth')->group(function () {
     Route::get('/new', 'create')->name('create');
