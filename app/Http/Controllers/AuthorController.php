@@ -56,7 +56,9 @@ class AuthorController extends Controller
      */
     public function show(Author $author)
     {
-        //
+        return view('author.show', [
+            'author' => $author,
+        ]);
     }
 
     /**

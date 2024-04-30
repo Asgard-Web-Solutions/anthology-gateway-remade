@@ -112,4 +112,16 @@ class AuthorControllerTest extends TestCase
         $this->assertDatabaseHas('authors', $data);
         $response->assertRedirect(route('dashboard'));
     }
+
+    public function test_author_view_page_loads()
+    {
+        $user = $this->CreateUserAndAuthenticate();
+        $author = $this->CreateAuthor($user);
+
+        $response = $this->get(route('author.show', $author->id));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertViewIs('author.show');
+        $response->assertSee($author->name);
+    }
 }

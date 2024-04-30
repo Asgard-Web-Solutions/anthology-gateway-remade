@@ -74,6 +74,7 @@ Route::get('/{publisher_id}/new-anthology', [AnthologyController::class, 'create
 Route::prefix('author')->name('author.')->controller(AuthorController::class)->middleware('auth')->group(function () {
     Route::get('/new', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
+    Route::get('/{author}', 'show')->name('show');
     Route::get('/{author}/edit', 'edit')->name('edit');
     Route::post('/{author}/update', 'update')->name('update');
 });
