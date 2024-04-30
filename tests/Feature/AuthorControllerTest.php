@@ -66,14 +66,14 @@ class AuthorControllerTest extends TestCase
         $response->assertRedirect(route('dashboard'));
     }
 
-    public function test_author_shows_on_dashboard_with_edit_link()
+    public function test_author_shows_on_dashboard_with_view_link()
     {
         $user = $this->CreateUserAndAuthenticate();
         $author = $this->CreateAuthor($user);
 
         $response = $this->get(route('dashboard'));
 
-        $response->assertSee(route('author.edit', $author->id));
+        $response->assertSee(route('author.view', $author->id));
     }
 
     public function test_author_edit_page_loads()
@@ -118,10 +118,10 @@ class AuthorControllerTest extends TestCase
         $user = $this->CreateUserAndAuthenticate();
         $author = $this->CreateAuthor($user);
 
-        $response = $this->get(route('author.show', $author->id));
+        $response = $this->get(route('author.view', $author->id));
 
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertViewIs('author.show');
-        // $response->assertSee($author->name);
+        $response->assertViewIs('author.view');
+        $response->assertSee($author->name);
     }
 }

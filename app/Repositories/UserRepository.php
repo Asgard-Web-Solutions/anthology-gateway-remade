@@ -24,14 +24,14 @@ class UserRepository implements UserRepositoryInterface
     public function getAllUsers()
     {
         return Cache::remember('users:all', $this->resetHourly, function () {
-            return User::with(['roles', 'publishers'])->get();
+            return User::with(['roles', 'publishers', 'author'])->get();
         });
     }
 
     public function getUser($id)
     {
         return Cache::remember('users:id:'.$id, $this->resetHourly, function () use ($id) {
-            return User::with(['publishers', 'anthologies'])->find($id);
+            return User::with(['publishers', 'anthologies', 'author'])->find($id);
         });
     }
 

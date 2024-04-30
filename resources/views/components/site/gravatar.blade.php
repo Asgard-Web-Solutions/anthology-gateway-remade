@@ -1,13 +1,20 @@
-@props(['email' => ''])
+@props(['size' => 64, 'shape' => 'round'])
 
 @php
-    $size = 64;
     $default = 'identicon';
     $rating = 'pg';
-    $emailHash = hash('sha256', strtolower(trim($email)));
+    $emailHash = hash('sha256', strtolower(trim($slot)));
     $url = "https://www.gravatar.com/avatar/$emailHash?s=$size&d=$default&r=$rating";
+    
+    $classes = '';
+    switch ($shape) {
+        case 'round':
+            $classes .= 'rounded-full';
+            break;
+        case 'square':
+            $classes .= 'rounded-lg';
+            break;
+    }
 @endphp
 
-<div class="">
-    <img src="{{ $url }}" />
-</div>
+<img src="{{ $url }}" class="border-2 border-collapse border-purple-600 {{ $classes }}" />

@@ -29,7 +29,7 @@
                         @if ($user->author)
                             <x-content.section heading="{{ $user->author->name }}" heading_icon="{{ config('ag.icons.author') }}">
                                 <x-content.paragraph>
-                                    <x-button.dim href="{{ route('author.edit', $user->author->id) }}">Edit Author Profile</x-button.primary>
+                                    <x-button.dim href="{{ route('author.view', $user->author->id) }}">View Author Profile</x-button.primary>
                                 </x-content.paragraph>
                             </x-content.section>
                         @else

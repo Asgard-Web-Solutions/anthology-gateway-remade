@@ -74,7 +74,7 @@ Route::get('/publisher/{id}', [PublisherController::class, 'show'])->name('publi
 Route::prefix('author')->name('author.')->controller(AuthorController::class)->middleware('auth')->group(function () {
     Route::get('/new', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
-    Route::get('/{author}', 'show')->name('show');
+    Route::get('/{author}', 'show')->name('view');
     Route::get('/{author}/edit', 'edit')->name('edit');
     Route::post('/{author}/update', 'update')->name('update');
 });
