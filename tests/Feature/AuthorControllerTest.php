@@ -124,4 +124,13 @@ class AuthorControllerTest extends TestCase
         $response->assertViewIs('author.view');
         $response->assertSee($author->name);
     }
+
+    public function test_settings_page_shows_link_to_authors() 
+    {
+        $user = $this->CreateAdminAndAuthenticate();
+
+        $response = $this->get(route('settings'));
+
+        $response->assertSee(route('authors'));
+    }
 }

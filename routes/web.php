@@ -78,6 +78,7 @@ Route::prefix('author')->name('author.')->controller(AuthorController::class)->m
     Route::get('/{author}/edit', 'edit')->name('edit');
     Route::post('/{author}/update', 'update')->name('update');
 });
+Route::get('/authors', [AuthorsController::class, 'index'])->name('authors');
 
 Route::get('/settings', [HomeController::class, 'index'])->name('settings');
 

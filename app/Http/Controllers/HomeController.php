@@ -6,6 +6,7 @@ use App\Repositories\AnthologyRepositoryInterface;
 use App\Repositories\PublisherRepositoryInterface;
 use App\Repositories\SocialRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
+use App\Repositories\AuthorRepositoryInterface;
 
 class HomeController extends Controller
 {
@@ -16,6 +17,7 @@ class HomeController extends Controller
     protected $publisherRepository;
 
     protected $anthologyRepository;
+    protected $authorRepository;
 
     public function __construct()
     {
@@ -23,6 +25,7 @@ class HomeController extends Controller
         $this->userRepository = app(UserRepositoryInterface::class);
         $this->publisherRepository = app(PublisherRepositoryInterface::class);
         $this->anthologyRepository = app(AnthologyRepositoryInterface::class);
+        $this->authorRepository = app(AuthorRepositoryInterface::class);
     }
 
     public function index()
@@ -34,10 +37,14 @@ class HomeController extends Controller
         $anthologyInfo['new'] = $this->anthologyRepository->countNewAnthologies();
         $anthologyInfo['total'] = $this->anthologyRepository->countAllAnthologies();
 
+        $authorInfo['new'] = $this->authorRepository->countNewAuthors();
+        $authorInfo['total'] = $this->authorRepository->countAllAuthors();
+
         return view('home.settings', [
             'socialsCount' => $socialsCount,
             'publisherInfo' => $publisherInfo,
             'anthologyInfo' => $anthologyInfo,
+            'authorInfo' => $authorInfo,
         ]);
     }
 

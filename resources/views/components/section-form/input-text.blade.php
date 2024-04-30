@@ -1,4 +1,4 @@
-@props(['name', 'value' => '', 'required' => false, 'placeholder' => '', 'description' => ''])
+@props(['name', 'value' => '', 'required' => false, 'placeholder' => '', 'description' => '', 'type' => 'text'])
 
 <div class="grid grid-cols-1 mb-6 xl:grid-cols-6">
     <div class="flex items-center h-12 col-span-1 mx-auto my-auto text-center xl:text-left">
@@ -7,7 +7,7 @@
     <div class="col-span-1 xl:col-span-5">
         <p class="my-3 text-sm text-gray-500">{{ $description }}</p>
 
-        <input type="text" id="{{ $name }}" name="{{ $name }}"
+        <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}"
             value="{{ old($name, $value) }}"
             @if($placeholder) placeholder="{{ $placeholder }}" @endif
             @if($required) required @endif

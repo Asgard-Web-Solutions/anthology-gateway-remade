@@ -63,6 +63,8 @@ class UserController extends Controller
         $user->save();
         $user->roles()->sync($data['roles'] ?? []);
 
+        $this->userRepository->clearCache($user->id);
+
         return redirect()->route('users.index');
     }
 }
