@@ -24,7 +24,13 @@
                         <tr class="hover:bg-gray-100">
                             <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">{{ $user->name }}</td>
                             <td class="px-6 py-4 border-b border-grey-light">{{ $user->email }}</td>
-                            <td class="px-6 py-4 border-b border-grey-light"><a href="{{ route('author.view', $user->author->id) }}">{{ $user->author->name }}</a></td>
+                            <td class="px-6 py-4 border-b border-grey-light">
+                                @if ($user->author)
+                                    <a href="{{ route('author.view', $user->author->id) }}">{{ $user->author->name }}</a>
+                                @else
+                                    &nbsp;
+                                @endif
+                            </td>
                             <td class="px-6 py-4 border-b border-grey-light">{{ $user->publishers->count() }}</td>
                             <td class="px-6 py-4 border-b border-grey-light">{{ $user->anthologies->count() }}</td>
                             <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">
