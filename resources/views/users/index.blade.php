@@ -11,6 +11,9 @@
                     <tr>
                         <th class="hidden px-6 py-4 text-sm font-bold uppercase border-b rounded-tl bg-grey-lightest text-grey-dark border-grey-light sm:table-cell">Name</th>
                         <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light">Email</th>
+                        <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light">Author</th>
+                        <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light"># Publishers</th>
+                        <th class="px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light"># Anthologies</th>
                         <th class="hidden px-6 py-4 text-sm font-bold uppercase border-b bg-grey-lightest text-grey-dark border-grey-light sm:table-cell">Role</th>
                         <th class="px-6 py-4 text-sm font-bold uppercase border-b rounded-tr bg-grey-lightest text-grey-dark border-grey-light">Actions</th>
                     </tr>
@@ -21,6 +24,15 @@
                         <tr class="hover:bg-gray-100">
                             <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">{{ $user->name }}</td>
                             <td class="px-6 py-4 border-b border-grey-light">{{ $user->email }}</td>
+                            <td class="px-6 py-4 border-b border-grey-light">
+                                @if ($user->author)
+                                    <a href="{{ route('author.view', $user->author->id) }}">{{ $user->author->name }}</a>
+                                @else
+                                    &nbsp;
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 border-b border-grey-light">{{ $user->publishers->count() }}</td>
+                            <td class="px-6 py-4 border-b border-grey-light">{{ $user->anthologies->count() }}</td>
                             <td class="hidden px-6 py-4 border-b border-grey-light sm:table-cell">
                                 @foreach ($user->roles as $role)
                                     {{ $role->name }}

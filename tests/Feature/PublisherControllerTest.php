@@ -53,7 +53,7 @@ class PublisherControllerTest extends TestCase
             $status_codes = [Response::HTTP_OK];
         }
 
-        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), 'The status code was not an expected status code.');
+        $this->assertTrue(in_array($response->getStatusCode(), $status_codes), 'The route "' . $routeName . '" returned status code "' . $response->getStatusCode() . '" which not an expected status code.');
         if ($view) {
             $response->assertViewIs($view);
         }

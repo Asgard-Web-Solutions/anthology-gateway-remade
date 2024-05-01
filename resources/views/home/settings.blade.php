@@ -56,6 +56,16 @@
                                 </p>
                             </div>
                         </a>
+
+                        <a href="{{ route('authors') }}">
+                            <div class="w-48 p-2 m-2 text-black bg-gray-200 rounded-md hover:bg-gray-300">
+                                <h2 class="font-bold text-red-900"><i class="fa-duotone fa-comments"></i> Authors</h2>
+                                <p class="m-2 text-sm font-light">
+                                    New: <span class="mr-4 font-bold">{{ $authorInfo['new'] }}</span>
+                                    Total: <span class="font-bold">{{ $authorInfo['total'] }}</span>
+                                </p>
+                            </div>
+                        </a>
                     </div>
 
                 </div>

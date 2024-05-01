@@ -2,11 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Publisher;
+use App\Models\Author;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Auth\Access\Response;
 
-class PublisherPolicy
+class AuthorPolicy
 {
     protected $cacheTime = 60 * 60;
 
@@ -26,6 +27,7 @@ class PublisherPolicy
         return null;
     }
 
+
     /**
      * Determine whether the user can view any models.
      */
@@ -37,9 +39,9 @@ class PublisherPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(?User $user, Publisher $publisher): bool
+    public function view(User $user, Author $author): bool
     {
-        return true;
+        //
     }
 
     /**
@@ -47,22 +49,21 @@ class PublisherPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Publisher $publisher): bool
+    public function update(User $user, Author $author): bool
     {
-        // return ($publisher->creator == $user->id);
-        return $publisher->users->contains($user->id);
+        return ($author->user_id == $user->id) ? true : false;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Publisher $publisher): bool
+    public function delete(User $user, Author $author): bool
     {
         //
     }
@@ -70,7 +71,7 @@ class PublisherPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Publisher $publisher): bool
+    public function restore(User $user, Author $author): bool
     {
         //
     }
@@ -78,7 +79,7 @@ class PublisherPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Publisher $publisher): bool
+    public function forceDelete(User $user, Author $author): bool
     {
         //
     }

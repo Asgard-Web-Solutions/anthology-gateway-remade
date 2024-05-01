@@ -17,6 +17,11 @@
             <x-form.input-text name='name' required='true'>Name</x-form.input-text>
             <x-form.input-text name='description' required='true'>Description</x-form.input-text>
             <x-form.date-picker name='open_date' required='true'>Open For Submissions Date</x-form.date-picker>
+
+            @if ($publisher)
+                Publisher: {{ $publisher->name }}
+                <input type="hidden" name="publisher_id" value="{{ $publisher->id }}">
+            @endif
         
             <div class="items-end block w-full text-right">
                 <x-button.dim href="{{ route('dashboard') }}">Cancel</x-button.dim>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnthologyController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\SocialController;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome')->name('welcome');
+Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
 
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard')->middleware(['auth', 'verified']);
 
@@ -67,7 +68,17 @@ Route::prefix('publisher')->name('publisher.')->controller(PublisherController::
     Route::get('/{publisher_id}/social-delete/{social_id}', 'social_delete')->name('social_delete');
     Route::get('/{publisher_id}/social-delete-confirm/{social_id}', 'social_delete_confirm')->name('social_delete_confirm');
 });
+Route::get('/{publisher_id}/new-anthology', [AnthologyController::class, 'create'])->name('publisher.create_anthology');
 Route::get('/publisher/{id}', [PublisherController::class, 'show'])->name('publisher.view');
+
+Route::prefix('author')->name('author.')->controller(AuthorController::class)->middleware('auth')->group(function () {
+    Route::get('/new', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/{author}', 'show')->name('view');
+    Route::get('/{author}/edit', 'edit')->name('edit');
+    Route::post('/{author}/update', 'update')->name('update');
+});
+Route::get('/authors', [AuthorsController::class, 'index'])->name('authors');
 
 Route::get('/settings', [HomeController::class, 'index'])->name('settings');
 

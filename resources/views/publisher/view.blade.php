@@ -27,9 +27,9 @@
 
             <div class="p-3 m-3 text-gray-300 bg-gray-900 rounded-lg">
                 <h2 class="mb-5 text-2xl font-semibold" style="color: #25e4e1">{{ __('Anthologies') }}</h2>
-                <div class="grid w-full grid-cols-1 xl:grid-cols-3">
-                    @foreach ($publisher->anthologies as $anthology)
-                        <x-content.mini-box heading="{{ $anthology->name }}">
+                @forelse ($publisher->anthologies as $anthology)
+                    <div class="grid w-full grid-cols-1 xl:grid-cols-3">
+                        <x-content.mini-box heading="{{ $anthology->name }}" href="{{ route('anthology.view', $anthology->id) }}">
                             <div class="items-center h-96">
                                 <a href="{{ route('anthology.view', $anthology->id) }}">
                                     @if ($anthology->cover)
@@ -40,8 +40,18 @@
                                 </a>
                             </div>
                         </x-content.mini-box>
-                    @endforeach
-                </div>
+                    </div>
+                @empty
+                    @can('update', $publisher)
+                        <x-content.section>
+                            <x-content.paragraph>No Anthologies Yet</x-content.paragraph>
+                        </x-content.section>
+                    @endcan
+                @endforelse
+
+                <x-content.button-section>
+                    <x-button.primary href="{{ route('publisher.create_anthology', $publisher->id) }}">Create Anthology</x-button.primary>
+                </x-content.button-section>
             </div>
         </div>
 

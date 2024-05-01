@@ -4,6 +4,13 @@
         <x-site.main-nav-link href="{{ route('anthology.list') }}" icon="{{ config('ag.icons.anthology') }}">{{ __('Browse Anthologies') }}</x-site.main-nav-link>
     </div>
 
+    @if($authUser && $authUser->author)
+        <div class="hidden w-full px-3 py-2 my-4 overflow-auto text-left bg-gray-900 rounded-lg sm:block">
+            <h2>Your Author Profile</h2>
+                <x-site.main-nav-link href="{{ route('author.view', $authUser->author->id) }}" icon="{{ config('ag.icons.author') }}">{{ $authUser->author->name }}</x-site.main-nav-link>
+        </div>
+    @endif
+
     @if($authUser && $authUser->publishers->count())
         <div class="hidden w-full px-3 py-2 my-4 overflow-auto text-left bg-gray-900 rounded-lg sm:block">
             <h2>Your Publishing Company</h2>

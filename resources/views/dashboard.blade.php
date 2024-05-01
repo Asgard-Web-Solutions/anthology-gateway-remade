@@ -8,29 +8,39 @@
             <div class="block p-2 text-gray-200 bg-gray-900 rounded-md">
                 <h2 class="mx-2" style="color: #25e4e1">Business Profiles</h2>
 
-                <div class="flex w-full">
-                    @if ($user->publishers->count())
-                        @foreach ($user->publishers as $publisher)
-                            <a href="{{ route('publisher.view', $publisher->id) }}">
-                                <x-content.section heading="Publisher Settings" heading_icon="{{ config('ag.icons.publisher') }}">
-                                    <p class="m-2 text-sm font-bold">
-                                        {{ $publisher->name }}
-                                    </p>
+                <div>
+                    <div class="flex w-full align-bottom">
+                        @if ($user->publishers->count())
+                            @foreach ($user->publishers as $publisher)
+                                <x-content.section heading="{{ $publisher->name }}" heading_icon="{{ config('ag.icons.publisher') }}">
+                                    <x-content.paragraph>
+                                        <x-button.dim href="{{ route('publisher.view', $publisher->id) }}" icon="{{ config('ag.icons.publisher') }}">View Publisher Profile</x-button.dim>
+                                    </x-content.paragraph>
                                 </x-content.section>
-                            </a>
-                        @endforeach
-                    @else
-                        <a href="{{ route('publisher.create') }}">
-                            <div class="w-48 p-2 m-2 text-black bg-gray-100 rounded-md hover:bg-gray-200">
-                                <h2 class="font-bold text-red-900"><i class="{{ config('ag.icons.publisher') }}"></i> Publisher Settings</h2>
-                                <p class="m-2 text-sm font-light">
-                                    No Current Publisher
-                                </p>
-                            </div>
-                        </a>
-                    @endif
+                            @endforeach
+                        @else
+                            <x-content.section heading="Publisher Profile" heading_icon="{{ config('ag.icons.publisher') }}">
+                                <x-content.paragraph>
+                                    <x-button.dim href="{{ route('publisher.create') }}">Create Publisher Profile</x-button.primary>
+                                </x-content.paragraph>
+                            </x-content.section>
+                        @endif
 
+                        @if ($user->author)
+                            <x-content.section heading="{{ $user->author->name }}" heading_icon="{{ config('ag.icons.author') }}">
+                                <x-content.paragraph>
+                                    <x-button.dim href="{{ route('author.view', $user->author->id) }}">View Author Profile</x-button.primary>
+                                </x-content.paragraph>
+                            </x-content.section>
+                        @else
+                            <x-content.section heading="Author Profile" heading_icon="{{ config('ag.icons.author') }}">
+                                <x-content.paragraph>
+                                    <x-button.primary href="{{ route('author.create') }}">Create Author Profile</x-button.primary>
+                                </x-content.paragraph>
+                            </x-content.section>
+                        @endif
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -41,13 +51,15 @@
                 <div class="flex w-full">
 
                     @forelse ($user->anthologies as $anthology)
-                        <x-content.mini-box heading="{{ $anthology->name }}">
+                        <x-content.mini-box heading="{{ $anthology->name }}" href="{{ route('anthology.view', $anthology->id) }}">
                             <div class="items-center h-96">
                                 <a href="{{ route('anthology.view', $anthology->id) }}">
                                     @if ($anthology->cover)
                                         <img src="{{ $anthology->cover }}" class="mx-auto h-96"/>
-                                    @else
+                                    @elseif ($anthology->header)
                                         <img src="{{ $anthology->header }}" class="mx-auto max-h-96"/>
+                                    @else
+                                        No Image Uploaded...
                                     @endif
                                 </a>
                             </div>
@@ -61,7 +73,7 @@
 
                 @can('create', App\Models\Anthology::class)
                     <x-content.button-section>
-                        <x-button.primary-small icon="fa-solid fa-plus" href="{{ route('anthology.create') }}">{{ __('Create Anthology ') }}</x-button.primary-small>
+                        <x-button.primary icon="fa-solid fa-plus" href="{{ route('anthology.create') }}">{{ __('Create Anthology ') }}</x-button.primary>
                     </x-content.button-section>
                 @endcan
             </x-content.box>
