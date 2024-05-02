@@ -6,7 +6,9 @@
             <x-site.header><i class="{{ config('ag.icons.anthology') }}"></i> {{ $anthology->name }}</x-site.header>
         </div>
 
-        <div class="w-full my-auto text-right sm:w-1/2">
+        <div class="w-full my-auto text-right sm:w-1/2 ">
+            <x-button.bookmark anthology='{{ $anthology->id }}' bookmarked='{{ $bookmarked }}' @endif/>
+            
             @can('update', $anthology)
                 <x-button.primary href="{{ route('anthology.manage', $anthology->id) }}" icon="fa-light fa-gear-complex">{{ __('Manage Anthology Settings') }}</x-button.primary>
             @endcan
