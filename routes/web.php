@@ -80,7 +80,7 @@ Route::prefix('author')->name('author.')->controller(AuthorController::class)->m
 });
 Route::get('/authors', [AuthorsController::class, 'index'])->name('authors');
 
-Route::get('/settings', [HomeController::class, 'index'])->name('settings');
+Route::get('/settings', [HomeController::class, 'index'])->name('settings')->middleware('auth');
 
 Route::get('/logout', function () {
     Auth::logout();
