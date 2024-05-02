@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use App\Enums\AnthologyStatus;
 
-class AnthologyTest extends TestCase
+class AnthologyControllerTest extends TestCase
 {
     // These are form responses that should give an error
     public static function dataProviderAnthologyCreateFormData()
@@ -61,7 +61,7 @@ class AnthologyTest extends TestCase
         $response->assertSeeInOrder(['Your Anthologies', route('anthology.create')]);
     }
 
-    // TODO: Put a "create" button on the publisher view page that connects the anthology to the publisher
+    // DONE: Put a "create" button on the publisher view page that connects the anthology to the publisher
 
     // DONE: Anthology create page which gathers limited details
     public function test_anthology_creation_page_loads()
@@ -271,8 +271,6 @@ class AnthologyTest extends TestCase
         $this->assertDatabaseHas('anthologies', $verifyData);
     }
 
-    // TODO: Launched anthologies show up on the dashboard if opening for submissions soon
-
     // TODO: Launched anthologies show up on the home page
 
     // DONE: The dashboard shows users own anthologies
@@ -329,7 +327,7 @@ class AnthologyTest extends TestCase
 
     // TODO: Write a command to delete all images from s3 for dev environments only 
 
-    // TODO: Create a public page to list all launched anthology projects
+    // DONE: Create a public page to list all launched anthology projects
     public function test_anthology_list_page_loads()
     {
         $this->CreateUserAndAuthenticate();
