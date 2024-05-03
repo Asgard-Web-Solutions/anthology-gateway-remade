@@ -118,7 +118,7 @@ class AnthologyController extends Controller
         $anthology->header = $this->AnthologyRepository->getAnthologyHeader($id);
         $anthology->cover = $this->AnthologyRepository->getAnthologyCover($id);
 
-        $bookmarked = $anthology->bookmarks()->where('user_id', auth()->user()->id)->exists();
+        $bookmarked = (auth()->check()) ? $anthology->bookmarks()->where('user_id', auth()->user()->id)->exists() : false;
 
         return view('anthology.view', [
             'anthology' => $anthology,
@@ -286,7 +286,7 @@ class AnthologyController extends Controller
 
         $user->anthologyBookmarks()->attach($anthology->id);
 
-        return redirect()->route('anthology.view', $anthology->id);
+        return redirect()->route('anthology.view', $anthology->id)->with(['success' => $anthology->name . ' bookmarked']);
     }
 
     public function unbookmark(Request $request)
@@ -302,6 +302,6 @@ class AnthologyController extends Controller
 
         $user->anthologyBookmarks()->detach($anthology->id);
 
-        return redirect()->route('anthology.view', $anthology->id);
+        return redirect()->route('anthology.view', $anthology->id)->with(['success' => 'Bookmark removed']);
     }
 }
