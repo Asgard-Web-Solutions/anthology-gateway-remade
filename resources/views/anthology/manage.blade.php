@@ -64,7 +64,12 @@
 
         <!-- Right Column -->
         <x-content.column size='sm'>
-            <x-content.box heading="Publisher">
+
+            <x-content.box heading="Stats" heading_icon="fa-duotone fa-chart-simple">
+
+            </x-content.box>
+
+            <x-content.box heading="Publisher" heading_icon="{{ config('ag.icons.publisher') }}">
                 <x-content.section>
                     @if ($anthology->publisher_id)
                         <x-site.link href="{{ route('publisher.view', $anthology->publisher_id) }}">{{ $anthology->publisher->name }}</x-site.link>
@@ -74,11 +79,11 @@
                 </x-content.section>
             </x-content.box>
 
-            <x-content.box heading="Team">
+            <x-content.box heading="Team" heading_icon="{{ config('ag.icons.team') }}">
 
             </x-content.box>
 
-            <x-content.box heading="Project">
+            <x-content.box heading="Project" heading_icon="{{ config('ag.icons.anthology') }}">
                 <x-button.primary href="{{ route('anthology.view', $anthology->id) }}">View Anthology</x-button.primary>
             </x-content.box>
         </x-content.column>
