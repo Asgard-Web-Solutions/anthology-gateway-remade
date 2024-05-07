@@ -21,4 +21,8 @@ interface AnthologyRepositoryInterface
     public function countAllAnthologies();
 
     public function countNewAnthologies();
+
+    public function getBookmarkCount($id);
+
+    public function clearBookmarkCount($id);
 }
