@@ -65,8 +65,10 @@
         <!-- Right Column -->
         <x-content.column size='sm'>
 
-            <x-content.box heading="Stats" heading_icon="fa-duotone fa-chart-simple">
-
+            <x-content.box heading="Statistics" heading_icon="fa-duotone fa-chart-simple">
+                <x-content.section>
+                    <span class="font-bold">Bookmarks:</span> {{ $bookmarkCount }}
+                </x-content.section>
             </x-content.box>
 
             <x-content.box heading="Publisher" heading_icon="{{ config('ag.icons.publisher') }}">

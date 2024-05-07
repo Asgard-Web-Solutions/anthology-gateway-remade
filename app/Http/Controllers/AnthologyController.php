@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Enums\AnthologyStatus;
 use AWS\CRT\HTTP\Response;
+use DB;
 
 class AnthologyController extends Controller
 {
@@ -143,9 +144,12 @@ class AnthologyController extends Controller
             ['name' => 'Payment Details', 'config' => 'payments', 'status' => $anthology->configured_payment_details],
         ];
 
+        $bookmarkCount = $this->AnthologyRepository->getBookmarkCount($id);
+
         return view('anthology.manage', [
             'anthology' => $anthology,
             'steps' => $steps,
+            'bookmarkCount' => $bookmarkCount,
         ]);
     }
 
@@ -285,6 +289,7 @@ class AnthologyController extends Controller
         $user = $this->UserRepository->getUser(auth()->user()->id);
 
         $user->anthologyBookmarks()->attach($anthology->id);
+        $this->AnthologyRepository->clearBookmarkCount($anthology->id);
 
         return redirect()->route('anthology.view', $anthology->id)->with(['success' => $anthology->name . ' bookmarked']);
     }
@@ -301,6 +306,7 @@ class AnthologyController extends Controller
         $user = $this->UserRepository->getUser(auth()->user()->id);
 
         $user->anthologyBookmarks()->detach($anthology->id);
+        $this->AnthologyRepository->clearBookmarkCount($anthology->id);
 
         return redirect()->route('anthology.view', $anthology->id)->with(['success' => 'Bookmark removed']);
     }

@@ -5,7 +5,9 @@ namespace App\Repositories;
 use App\Enums\AnthologyStatus;
 use App\Models\Anthology;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\Storage;
 
 class AnthologyRepository implements AnthologyRepositoryInterface
@@ -106,5 +108,17 @@ class AnthologyRepository implements AnthologyRepositoryInterface
         return Cache::remember('anthologies:countNew', $this->resetDaily, function () {
             return Anthology::where('created_at', '>=', Carbon::now()->subDays(30))->count();
         });
+    }
+
+    public function getBookmarkCount($id)
+    {
+        return Cache::remember('anthology:id:' . $id . ':bookmarkCount', $this->resetDaily, function () use ($id) {
+            return DB::table('user_anthology_bookmarks')->where('anthology_id', $id)->count();
+        });
+    }
+
+    public function clearBookmarkCount($id)
+    {
+        Cache::forget('anthology:id:' . $id . ':bookmarkCount');
     }
 }
