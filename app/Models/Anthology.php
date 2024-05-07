@@ -99,4 +99,9 @@ class Anthology extends Model
     {
         return $this->belongsTo(Publisher::class, 'publisher_id', 'id');
     }
+
+    public function bookmarks(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_anthology_bookmarks')->withTimestamps();
+    }
 }

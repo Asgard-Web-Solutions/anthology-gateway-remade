@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Author::class);
     }
+
+    public function anthologyBookmarks(): BelongsToMany
+    {
+        return $this->belongsToMany(Anthology::class, 'user_anthology_bookmarks')->withTimestamps();
+    }
 }

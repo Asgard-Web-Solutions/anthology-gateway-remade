@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Enums\AnthologyStatus;
+use AWS\CRT\HTTP\Response;
 
 class AnthologyController extends Controller
 {
@@ -117,8 +118,11 @@ class AnthologyController extends Controller
         $anthology->header = $this->AnthologyRepository->getAnthologyHeader($id);
         $anthology->cover = $this->AnthologyRepository->getAnthologyCover($id);
 
+        $bookmarked = (auth()->check()) ? $anthology->bookmarks()->where('user_id', auth()->user()->id)->exists() : false;
+
         return view('anthology.view', [
             'anthology' => $anthology,
+            'bookmarked' => $bookmarked,
         ]);
     }
 
@@ -267,5 +271,37 @@ class AnthologyController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function bookmark(Request $request)
+    {
+        $validatedData = $request->validate([
+            'anthology_id' => ['required', 'integer', 'exists:anthologies,id'],
+        ]);
+        
+        $anthology = $this->AnthologyRepository->getAnthology($validatedData['anthology_id']);
+        Gate::authorize('view', $anthology);
+
+        $user = $this->UserRepository->getUser(auth()->user()->id);
+
+        $user->anthologyBookmarks()->attach($anthology->id);
+
+        return redirect()->route('anthology.view', $anthology->id)->with(['success' => $anthology->name . ' bookmarked']);
+    }
+
+    public function unbookmark(Request $request)
+    {
+        $validatedData = $request->validate([
+            'anthology_id' => ['required', 'integer', 'exists:anthologies,id'],
+        ]);
+        
+        $anthology = $this->AnthologyRepository->getAnthology($validatedData['anthology_id']);
+        Gate::authorize('view', $anthology);
+
+        $user = $this->UserRepository->getUser(auth()->user()->id);
+
+        $user->anthologyBookmarks()->detach($anthology->id);
+
+        return redirect()->route('anthology.view', $anthology->id)->with(['success' => 'Bookmark removed']);
     }
 }

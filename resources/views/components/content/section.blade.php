@@ -1,4 +1,4 @@
-@props(['heading' => '', 'heading_icon' => '', 'style' => 'light'])
+@props(['heading' => '', 'heading_icon' => '', 'style' => 'light', 'href' => ''])
 
 @php
     $headingText = ($heading_icon) ? '<i class="' . $heading_icon . '"></i> ' : '';
@@ -15,7 +15,11 @@
 @endphp
 
 <div class="p-3 my-5 mr-3 {{ $colorStyle }} rounded-lg">
-    @if ($heading) <h3 class="mb-3 text-lg {{ $colorHeading }} text-bold">{!! $headingText !!}</h3> @endif
+    @if ($heading)
+        @if ($href) <a href="{{ $href }}" class="hover:underline">@endif
+            <h3 class="mb-3 text-lg {{ $colorHeading }} text-bold">{!! $headingText !!}</h3>
+        @if ($href)</a>@endif
+    @endif
     
     {{ $slot }}
 </div>

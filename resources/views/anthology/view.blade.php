@@ -2,14 +2,22 @@
 
 @section('content')
     <div class="block w-full sm:flex">
-        <div class="w-full sm:w-1/2">
+        <div class="w-full sm:w-3/4">
             <x-site.header><i class="{{ config('ag.icons.anthology') }}"></i> {{ $anthology->name }}</x-site.header>
         </div>
 
-        <div class="w-full my-auto text-right sm:w-1/2">
-            @can('update', $anthology)
-                <x-button.primary href="{{ route('anthology.manage', $anthology->id) }}" icon="fa-light fa-gear-complex">{{ __('Manage Anthology Settings') }}</x-button.primary>
-            @endcan
+        <div class="w-full my-auto text-right sm:w-1/4">
+            <div class="flex justify-end w-full">
+                @auth
+                    <div class="float-right">
+                        <x-button.bookmark anthology='{{ $anthology->id }}' bookmarked='{{ $bookmarked }}' @endif/>
+                    </div>
+                @endauth
+                
+                @can('update', $anthology)
+                    <x-button.primary href="{{ route('anthology.manage', $anthology->id) }}" icon="fa-light fa-gear-complex">{{ __('Manage Anthology Settings') }}</x-button.primary>
+                @endcan
+            </div>
         </div>
     </div>
 

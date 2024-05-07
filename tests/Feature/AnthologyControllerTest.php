@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use App\Enums\AnthologyStatus;
 
-class AnthologyTest extends TestCase
+class AnthologyControllerTest extends TestCase
 {
     // These are form responses that should give an error
     public static function dataProviderAnthologyCreateFormData()
@@ -61,7 +61,7 @@ class AnthologyTest extends TestCase
         $response->assertSeeInOrder(['Your Anthologies', route('anthology.create')]);
     }
 
-    // TODO: Put a "create" button on the publisher view page that connects the anthology to the publisher
+    // DONE: Put a "create" button on the publisher view page that connects the anthology to the publisher
 
     // DONE: Anthology create page which gathers limited details
     public function test_anthology_creation_page_loads()
@@ -271,8 +271,6 @@ class AnthologyTest extends TestCase
         $this->assertDatabaseHas('anthologies', $verifyData);
     }
 
-    // TODO: Launched anthologies show up on the dashboard if opening for submissions soon
-
     // TODO: Launched anthologies show up on the home page
 
     // DONE: The dashboard shows users own anthologies
@@ -329,7 +327,7 @@ class AnthologyTest extends TestCase
 
     // TODO: Write a command to delete all images from s3 for dev environments only 
 
-    // TODO: Create a public page to list all launched anthology projects
+    // DONE: Create a public page to list all launched anthology projects
     public function test_anthology_list_page_loads()
     {
         $this->CreateUserAndAuthenticate();
@@ -343,4 +341,47 @@ class AnthologyTest extends TestCase
         $response->assertViewIs('anthology.list');
         $response->assertSee($anthology->name);
     }
+
+    // DONE: Show a bookmark link on the anthology page for logged in users
+    public function test_bookmark_link_shows_on_anthology_view_page()
+    {
+        $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology();
+
+        $response = $this->get(route('anthology.view', $anthology->id));
+
+        $response->assertSee(route('anthology.bookmark'));
+    }
+
+    // DONE: Allow users to bookmark an anthology
+    public function test_bookmark_page_loads()
+    {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology();
+
+        $response = $this->post(route('anthology.bookmark'), ['anthology_id' => $anthology->id]);
+
+        $data['user_id'] = $user->id;
+        $data['anthology_id'] = $anthology->id;
+
+        $response->assertRedirect(route('anthology.view', $anthology->id));
+        $this->assertDatabaseHas('user_anthology_bookmarks', $data);
+    }
+
+    public function test_bookmarked_anthology_shows_unbookmark_link()
+    {
+        $user = $this->CreateUserAndAuthenticate();
+        $anthology = $this->createAnthology();
+        $user->anthologyBookmarks()->attach($anthology->id);
+
+        $response = $this->get(route('anthology.view', $anthology->id));
+
+        $response->assertSee(route('anthology.unbookmark'));
+    }
+
+    // TODO: Favorited anthologies show up on the dashboard
+
+    // TODO: Favorited anthology shows link to unbookmark it
+
+    // TODO: Removing a bookmark removes it from the dashboard list
 }

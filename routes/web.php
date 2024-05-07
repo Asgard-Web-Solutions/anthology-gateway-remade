@@ -46,6 +46,8 @@ Route::get('/anthologies', [AnthologyController::class, 'index'])->name('antholo
 Route::prefix('anthology')->name('anthology.')->controller(AnthologyController::class)->middleware('auth')->group(function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
+    Route::post('/bookmark', 'bookmark')->name('bookmark');
+    Route::post('/unbookmark', 'unbookmark')->name('unbookmark');
     Route::get('/{id}/manage', 'manage')->name('manage');
     Route::get('/{id}/manage/{setting}', 'edit')->name('edit');
     Route::post('/{id}/update', 'update')->name('update');
@@ -80,7 +82,7 @@ Route::prefix('author')->name('author.')->controller(AuthorController::class)->m
 });
 Route::get('/authors', [AuthorsController::class, 'index'])->name('authors');
 
-Route::get('/settings', [HomeController::class, 'index'])->name('settings');
+Route::get('/settings', [HomeController::class, 'index'])->name('settings')->middleware('auth');
 
 Route::get('/logout', function () {
     Auth::logout();
