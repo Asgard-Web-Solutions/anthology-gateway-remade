@@ -11,4 +11,21 @@ return [
         'unbookmarked' => env('ICON_UNBOOKMARKED', 'fa-regular fa-bookmark'),
         'bookmarked' => env('ICON_BOOKMARKED', 'fa-duotone fa-bookmark'),
     ],
+    'limits' => [
+        'team_silver' => env('LIMIT_TEAM_SILVER', '2'),
+        'team_gold' => env('LIMIT_TEAM_GOLD', '5'),
+        'team_diamond' => env('LIMIT_TEAM_DIAMOND', '10'),
+
+        'submissions_silver' => env('SUBMISSIONS_TEAM_SILVER', '10'),
+        'submissions_gold' => env('SUBMISSIONS_TEAM_GOLD', '99'),
+        'submissions_diamond' => env('SUBMISSIONS_TEAM_DIAMOND', '250'),
+
+        'open_days_silver' => env('OPEN_DAYS_TEAM_SILVER', '15'),
+        'open_days_gold' => env('OPEN_DAYS_TEAM_GOLD', '60'),
+        'open_days_diamond' => env('OPEN_DAYS_TEAM_DIAMOND', '120'),
+
+        'data_retention_silver' => env('DATA_RETENTION_TEAM_SILVER', '180'),
+        'data_retention_gold' => env('DATA_RETENTION_TEAM_GOLD', '365'),
+        'data_retention_diamond' => env('DATA_RETENTION_TEAM_DIAMOND', '730'),
+    ],
 ];
