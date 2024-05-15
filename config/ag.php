@@ -28,4 +28,5 @@ return [
         'data_retention_gold' => env('DATA_RETENTION_GOLD', '365'),
         'data_retention_diamond' => env('DATA_RETENTION_DIAMOND', '730'),
     ],
+    'default_tier' => 'silver',
 ];

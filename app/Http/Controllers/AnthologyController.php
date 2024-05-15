@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Enums\AnthologyStatus;
+use App\Enums\TierLevel;
 use AWS\CRT\HTTP\Response;
 use DB;
 
@@ -95,6 +96,12 @@ class AnthologyController extends Controller
 
         $anthology->creator_id = auth()->user()->id;
         $anthology->status = AnthologyStatus::Draft;
+        $anthology->subscription_tier = TierLevel::Silver;
+        $anthology->limit_team = config('ag.limits.team_' . TierLevel::Silver);
+        $anthology->data_retention = config('ag.limits.data_retention_' . TierLevel::Silver);
+        $anthology->limit_submissions = config('ag.limits.submissions_' . TierLevel::Silver);
+        $anthology->limit_open_days = config('ag.limits.open_days_' . TierLevel::Silver);
+        $anthology->remaining_open_days = $anthology->limit_open_days;
         $anthology->save();
 
         $this->UserRepository->clearCache(auth()->user()->id);
